@@ -793,7 +793,9 @@ pkg-1.0.2			New generation package manager</screen>
 	  does it use the defined <envvar>PACKAGESITE</envvar>, so
 	  dependencies may not be properly tracked, and missing
 	  dependencies will not be fetched from a remote
-	  source.</para>
+	  source.  This section covers usage of <command>pkg
+	    install</command>.  For information on usage of
+	  <command>pkg add</command>, see &man.pkg-add.8;.</para>
 
 	<para>Additional binary packages can be installed with
 	  <command>pkg install</command>.  For example, to install
@@ -826,8 +828,6 @@ Installing curl-7.24.0... done</screen>
 ca_root_nss-3.13.5	The root certificate bundle from the Mozilla Project
 curl-7.24.0	Non-interactive tool to get files from FTP, GOPHER, HTTP(S) servers
 pkg-1.0.2	New generation package manager</screen>
-
-	<para><!-- pkg add --></para>
 
 	<para><!-- pkg delete --></para>
       </sect3>
