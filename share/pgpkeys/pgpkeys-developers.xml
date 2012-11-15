@@ -124,6 +124,11 @@
       &pgpkey.tdb;
     </sect2>
 
+    <sect2 id="pgpkey-gblach">
+      <title>&a.gblach;</title>
+      &pgpkey.gblach;
+    </sect2>
+
     <sect2 id="pgpkey-mbr">
       <title>&a.mbr;</title>
       &pgpkey.mbr;
@@ -1759,6 +1764,11 @@
     <sect2 id="pgpkey-ups">
       <title>&a.ups;</title>
       &pgpkey.ups;
+    </sect2>
+
+    <sect2 id="pgpkey-bryanv">
+      <title>&a.bryanv;</title>
+      &pgpkey.bryanv;
     </sect2>
 
     <sect2 id="pgpkey-nectar">

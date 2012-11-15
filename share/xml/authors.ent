@@ -192,6 +192,8 @@
 
 <!ENTITY a.bruno "Bruno Ducrot <email>bruno@FreeBSD.org</email>">
 
+<!ENTITY a.bryanv "Bryan Venteicher <email>bryanv@FreeBSD.org</email>">
+
 <!ENTITY a.bsam "Boris Samorodov <email>bsam@FreeBSD.org</email>">
 
 <!ENTITY a.bschmidt "Bernhard Schmidt <email>bschmidt@FreeBSD.org</email>">
@@ -445,6 +447,8 @@
 <!ENTITY a.gavin "Gavin Atkinson <email>gavin@FreeBSD.org</email>">
 
 <!ENTITY a.gber "Grzegorz Bernacki <email>gber@FreeBSD.org</email>">
+
+<!ENTITY a.gblach "Grzegorz Blach <email>gblach@FreeBSD.org</email>">
 
 <!ENTITY a.gclarkii "Gary Clark II <email>gclarkii@FreeBSD.org</email>">
 
