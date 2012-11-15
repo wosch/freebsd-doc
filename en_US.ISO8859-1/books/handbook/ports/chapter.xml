@@ -724,9 +724,43 @@ PKGSUFFIX=	.txz</programlisting>
     <sect2 id="pkgng-basic-usage">
       <title>Basic <application>pkgng</application> Operations</title>
 
-      <para><!-- pkg help --></para>
+      <para>Usage information for <application>pkgng</application> is
+	available in the &man.pkg.8; manual page, or by running
+	<command>pkg</command> without additional arguments.</para>
 
-      <sect3>
+      <para>Each <application>pkgng</application> command argument is
+	documented in a command-specific manual page.  To read the
+	manual page for <command>pkg install</command>, for example,
+	run either:</para>
+
+      <screen>&prompt.root; <userinput>pkg help install</userinput></screen>
+
+      <screen>&prompt.root; <userinput>man pkg-install</userinput></screen>
+
+      <sect3 id="pkgng-pkg-conf">
+	<title>Configuring the <application>pkgng</application>
+	  Environment</title>
+
+	<para>The <application>pkgng</application> package management
+	  system uses a package repository for most operations.  The
+	  default package repository location is the
+	  <envvar>PACKAGESITE</envvar> defined  in
+	  <filename>/usr/local/etc/pkg.conf</filename> unless
+	  <envvar>PACKAGESITE</envvar> is defined in the local
+	  environment.</para>
+
+	<note>
+	  <para>If <envvar>PACKAGESITE</envvar> is defined in the
+	    environment, the &man.pkg.conf.5;
+	    <envvar>PACKAGESITE</envvar> will be ignored.</para>
+	</note>
+
+	<para>Additional <application>pkgng</application>
+	  configuration options are described in
+	  &man.pkg.conf.5;.</para>
+      </sect3>
+
+      <sect3 id="pkgng-installing-deinstalling">
 	<title>Installing and Removing Packages with
 	  <application>pkgng</application></title>
 
