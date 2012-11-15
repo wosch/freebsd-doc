@@ -784,7 +784,48 @@ pkg-1.0.2			New generation package manager</screen>
 	<title>Installing and Removing Packages with
 	  <application>pkgng</application></title>
 
-	<para><!-- pkg install --></para>
+	<para>In general, most &os; users will install binary packages
+	  by running <command>pkg install
+	    <replaceable>packagename</replaceable></command>.
+	  <command>pkg install</command> uses repository data, as
+	  mentioned in <xref linkend="pkgng-pkg-conf"/>.  Conversely,
+	  <command>pkg add</command> does not use repository data, nor
+	  does it use the defined <envvar>PACKAGESITE</envvar>, so
+	  dependencies may not be properly tracked, and missing
+	  dependencies will not be fetched from a remote
+	  source.</para>
+
+	<para>Additional binary packages can be installed with
+	  <command>pkg install</command>.  For example, to install
+	  <application>curl</application>:</para>
+
+	  <screen>&prompt.root; <userinput>pkg install curl</userinput>
+Updating repository catalogue
+Repository catalogue is up-to-date, no need to fetch fresh copy
+The following packages will be installed:
+
+	Installing ca_root_nss: 3.13.5
+	Installing curl: 7.24.0
+
+The installation will require 4 MB more space
+
+1 MB to be downloaded
+
+Proceed with installing packages [y/N]: <userinput>y</userinput>
+ca_root_nss-3.13.5.txz    100%  255KB 255.1KB/s 255.1KB/s   00:00
+curl-7.24.0.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00
+Checking integrity... done
+Installing ca_root_nss-3.13.5... done
+Installing curl-7.24.0... done</screen>
+
+	<para>The new package and any additional packages that were
+	  installed as dependencies can be seen in the installed
+	  packages list:</para>
+
+	<screen>&prompt.root; <userinput>pkg info</userinput>
+ca_root_nss-3.13.5	The root certificate bundle from the Mozilla Project
+curl-7.24.0	Non-interactive tool to get files from FTP, GOPHER, HTTP(S) servers
+pkg-1.0.2	New generation package manager</screen>
 
 	<para><!-- pkg add --></para>
 
