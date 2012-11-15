@@ -874,8 +874,23 @@ curl-7.24.0_1.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00    
 Checking integrity... done
 Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
 
-	<para><!-- pkg audit --></para>
-      </sect3>
+	<para>Occasionally, software vulnerabilities may be discovered
+	  in software within the Ports Collection.
+	  <application>pkgng</application> includes built-in auditing,
+	  similar to the <filename
+	    role="package">ports-mgmt/portaudit</filename> package.
+	  To audit the software installed on the system, run:</para>
+
+	<screen>&prompt.root; <userinput>pkg audit</userinput></screen>
+
+	<tip>
+	  <para>If running <command>pkg audit</command> for the first
+	    time, the audit database file must be downloaded.  Run
+	    <command>pkg audit -F</command> to fetch the audit
+	    database file.</para>
+	</tip>
+
+	</sect3>
     </sect2>
 
   </sect1><!-- PKGNG -->
