@@ -836,7 +836,24 @@ pkg-1.0.2	New generation package manager</screen>
 	<title>Upgrading and Auditing Packages with
 	  <application>pkgng</application></title>
 
-	<para><!-- pkg upgrade --></para>
+	<para>Packages can be upgraded to newer versions with
+	  <application>pkgng</application>.  Suppose a new version of
+	  <application>curl</application> has been released.  The
+	  local package can be upgraded to the new version:</para>
+
+	<screen>&prompt.root; <userinput>pkg upgrade</userinput>
+Updating repository catalogue
+repo.txz    100%  297KB 296.5KB/s 296.5KB/s   00:00
+The following packages will be upgraded:
+
+	Upgrading curl: 7.24.0 -> 7.24.0_1
+
+1 MB to be downloaded
+
+Proceed with upgrading packages [y/N]: <userinput>y</userinput>
+curl-7.24.0_1.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00    
+Checking integrity... done
+Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
 
 	<para><!-- pkg version--></para>
 
