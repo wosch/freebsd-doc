@@ -868,7 +868,11 @@ curl-7.24.0_1.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00    
 Checking integrity... done
 Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
 
-	<para><!-- pkg version--></para>
+	<para>Packages that are outdated can be found with
+	  <command>pkg version</command>.  If a local ports tree
+	  does not exist, &man.pkg-version.8; will use the remote
+	  repository catalogue, otherwise the local ports tree will
+	  be used to identify package versions.</para>
 
 	<para><!-- pkg audit --></para>
       </sect3>
