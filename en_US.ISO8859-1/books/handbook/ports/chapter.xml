@@ -658,12 +658,67 @@ docbook                     =
       <title>Getting Started with
 	<application>pkgng</application></title>
 
-      <para><!-- 
-	- Bootstrapping
-	- Installation from ports (for older &os releases)
-	- Converting to pkgng (pkg2ng)
-	- make.conf modifications
-      --></para>
+      <para>&os;&nbsp;9.1 and later includes a &quot;bootstrap&quot;
+	utility for <application>pkgng</application>.  The bootstrap
+	utility will download and install
+	<application>pkgng</application>.</para>
+	
+      <para>To bootstrap the system, run:</para>
+
+      <screen>&prompt.root; <userinput>/usr/sbin/pkg</userinput></screen>
+
+      <para>For earlier &os; versions,
+	<application>pkgng</application> must be installed from the
+	Ports Collection, or as a binary package.</para>
+
+      <para>To install the <application>pkgng</application> port,
+	run:</para>
+
+      <screen>&prompt.root; <userinput>cd /usr/ports/ports-mgmt/pkg</userinput>
+&prompt.root; <userinput>make</userinput>
+&prompt.root; <userinput>make install clean</userinput></screen>
+
+      <para>To install the binary package, run:</para>
+
+      <screen>&prompt.root; <userinput>pkg_add -r pkg</userinput></screen>
+
+      <note>
+	<para>The <application>pkgng</application> package management
+	  utility is not supported on
+	  &os;&nbsp;7.<replaceable>X</replaceable> or early
+	  &os;&nbsp;8.<replaceable>X</replaceable> versions.</para>
+      </note>
+
+      <para>Existing &os; installations require conversion of the
+	<application>pkg_install</application> package database to the
+	new format.  To convert the package database, run:</para>
+
+      <screen>&prompt.root; <userinput>pkg2ng</userinput></screen>
+
+      <para>This step is not required for new installations that do
+	not have third-party software installed.</para>
+
+      <note>
+	<para>The package database conversion may emit errors as the
+	  contents are converted to the new version.  Generally, these
+	  errors can be safely ignored, however a list of third-party
+	  software that was not successfully converted will be listed
+	  after <command>pkg2ng</command> has finished.  These must be
+	  fixed by hand.</para>
+      </note>
+
+      <para>To ensure the &os;&nbsp;Ports Collection registers new
+	software with <application>pkgng</application>, and not
+	<application>pkg_install</application>, add the following
+	lines to <filename>/etc/make.conf</filename>:</para>
+
+      <programlisting>WITH_PKGNG=	yes
+PKGSUFFIX=	.txz</programlisting>
+
+      <note>
+	<para>This step is not required on
+	  &os;&nbsp;10.<replaceable>X</replaceable>.</para>
+      </note>
     </sect2>
 
     <sect2 id="pkgng-basic-usage">
