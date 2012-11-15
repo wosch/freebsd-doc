@@ -760,6 +760,26 @@ PKGSUFFIX=	.txz</programlisting>
 	  &man.pkg.conf.5;.</para>
       </sect3>
 
+      <sect3 id="pkgng-pkg-info">
+	<title>Obtaining Information about Installed Packages with
+	  <application>pkgng</application></title>
+
+	<para>Information about the packages installed on a system can
+	  be viewed by running <command>pkg info</command>.  Similar
+	  to <command>pkg_info</command>, the package version and
+	  description for all packages will be listed.</para>
+
+	<para>Information about a specific package is available by
+	  running <command>pkg info
+	    <replaceable>packagename</replaceable></command>.  For
+	  example, to see which version of
+	  <application>pkgng</application> is installed on the system,
+	  run:</para>
+
+	<screen>&prompt.root; <userinput>pkg info pkg</userinput>
+pkg-1.0.2			New generation package manager</screen>
+	</sect3>
+
       <sect3 id="pkgng-installing-deinstalling">
 	<title>Installing and Removing Packages with
 	  <application>pkgng</application></title>
