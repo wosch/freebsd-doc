@@ -638,6 +638,64 @@ docbook                     =
     </sect2>
   </sect1>
 
+  <sect1 id="pkgng-intro"><!-- PKGNG -->
+    <title>Using <application>pkgng</application> for Binary Package
+      Management</title>
+
+    <para><application>pkgng</application> is an improved replacement
+      for the traditional &os; <application>pkg_install</application>
+      package management tools, offering many features that make
+      dealing with binary packages faster and easier.  The first
+      release of <application>pkgng</application> was in August,
+      2012.</para>
+
+    <para><application>pkgng</application> is not a replacement for
+      port management tools like <filename
+	role="package">ports-mgmt/portmaster</filename> or <filename
+	role="package">ports-mgmt/portupgrade</filename>.
+
+    <sect2 id="pkgng-initial-setup">
+      <title>Getting Started with
+	<application>pkgng</application></title>
+
+      <para><!-- 
+	- Bootstrapping
+	- Installation from ports (for older &os releases)
+	- Converting to pkgng (pkg2ng)
+	- make.conf modifications
+      --></para>
+    </sect2>
+
+    <sect2 id="pkgng-basic-usage">
+      <title>Basic <application>pkgng</application> Operations</title>
+
+      <para><!-- pkg help --></para>
+
+      <sect3>
+	<title>Installing and Removing Packages with
+	  <application>pkgng</application></title>
+
+	<para><!-- pkg install --></para>
+
+	<para><!-- pkg add --></para>
+
+	<para><!-- pkg delete --></para>
+      </sect3>
+
+      <sect3>
+	<title>Upgrading and Auditing Packages with
+	  <application>pkgng</application></title>
+
+	<para><!-- pkg upgrade --></para>
+
+	<para><!-- pkg version--></para>
+
+	<para><!-- pkg audit --></para>
+      </sect3>
+    </sect2>
+
+  </sect1><!-- PKGNG -->
+
   <sect1 id="ports-using">
     <title>Using the Ports Collection</title>
 
