@@ -145,6 +145,8 @@ $sectionpath = {
     'OpenBSD 4.8' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
     'OpenBSD 4.9' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
     'OpenBSD 5.0' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
+    'OpenBSD 5.1' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
+    'OpenBSD 5.2' => { 'path' => '1:2:3:3p:4:5:6:7:8:9', },
 
     'CentOS Linux/i386 3.9' => { 'path' => '1:2:3:3p:4:5:6:7:8:9:n', },
     'CentOS Linux/i386 4.8' => { 'path' => '1:1p:2:3:3p:4:5:6:7:8:9:n:0p', },
@@ -375,6 +377,8 @@ $manPathDefault = 'FreeBSD 9.0-RELEASE';
     'OpenBSD 4.8', "$manLocalDir/OpenBSD-4.8",
     'OpenBSD 4.9', "$manLocalDir/OpenBSD-4.9",
     'OpenBSD 5.0', "$manLocalDir/OpenBSD-5.0",
+    'OpenBSD 5.1', "$manLocalDir/OpenBSD-5.1",
+    'OpenBSD 5.2', "$manLocalDir/OpenBSD-5.2",
 
     #'NetBSD 0.9',            "$manLocalDir/NetBSD-0.9",
     'NetBSD 1.0',   "$manLocalDir/NetBSD-1.0",
@@ -585,6 +589,8 @@ my %arch = (
 'OpenBSD 4.8' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
 'OpenBSD 4.9' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
 'OpenBSD 5.0' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
+'OpenBSD 5.1' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
+'OpenBSD 5.2' => { 'arch' => [qw/alpha amd64 armish aviion hp300 hppa hppa64 i386 landisk loongson luna88k mac68k macppc mvme68k mvme88k mvmeppc palm sgi socppc sparc sparc64 vax zaurus/] }, 
 );
 
 # delete not existing releases
@@ -626,7 +632,7 @@ while ( ( $key, $val ) = each %manPath ) {
     'macosx',     'Darwin 8.0.1/ppc',
 
     'netbsd',        'NetBSD 6.0',
-    'openbsd',       'OpenBSD 5.0',
+    'openbsd',       'OpenBSD 5.2',
     'v7',            'Unix Seventh Edition',
     'v7man',         'Unix Seventh Edition',
     'x11',           'X11R7.4',
@@ -849,7 +855,7 @@ sub do_man {
         return &man( $1, $2 );
     }
 
-    # download a man hierarchie as gzip'd tar file
+    # download a man hierarchy as gzip'd tar file
     return &download if ( $apropos > 1 );
 
     # empty query
@@ -1643,10 +1649,10 @@ Copyright (c) for man pages by OS vendors.
 <li>Get the <a href="$BASE/source">source</a> of the man.cgi script</li>
 <li>Troff macros works only if defined in FreeBSD/groff. OS specific
 macros like `appeared in NetBSD version 1.2' are not supported.</li>
-<li>Some OSs provide only formated manual pages (catpages), e.g. NetBSD
+<li>Some OSs provide only formatted manual pages (catpages), e.g., NetBSD
 and OpenBSD. In this case it is not possible to create Postscript
 and troff output.</li>
-<li>The <a href="http://cvsweb.freebsd.org/src/share/misc/bsd-family-tree">
+<li>The <a href="http://svnweb.freebsd.org/base/head/share/misc/bsd-family-tree?view=markup">
 Unix family tree, BSD part</a>.</li>
 <li>The <a href="http://www.freebsd.org/cgi/ports.cgi">
 FreeBSD Ports Changes</a> script.</li>
