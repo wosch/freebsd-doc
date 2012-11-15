@@ -829,7 +829,20 @@ ca_root_nss-3.13.5	The root certificate bundle from the Mozilla Project
 curl-7.24.0	Non-interactive tool to get files from FTP, GOPHER, HTTP(S) servers
 pkg-1.0.2	New generation package manager</screen>
 
-	<para><!-- pkg delete --></para>
+	<para>Packages that are no longer needed can be removed with
+	  <command>pkg delete</command>.  For example, if it turns out
+	  that <application>curl</application> is not needed after
+	  all:</para>
+
+	<screen>&prompt.root; <userinput>pkg delete curl</userinput>
+The following packages will be deleted:
+
+	curl-7.24.0_1
+
+The deletion will free 3 MB
+
+Proceed with deleting packages [y/N]: <userinput>y</userinput>
+Deleting curl-7.24.0_1... done</screen>
       </sect3>
 
       <sect3>
