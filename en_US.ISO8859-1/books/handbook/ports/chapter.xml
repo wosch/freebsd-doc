@@ -645,7 +645,7 @@ docbook                     =
     <para><application>pkgng</application> is an improved replacement
       for the traditional &os; <application>pkg_install</application>
       package management tools, offering many features that make
-      dealing with binary packages faster and easier.  The first
+      dealing with binary packages faster and easier.  The first
       release of <application>pkgng</application> was in August,
       2012.</para>
 
@@ -727,7 +727,7 @@ docbook                     =
       <para>The <application>pkgng</application> package management
 	system uses a package repository for most operations.  The
 	default package repository location is the
-	<envar>PACKAGESITE</envar> defined  in
+	<envar>PACKAGESITE</envar> defined in
 	<filename>/usr/local/etc/pkg.conf</filename> unless
 	<envar>PACKAGESITE</envar> is defined in the local
 	environment.</para>
@@ -797,7 +797,7 @@ pkg-1.0.2			New generation package manager</screen>
 	  <command>pkg add</command>, see pkg-add(8).</para>
 
 	<para>Additional binary packages can be installed with
-	  <command>pkg install</command>.  For example, to install
+	  <command>pkg install</command>.  For example, to install
 	  <application>curl</application>:</para>
 
 	  <screen>&prompt.root; <userinput>pkg install curl</userinput>
@@ -855,8 +855,8 @@ Deleting curl-7.24.0_1... done</screen>
 	  be used to identify package versions.</para>
 
 	<para>Packages can be upgraded to newer versions with
-	  <application>pkgng</application>.  Suppose a new version of
-	  <application>curl</application> has been released.  The
+	  <application>pkgng</application>.  Suppose a new version of
+	  <application>curl</application> has been released.  The
 	  local package can be upgraded to the new version:</para>
 
 	<screen>&prompt.root; <userinput>pkg upgrade</userinput>
