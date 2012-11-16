@@ -1001,7 +1001,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	  ports, the order in which the new and old versions are
 	  listed differ.  For <application>pkgng</application>, the
 	  syntax is <command>pkg set -o
-	    <replacable>category/oldport</replaceable>:<replaceable>category/newport</replaceable></command>.</para>
+	    <replaceable>category/oldport</replaceable>:<replaceable>category/newport</replaceable></command>.</para>
 
 	<para>For example, to change the package origin for the above
 	  example, run:</para>
