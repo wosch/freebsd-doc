@@ -638,7 +638,7 @@ docbook                     =
     </sect2>
   </sect1>
 
-  <sect1 id="pkgng-intro"><!-- PKGNG -->
+  <sect1 id="pkgng-intro">
     <title>Using <application>pkgng</application> for Binary Package
       Management</title>
 
@@ -1031,7 +1031,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	</note>
       </sect3>
     </sect2>
-  </sect1><!-- PKGNG -->
+  </sect1>
 
   <sect1 id="ports-using">
     <title>Using the Ports Collection</title>
