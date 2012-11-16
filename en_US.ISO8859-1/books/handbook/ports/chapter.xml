@@ -733,17 +733,10 @@ docbook                     =
 
       <para>The <application>pkgng</application> package management
 	system uses a package repository for most operations.  The
-	default package repository location is the
-	<envar>PACKAGESITE</envar> defined in
-	<filename>/usr/local/etc/pkg.conf</filename> unless
-	<envar>PACKAGESITE</envar> is defined in the local
-	environment.</para>
-
-      <note>
-	<para>If <envar>PACKAGESITE</envar> is defined in the
-	  environment, the pkg.conf(5)
-	  <envar>PACKAGESITE</envar> will be ignored.</para>
-      </note>
+	default package repository location is defined in
+	<filename>/usr/local/etc/pkg.conf</filename> or the
+	<envar>PACKAGESITE</envar> environment variable, which
+	overrides the configuration file.</para>
 
       <para>Additional <application>pkgng</application>
 	configuration options are described in
