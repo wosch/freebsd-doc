@@ -698,6 +698,13 @@ docbook                     =
       <para>This step is not required for new installations that do
 	not have third-party software installed.</para>
 
+      <important>
+	<para>This step is not reversible.  Once the package database
+	  has been converted to the <application>pkgng</application>
+	  format, the <application>pkg_install</application> tools
+	  should not be used.</para>
+      </important>
+
       <note>
 	<para>The package database conversion may emit errors as the
 	  contents are converted to the new version.  Generally, these
@@ -885,15 +892,7 @@ Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
 	    role="package">ports-mgmt/portaudit</filename> package.
 	  To audit the software installed on the system, run:</para>
 
-	<screen>&prompt.root; <userinput>pkg audit</userinput></screen>
-
-	<tip>
-	  <para>If running <command>pkg audit</command> for the first
-	    time, the audit database file must be downloaded.  Run
-	    <command>pkg audit -F</command> to fetch the audit
-	    database file.</para>
-	</tip>
-
+	<screen>&prompt.root; <userinput>pkg audit -F</userinput></screen>
 	</sect3>
     </sect2>
 
