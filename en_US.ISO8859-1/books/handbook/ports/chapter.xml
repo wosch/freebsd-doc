@@ -784,9 +784,11 @@ pkg-1.0.2			New generation package manager</screen>
 	  <application>pkgng</application></title>
 
 	<para>In general, most &os; users will install binary packages
-	  by running <command>pkg install
-	    <replaceable>packagename</replaceable></command>.
-	  <command>pkg install</command> uses repository data, as
+	  by running:</para>
+
+	<screen>&prompt.root; <userinput>pkg install <replaceable>packagename</replaceable></userinput></screen>
+
+	<para><command>pkg install</command> uses repository data, as
 	  mentioned in <xref linkend="pkgng-pkg-conf"/>.  Conversely,
 	  <command>pkg add</command> does not use repository data, nor
 	  does it use the defined <envar>PACKAGESITE</envar>, so
