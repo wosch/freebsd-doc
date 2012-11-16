@@ -1015,8 +1015,8 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	<screen>&prompt.root; <userinput>pkg set -o lang/ruby18:lang/ruby19</userinput></screen>
 
 	<para>As a final example, to change the origin of the
-	  <filenmae>libglut</filename> shared libraries from <filename
-	    role="package">graphics/libglut</filename> to <<filename
+	  <filename>libglut</filename> shared libraries from <filename
+	    role="package">graphics/libglut</filename> to <filename
 	    role="package">graphics/freeglut</filename>, run:</para>
 
 	<screen>&prompt.root; <userinput>pkg set -o graphics/libglut:graphics/freeglut</userinput></screen>
