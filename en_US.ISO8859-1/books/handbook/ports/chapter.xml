@@ -1021,6 +1021,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	    role="package">graphics/freeglut</filename>, run:</para>
 
 	<screen>&prompt.root; <userinput>pkg set -o graphics/libglut:graphics/freeglut</userinput></screen>
+
 	<note>
 	  <para>When changing package origins, in most cases it is
 	    important to reinstall packages that are dependent on the
