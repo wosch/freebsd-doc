@@ -652,7 +652,7 @@ docbook                     =
     <para><application>pkgng</application> is not a replacement for
       port management tools like <filename
 	role="package">ports-mgmt/portmaster</filename> or <filename
-	role="package">ports-mgmt/portupgrade</filename>.
+	role="package">ports-mgmt/portupgrade</filename>.</para>
 
     <sect2 id="pkgng-initial-setup">
       <title>Getting Started with
@@ -727,27 +727,27 @@ docbook                     =
       <para>The <application>pkgng</application> package management
 	system uses a package repository for most operations.  The
 	default package repository location is the
-	<envvar>PACKAGESITE</envvar> defined  in
+	<envar>PACKAGESITE</envar> defined  in
 	<filename>/usr/local/etc/pkg.conf</filename> unless
-	<envvar>PACKAGESITE</envvar> is defined in the local
+	<envar>PACKAGESITE</envar> is defined in the local
 	environment.</para>
 
       <note>
-	<para>If <envvar>PACKAGESITE</envvar> is defined in the
-	  environment, the &man.pkg.conf.5;
-	  <envvar>PACKAGESITE</envvar> will be ignored.</para>
+	<para>If <envar>PACKAGESITE</envar> is defined in the
+	  environment, the pkg.conf(5)
+	  <envar>PACKAGESITE</envar> will be ignored.</para>
       </note>
 
       <para>Additional <application>pkgng</application>
 	configuration options are described in
-	&man.pkg.conf.5;.</para>
+	pkg.conf(5).</para>
     </sect2>
 
     <sect2 id="pkgng-basic-usage">
       <title>Basic <application>pkgng</application> Operations</title>
 
       <para>Usage information for <application>pkgng</application> is
-	available in the &man.pkg.8; manual page, or by running
+	available in the pkg(8) manual page, or by running
 	<command>pkg</command> without additional arguments.</para>
 
       <para>Each <application>pkgng</application> command argument is
@@ -789,12 +789,12 @@ pkg-1.0.2			New generation package manager</screen>
 	  <command>pkg install</command> uses repository data, as
 	  mentioned in <xref linkend="pkgng-pkg-conf"/>.  Conversely,
 	  <command>pkg add</command> does not use repository data, nor
-	  does it use the defined <envvar>PACKAGESITE</envvar>, so
+	  does it use the defined <envar>PACKAGESITE</envar>, so
 	  dependencies may not be properly tracked, and missing
 	  dependencies will not be fetched from a remote
 	  source.  This section covers usage of <command>pkg
 	    install</command>.  For information on usage of
-	  <command>pkg add</command>, see &man.pkg-add.8;.</para>
+	  <command>pkg add</command>, see pkg-add(8).</para>
 
 	<para>Additional binary packages can be installed with
 	  <command>pkg install</command>.  For example, to install
@@ -850,7 +850,7 @@ Deleting curl-7.24.0_1... done</screen>
 
 	<para>Packages that are outdated can be found with
 	  <command>pkg version</command>.  If a local ports tree
-	  does not exist, &man.pkg-version.8; will use the remote
+	  does not exist, pkg-version(8) will use the remote
 	  repository catalogue, otherwise the local ports tree will
 	  be used to identify package versions.</para>
 
@@ -932,7 +932,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	  includes its own package database backup mechanism.  To
 	  manually backup the package database contents, run:</para>
 
-	<screen>&prompt.root; <userinput>pkg backup -d <replaceable>pkgng.db</replacable></userinput></screen>
+	<screen>&prompt.root; <userinput>pkg backup -d <replaceable>pkgng.db</replaceable></userinput></screen>
 
 	<note>
 	  <para>Replace the file name
@@ -965,7 +965,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 
 	<para>By default, <application>pkgng</application> stores
 	  binary packages in a cache directory as defined by
-	  <envvar>PKG_CACHEDIR</envvar> in &man.pkg.conf.5;.  When
+	  <envar>PKG_CACHEDIR</envar> in pkg.conf(5).  When
 	  upgrading packages with <command>pkg upgrade</command>, old
 	  versions of the upgraded packages are not automatically
 	  removed.</para>
