@@ -923,6 +923,41 @@ The autoremoval will free 723 kB
 Proceed with autoremoval of packages [y/N]: <userinput>y</userinput>
 Deinstalling ca_root_nss-3.13.5... done</screen>
       </sect3>
+
+      <sect3 id="pkgng-backup">
+	<title>Backing Up the <application>pkgng</application> Package
+	  Database</title>
+
+	<para>Unlike the <application>pkg_install</application>
+	  package management system, <application>pkgng</application>
+	  includes its own package database backup mechanism.  To
+	  manually backup the package database contents, run:</para>
+
+	<screen>&prompt.root; <userinput>pkg backup -d <replaceable>pkgng.db</replacable></userinput></screen>
+	<note>
+	  <para>Replace the file name
+	    <replaceable>pkgng.db</replaceable> to a suitable file
+	    name.</para>
+	</note>
+
+	<para>Additionally, <application>pkgng</application> includes
+	  a &man.periodic.conf.5; script to automatically backup the
+	  package database daily if
+	  <literal>daily_backup_pkgng_enable</literal> is set to
+	  <literal>YES</literal> in &man.periodic.conf.5;.</para>
+
+	<tip>
+	  <para>To avoid the <application>pkg_install</application>
+	    periodic script from also backing up the package database,
+	    set <literal>daily_backup_pkgdb_enable</literal> to
+	    <literal>NO</literal> in &man.periodic.conf.5;.</para>
+	</tip>
+
+	<para>To restore the contents of a previous package database
+	  backup, run:</para>
+
+	<screen>&prompt.root; <userinput>pkg backup -r <replaceable>/path/to/pkgng.db</replaceable></userinput></screen>
+      </sect3>
     </sect2>
   </sect1><!-- PKGNG -->
 
