@@ -941,7 +941,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	</note>
 
 	<para>Additionally, <application>pkgng</application> includes
-	  a &man.periodic.conf.5; script to automatically backup the
+	  a &man.periodic.8; script to automatically backup the
 	  package database daily if
 	  <literal>daily_backup_pkgng_enable</literal> is set to
 	  <literal>YES</literal> in &man.periodic.conf.5;.</para>
