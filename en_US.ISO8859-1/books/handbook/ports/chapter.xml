@@ -958,6 +958,23 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 
 	<screen>&prompt.root; <userinput>pkg backup -r <replaceable>/path/to/pkgng.db</replaceable></userinput></screen>
       </sect3>
+
+      <sect3 id="pkgng-clean">
+	<title>Removing Stale <application>pkgng</application>
+	  Packages</title>
+
+	<para>By default, <application>pkgng</application> stores
+	  binary packages in a cache directory as defined by
+	  <envvar>PKG_CACHEDIR</envvar> in &man.pkg.conf.5;.  When
+	  upgrading packages with <command>pkg upgrade</command>, old
+	  versions of the upgraded packages are not automatically
+	  removed.</para>
+
+	<para>To remove the outdated binary packages from the system,
+	  run:</para>
+
+	<screen>&prompt.root; <userinput>pkg clean</userinput></screen>
+      </sect3>
     </sect2>
   </sect1><!-- PKGNG -->
 
