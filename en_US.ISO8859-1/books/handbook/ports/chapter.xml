@@ -929,7 +929,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	<para>Unlike the <application>pkg_install</application>
 	  package management system, <application>pkgng</application>
 	  includes its own package database backup mechanism.  To
-	  manually backup the package database contents, run:</para>
+	  manually back up the package database contents, run:</para>
 
 	<screen>&prompt.root; <userinput>pkg backup -d <replaceable>pkgng.db</replaceable></userinput></screen>
 
@@ -940,7 +940,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	</note>
 
 	<para>Additionally, <application>pkgng</application> includes
-	  a &man.periodic.8; script to automatically backup the
+	  a &man.periodic.8; script to automatically back up the
 	  package database daily if
 	  <literal>daily_backup_pkgng_enable</literal> is set to
 	  <literal>YES</literal> in &man.periodic.conf.5;.</para>
