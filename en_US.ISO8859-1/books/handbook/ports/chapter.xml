@@ -893,7 +893,7 @@ Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
 	  To audit the software installed on the system, run:</para>
 
 	<screen>&prompt.root; <userinput>pkg audit -F</userinput></screen>
-	</sect3>
+      </sect3>
     </sect2>
 
     <sect2 id="pkgng-advanced-usage">
