@@ -721,23 +721,7 @@ PKGSUFFIX=	.txz</programlisting>
       </note>
     </sect2>
 
-    <sect2 id="pkgng-basic-usage">
-      <title>Basic <application>pkgng</application> Operations</title>
-
-      <para>Usage information for <application>pkgng</application> is
-	available in the &man.pkg.8; manual page, or by running
-	<command>pkg</command> without additional arguments.</para>
-
-      <para>Each <application>pkgng</application> command argument is
-	documented in a command-specific manual page.  To read the
-	manual page for <command>pkg install</command>, for example,
-	run either:</para>
-
-      <screen>&prompt.root; <userinput>pkg help install</userinput></screen>
-
-      <screen>&prompt.root; <userinput>man pkg-install</userinput></screen>
-
-      <sect3 id="pkgng-pkg-conf">
+      <sect2 id="pkgng-pkg-conf">
 	<title>Configuring the <application>pkgng</application>
 	  Environment</title>
 
@@ -758,7 +742,23 @@ PKGSUFFIX=	.txz</programlisting>
 	<para>Additional <application>pkgng</application>
 	  configuration options are described in
 	  &man.pkg.conf.5;.</para>
-      </sect3>
+      </sect2>
+
+    <sect2 id="pkgng-basic-usage">
+      <title>Basic <application>pkgng</application> Operations</title>
+
+      <para>Usage information for <application>pkgng</application> is
+	available in the &man.pkg.8; manual page, or by running
+	<command>pkg</command> without additional arguments.</para>
+
+      <para>Each <application>pkgng</application> command argument is
+	documented in a command-specific manual page.  To read the
+	manual page for <command>pkg install</command>, for example,
+	run either:</para>
+
+      <screen>&prompt.root; <userinput>pkg help install</userinput></screen>
+
+      <screen>&prompt.root; <userinput>man pkg-install</userinput></screen>
 
       <sect3 id="pkgng-pkg-info">
 	<title>Obtaining Information about Installed Packages with
