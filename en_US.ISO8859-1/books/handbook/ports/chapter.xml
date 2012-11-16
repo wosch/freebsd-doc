@@ -845,8 +845,8 @@ Proceed with deleting packages [y/N]: <userinput>y</userinput>
 Deleting curl-7.24.0_1... done</screen>
       </sect3>
 
-      <sect3>
-	<title>Upgrading and Auditing Packages with
+      <sect3 id="pkgng-upgrading">
+	<title>Upgrading Installed Packages with
 	  <application>pkgng</application></title>
 
 	<para>Packages that are outdated can be found with
@@ -873,6 +873,11 @@ Proceed with upgrading packages [y/N]: <userinput>y</userinput>
 curl-7.24.0_1.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00    
 Checking integrity... done
 Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
+      </sect3>
+
+      <sect3 id="pkgng-auditing">
+	<title>Auditing Installed Packages with
+	  <application>pkgng</application></title>
 
 	<para>Occasionally, software vulnerabilities may be discovered
 	  in software within the Ports Collection.
