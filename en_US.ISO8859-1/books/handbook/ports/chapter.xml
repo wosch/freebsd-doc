@@ -765,12 +765,15 @@ docbook                     =
 
 	<para>Information about the packages installed on a system can
 	  be viewed by running <command>pkg info</command>.  Similar
-	  to <command>pkg_info</command>, the package version and
+	  to &man.pkg.info.1;, the package version and
 	  description for all packages will be listed.</para>
 
 	<para>Information about a specific package is available by
-	  running <command>pkg info
-	    <replaceable>packagename</replaceable></command>.  For
+	  running:</para>
+
+	<screen>&prompt.root; <userinput>pkg info <replaceable>packagename</replaceable></userinput></command>
+
+	<para>For
 	  example, to see which version of
 	  <application>pkgng</application> is installed on the system,
 	  run:</para>
@@ -790,7 +793,7 @@ pkg-1.0.2			New generation package manager</screen>
 
 	<para><command>pkg install</command> uses repository data, as
 	  mentioned in <xref linkend="pkgng-pkg-conf"/>.  Conversely,
-	  <command>pkg add</command> does not use repository data, nor
+	  &man.pkg.add.1; does not use repository data, nor
 	  does it use the defined <envar>PACKAGESITE</envar>, so
 	  dependencies may not be properly tracked, and missing
 	  dependencies will not be fetched from a remote
