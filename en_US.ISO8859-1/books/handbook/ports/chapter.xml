@@ -813,8 +813,8 @@ The installation will require 4 MB more space
 1 MB to be downloaded
 
 Proceed with installing packages [y/N]: <userinput>y</userinput>
-ca_root_nss-3.13.5.txz    100%  255KB 255.1KB/s 255.1KB/s   00:00
-curl-7.24.0.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00
+ca_root_nss-3.13.5.txz		100%	255KB 	255.1KB/s 255.1KB/s	00:00
+curl-7.24.0.txz			100%	1108KB	1.1MB/s	1.1MB/s		00:00
 Checking integrity... done
 Installing ca_root_nss-3.13.5... done
 Installing curl-7.24.0... done</screen>
@@ -861,7 +861,7 @@ Deleting curl-7.24.0_1... done</screen>
 
 	<screen>&prompt.root; <userinput>pkg upgrade</userinput>
 Updating repository catalogue
-repo.txz    100%  297KB 296.5KB/s 296.5KB/s   00:00
+repo.txz		100%	297KB 296.5KB/s 296.5KB/s	00:00
 The following packages will be upgraded:
 
 	Upgrading curl: 7.24.0 -> 7.24.0_1
@@ -869,7 +869,7 @@ The following packages will be upgraded:
 1 MB to be downloaded
 
 Proceed with upgrading packages [y/N]: <userinput>y</userinput>
-curl-7.24.0_1.txz    100% 1108KB   1.1MB/s   1.1MB/s   00:00    
+curl-7.24.0_1.txz	100% 1108KB	1.1MB/s	1.1MB/s		00:00
 Checking integrity... done
 Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
       </sect3>
