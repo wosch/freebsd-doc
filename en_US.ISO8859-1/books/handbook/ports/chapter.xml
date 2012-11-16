@@ -976,6 +976,60 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 
 	<screen>&prompt.root; <userinput>pkg clean</userinput></screen>
       </sect3>
+
+      <sect3 id="pkgng-set">
+	<title>Modifying <application>pkgng</application> Package
+	  Metadata</title>
+
+	<para>Historically, software within the &os;&nbsp;Ports
+	  Collection can undergo major version number changes.  Unlike
+	  <application>pkg_install</application>,
+	  <application>pkgng</application> has a built-in command to
+	  update package origins.  For example, if <filename
+	    role="package">lang/php5</filename> was originally at
+	  version <literal>5.3</literal>, but has been renamed to
+	  <filename role="package">lang/php53</filename> for the
+	  inclusion of version <literal>5.4</literal>,
+	  <application>pkg_install</application> would require the use
+	  of additional software such as <filename
+	    role="package">ports-mgmt/portmaster</filename> to update
+	  the package database, reflecting from which port the
+	  installation originated.</para>
+
+	<para>Unlike the <filename
+	    role="package">ports-mgmt/portmaster</filename> and
+	  <filename role="package">ports-mgmt/portupgrade</filename>
+	  ports, the order in which the new and old versions are
+	  listed differ.  For <application>pkgng</application>, the
+	  syntax is <command>pkg set -o
+	    <replacable>category/oldport</replaceable>:<replaceable>category/newport</replaceable></command>.</para>
+
+	<para>For example, to change the package origin for the above
+	  example, run:</para>
+
+	<screen>&prompt.root; <userinput>pkg set -o lang/php5:lang/php53</userinput></screen>
+
+	<para>As another example, to update <filename
+	    role="package">lang/ruby18</filename> to <filename
+	    role="package">lang/ruby19</filename>, run:</para>
+
+	<screen>&prompt.root; <userinput>pkg set -o lang/ruby18:lang/ruby19</userinput></screen>
+
+	<para>As a final example, to change the origin of the
+	  <filenmae>libglut</filename> shared libraries from <filename
+	    role="package">graphics/libglut</filename> to <<filename
+	    role="package">graphics/freeglut</filename>, run:</para>
+
+	<screen>&prompt.root; <userinput>pkg set -o graphics/libglut:graphics/freeglut</userinput></screen>
+	<note>
+	  <para>When changing package origins, in most cases it is
+	    important to reinstall packages that are dependent on the
+	    package that has had the origin changed.  To force a
+	    reinstallation of dependent packages, run:</para>
+
+	  <screen>&prompt.root; <userinput>pkg install -Rf <replaceable>category/freeglut</replaceable></userinput></screen>
+	</note>
+      </sect3>
     </sect2>
   </sect1><!-- PKGNG -->
 
