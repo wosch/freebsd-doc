@@ -773,8 +773,7 @@ docbook                     =
 
 	<screen>&prompt.root; <userinput>pkg info <replaceable>packagename</replaceable></userinput></screen>
 
-	<para>For
-	  example, to see which version of
+	<para>For example, to see which version of
 	  <application>pkgng</application> is installed on the system,
 	  run:</para>
 
