@@ -934,6 +934,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	  manually backup the package database contents, run:</para>
 
 	<screen>&prompt.root; <userinput>pkg backup -d <replaceable>pkgng.db</replacable></userinput></screen>
+
 	<note>
 	  <para>Replace the file name
 	    <replaceable>pkgng.db</replaceable> to a suitable file
