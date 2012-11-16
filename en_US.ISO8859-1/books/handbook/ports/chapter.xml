@@ -721,28 +721,28 @@ PKGSUFFIX=	.txz</programlisting>
       </note>
     </sect2>
 
-      <sect2 id="pkgng-pkg-conf">
-	<title>Configuring the <application>pkgng</application>
-	  Environment</title>
+    <sect2 id="pkgng-pkg-conf">
+      <title>Configuring the <application>pkgng</application>
+	Environment</title>
 
-	<para>The <application>pkgng</application> package management
-	  system uses a package repository for most operations.  The
-	  default package repository location is the
-	  <envvar>PACKAGESITE</envvar> defined  in
-	  <filename>/usr/local/etc/pkg.conf</filename> unless
-	  <envvar>PACKAGESITE</envvar> is defined in the local
-	  environment.</para>
+      <para>The <application>pkgng</application> package management
+	system uses a package repository for most operations.  The
+	default package repository location is the
+	<envvar>PACKAGESITE</envvar> defined  in
+	<filename>/usr/local/etc/pkg.conf</filename> unless
+	<envvar>PACKAGESITE</envvar> is defined in the local
+	environment.</para>
 
-	<note>
-	  <para>If <envvar>PACKAGESITE</envvar> is defined in the
-	    environment, the &man.pkg.conf.5;
-	    <envvar>PACKAGESITE</envvar> will be ignored.</para>
-	</note>
+      <note>
+	<para>If <envvar>PACKAGESITE</envvar> is defined in the
+	  environment, the &man.pkg.conf.5;
+	  <envvar>PACKAGESITE</envvar> will be ignored.</para>
+      </note>
 
-	<para>Additional <application>pkgng</application>
-	  configuration options are described in
-	  &man.pkg.conf.5;.</para>
-      </sect2>
+      <para>Additional <application>pkgng</application>
+	configuration options are described in
+	&man.pkg.conf.5;.</para>
+    </sect2>
 
     <sect2 id="pkgng-basic-usage">
       <title>Basic <application>pkgng</application> Operations</title>
