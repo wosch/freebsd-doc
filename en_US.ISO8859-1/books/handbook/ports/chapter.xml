@@ -712,8 +712,7 @@ docbook                     =
 	<application>pkg_install</application>, add the following
 	lines to <filename>/etc/make.conf</filename>:</para>
 
-      <programlisting>WITH_PKGNG=	yes
-PKGSUFFIX=	.txz</programlisting>
+      <programlisting>WITH_PKGNG=	yes</programlisting>
 
       <note>
 	<para>This step is not required on
