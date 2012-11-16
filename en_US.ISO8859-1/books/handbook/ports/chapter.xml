@@ -771,7 +771,7 @@ docbook                     =
 	<para>Information about a specific package is available by
 	  running:</para>
 
-	<screen>&prompt.root; <userinput>pkg info <replaceable>packagename</replaceable></userinput></command>
+	<screen>&prompt.root; <userinput>pkg info <replaceable>packagename</replaceable></userinput></screen>
 
 	<para>For
 	  example, to see which version of
