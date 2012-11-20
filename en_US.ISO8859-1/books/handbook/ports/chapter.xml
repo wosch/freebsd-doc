@@ -653,7 +653,8 @@ docbook                     =
       port management tools like <filename
 	role="package">ports-mgmt/portmaster</filename> or <filename
 	role="package">ports-mgmt/portupgrade</filename>.  While
-      <filename role="package">ports-mgmt/portmaster</filename> and <filename role="package">ports-mgmt/portupgrade</filename> can
+      <filename role="package">ports-mgmt/portmaster</filename> and
+      <filename role="package">ports-mgmt/portupgrade</filename> can
       install third-party software from both binary packages and the
       Ports Collection, <application>pkgng</application> installs
       only binary packages.</para>
