@@ -690,8 +690,8 @@ docbook                     =
       <note>
 	<para>The <application>pkgng</application> package management
 	  utility is not supported on
-	  &os;&nbsp;7.<replaceable>X</replaceable> or early
-	  &os;&nbsp;8.<replaceable>X</replaceable> versions.</para>
+	  &os;&nbsp;7.<replaceable>X</replaceable> or
+	  &os;&nbsp;8.<replaceable>0</replaceable>.</para>
       </note>
 
       <para>Existing &os; installations require conversion of the
