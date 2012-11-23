@@ -793,7 +793,7 @@ pkg-1.0.2			New generation package manager</screen>
 
 	<para><command>pkg install</command> uses repository data, as
 	  mentioned in <xref linkend="pkgng-pkg-conf"/>.  Conversely,
-	  &man.pkg.add.1; does not use repository data, nor
+	  pkg-add(8) does not use repository data, nor
 	  does it use the defined <envar>PACKAGESITE</envar>, so
 	  dependencies may not be properly tracked, and missing
 	  dependencies will not be fetched from a remote
