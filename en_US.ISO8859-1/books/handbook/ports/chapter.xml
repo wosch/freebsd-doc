@@ -793,12 +793,11 @@ pkg-1.0.2			New generation package manager</screen>
 
 	<para><command>pkg install</command> uses repository data, as
 	  mentioned in <xref linkend="pkgng-pkg-conf"/>.  Conversely,
-	  pkg-add(8) does not use repository data, nor
-	  does it use the defined <envar>PACKAGESITE</envar>, so
-	  dependencies may not be properly tracked, and missing
-	  dependencies will not be fetched from a remote
-	  source.  This section covers usage of <command>pkg
-	    install</command>.  For information on usage of
+	  pkg-add(8) does not use repository data, nor does it use the
+	  defined <envar>PACKAGESITE</envar>, so dependencies may not
+	  be properly tracked, and missing dependencies will not be
+	  fetched from a remote source.  This section covers usage of
+	  <command>pkg install</command>.  For information on usage of
 	  <command>pkg add</command>, see pkg-add(8).</para>
 
 	<para>Additional binary packages can be installed with
