@@ -416,6 +416,11 @@
       &pgpkey.peadar;
     </sect2>
 
+    <sect2 id="pgpkey-deischen">
+      <title>&a.deischen;</title>
+      &pgpkey.deischen;
+    </sect2>
+
     <sect2 id="pgpkey-josef">
       <title>&a.josef;</title>
       &pgpkey.josef;
@@ -724,6 +729,11 @@
     <sect2 id="pgpkey-tj">
       <title>&a.tj;</title>
       &pgpkey.tj;
+    </sect2>
+
+    <sect2 id="pgpkey-kan">
+      <title>&a.kan;</title>
+      &pgpkey.kan;
     </sect2>
 
     <sect2 id="pgpkey-bjk">
@@ -1224,6 +1234,11 @@
     <sect2 id="pgpkey-obrien">
       <title>&a.obrien;</title>
       &pgpkey.obrien;
+    </sect2>
+
+    <sect2 id="pgpkey-olgeni">
+      <title>&a.olgeni;</title>
+      &pgpkey.olgeni;
     </sect2>
 
     <sect2 id="pgpkey-philip">
