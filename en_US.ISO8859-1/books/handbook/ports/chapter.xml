@@ -903,11 +903,11 @@ Upgrading curl from 7.24.0 to 7.24.0_1... done</screen>
 
 	<para>Removing a package may leave behind unnecessary
 	  dependencies, like <filename
-	    role="package">security/ca_root_nss</filename> in the example
-	  above.  Such packages are still installed, but nothing
-	  depends on them any more.  Unneeded packages that were
-	  installed as dependencies can be automatically detected and
-	  removed:</para>
+	    role="package">security/ca_root_nss</filename> in the
+	  example above.  Such packages are still installed, but
+	  nothing depends on them any more.  Unneeded packages that
+	  were installed as dependencies can be automatically detected
+	  and removed:</para>
 
 	<screen>&prompt.root; <userinput>pkg autoremove</userinput>
 Packages to be autoremoved:
@@ -966,8 +966,7 @@ Deinstalling ca_root_nss-3.13.5... done</screen>
 	  versions of the upgraded packages are not automatically
 	  removed.</para>
 
-	<para>To remove the outdated binary packages,
-	  run:</para>
+	<para>To remove the outdated binary packages, run:</para>
 
 	<screen>&prompt.root; <userinput>pkg clean</userinput></screen>
       </sect3>
