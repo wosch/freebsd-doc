@@ -133,8 +133,7 @@
 	    <quote>386BSD</quote>, though very little of the 386BSD code
 	    remains.  A fuller description of what &os; is and how it
 	    can work for you may be found on the <ulink
-	      url="&url.base;/index.html">&os; home page</ulink>.
-	    </para>
+	      url="&url.base;/index.html">&os; home page</ulink>.</para>
 
 	  <para>&os; is used by companies, Internet Service Providers,
 	    researchers, computer professionals, students and home users
@@ -181,6 +180,10 @@
 
 	    <listitem>
 	      <para>Do not sue us if it breaks.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para>Do not remove or modify the license.</para>
 	    </listitem>
 	  </itemizedlist>
 
@@ -472,23 +475,10 @@
 	    been one unbroken line since 2.0 was released, leading
 	    towards &rel.current;-RELEASE and beyond.  For more detailed
 	    information on branches see <quote><ulink
-	      url="&url.articles.releng;/release-proc.html#REL-BRANCH">&os; Release Engineering: Creating the Release Branch</ulink></quote>,
+	      url="&url.articles.releng;/release-proc.html#rel-branch">&os; Release Engineering: Creating the Release Branch</ulink></quote>,
 	    the status of the branches and the upcoming release schedule
 	    can be found on the <ulink
 	      url="http://www.FreeBSD.org/releng">Release Engineering Information</ulink> page.</para>
-
-	  <para>The 2.2-STABLE branch was retired with the release of
-	    2.2.8.  The 3-STABLE branch has ended with the release of
-	    3.5.1, the final 3.<replaceable>X</replaceable> release.
-	    The 4-STABLE branch has ended with the release of 4.11, the
-	    final 4.<replaceable>X</replaceable> release.  The only
-	    changes made to either of these branches will be, for the
-	    most part, security-related bug fixes.  Support for the
-	    5-STABLE branches has ended with the release of 5.5, the
-	    final 5.<replaceable>X</replaceable> release.  Support for
-	    the 6-STABLE branch will continue for some time but focus
-	    primarily on security-related bug fixes and other serious
-	    issues.</para>
 
 	  <para>&rel.current;-STABLE is the actively developed
 	    <emphasis>-STABLE</emphasis> branch.  The latest release on
@@ -912,7 +902,7 @@
 		  <para>Where the format is
 		    <literal>html-split</literal>, the files are bundled
 		    up using &man.tar.1;.  The resulting
-		    <filename>.tar</filename> is then compressed
+		    <filename>.tar</filename> file is then compressed
 		    using the compression schemes detailed in the next
 		    point.</para>
 		</listitem>
@@ -947,12 +937,15 @@
 	    compressed using &man.bzip2.1;, can be found in
 	    <filename>doc/en_US.ISO8859-1/books/faq/book.html-split.tar.bz2</filename>
 	    To download and uncompress that file you would have
-	    to do this.</para>
+	    to do this:</para>
 
 	  <screen>&prompt.root; <userinput>fetch ftp://ftp.FreeBSD.org/pub/FreeBSD/doc/en_US.ISO8859-1/books/faq/book.html-split.tar.bz2</userinput>
 &prompt.root; <userinput>tar xvf book.html-split.tar.bz2</userinput></screen>
 
-	  <para>You will be left with a collection of
+	  <para>If the file is compressed,
+	    <application>tar</application> will automatically
+	    detect the appropriate format and decompress it correctly.
+	    You will be left with a collection of
 	    <filename>.html</filename> files.  The main one is called
 	    <filename>index.html</filename>, which will contain the
 	    table of contents, introductory material, and links to the
@@ -1392,9 +1385,6 @@
 	    sufficient to fix the bad blocks, which means the disk is
 	    heavily corrupted); we suggest you buy a new hard
 	    drive.</para>
-
-	  <para>If you have a SCSI drive with bad blocks, see <link
-	      linkend="awre">this answer</link>.</para>
 	</answer>
       </qandaentry>
 
@@ -1477,128 +1467,6 @@
       </qandaentry>
 
       <qandaentry>
-	<question id="geometry">
-	  <para>Which geometry should I use for a disk drive?</para>
-	</question>
-
-	<answer>
-	    <note>
-	      <para>By the <quote>geometry</quote> of a disk, we mean
-		the number of cylinders, heads and sectors/track on a
-		disk.  We will refer to this as C/H/S for convenience.
-		This is how the PC's BIOS works out which area on a disk
-		to read/write from.</para>
-	    </note>
-
-	  <para>This causes a lot of confusion among new system
-	    administrators.  First of all, the
-	    <emphasis>physical</emphasis> geometry of a SCSI drive is
-	    totally irrelevant, as &os; works in term of disk blocks.
-	    In fact, there is no such thing as <quote>the</quote>
-	    physical geometry, as the sector density varies across the
-	    disk.  What manufacturers claim is the <quote>physical
-	    geometry</quote> is usually the geometry that they have
-	    determined wastes the least space.  For IDE disks, &os; does
-	    work in terms of C/H/S, but all modern drives internally
-	    convert this into block references.</para>
-
-	  <para>All that matters is the <emphasis>logical</emphasis>
-	    geometry.  This is the answer that the BIOS gets when it
-	    asks the drive <quote>what is your geometry?</quote> It then
-	    uses this geometry to access the disk.  As &os; uses the
-	    BIOS when booting, it is very important to get this right.
-	    In particular, if you have more than one operating system on
-	    a disk, they must all agree on the geometry.  Otherwise you
-	    will have serious problems booting!</para>
-
-	  <para>For SCSI disks, the geometry to use depends on whether
-	    extended translation support is turned on in your controller
-	    (this is often referred to as <quote>support for DOS disks
-	    &gt;1GB</quote> or something similar).  If it is turned off,
-	    then use <replaceable>N</replaceable> cylinders, 64 heads
-	    and 32 sectors/track, where <replaceable>N</replaceable> is
-	    the capacity of the disk in MB.  For example, a 2&nbsp;GB disk
-	    should pretend to have 2048 cylinders, 64 heads and 32
-	    sectors/track.</para>
-
-	  <para>If it <emphasis>is</emphasis> turned on (it is often
-	    supplied this way to get around certain limitations in
-	    &ms-dos;) and the disk capacity is more than 1&nbsp;GB, use
-	    <replaceable>M</replaceable> cylinders, 63 sectors per track
-	    (<emphasis>not</emphasis> 64), and 255 heads, where
-	    <replaceable>M</replaceable> is the disk capacity in MB
-	    divided by 7.844238 (!).  So our example 2&nbsp;GB drive
-	    would have 261 cylinders, 63 sectors per track and 255
-	    heads.</para>
-
-	  <para>If you are not sure about this, or &os; fails to detect
-	    the geometry correctly during installation, the simplest way
-	    around this is usually to create a small DOS partition on
-	    the disk.  The BIOS should then detect the correct geometry,
-	    and you can always remove the DOS partition in the partition
-	    editor if you do not want to keep it.  You might want to
-	    leave it around for programming network cards and the like,
-	    however.</para>
-
-	  <para>Alternatively, there is a freely available utility
-	    distributed with &os; called
-	    <filename>pfdisk.exe</filename>.  You can find it in the
-	    <filename class="directory">tools</filename> subdirectory on
-	    the &os; CD-ROM or on the various &os; FTP sites.  This
-	    program can be used to work out what geometry the other
-	    operating systems on the disk are using.  You can then enter
-	    this geometry in the partition editor.</para>
-	</answer>
-      </qandaentry>
-
-      <qandaentry>
-	<question id="disk-divide-restrictions">
-	  <para>Are there any restrictions on how I divide the disk
-	    up?</para>
-	</question>
-
-	<answer>
-	  <para>Yes.  You must make sure that your root partition is
-	    below 1024 cylinders so the BIOS can boot the kernel from it.
-	    (Note that this is a limitation in the PC's BIOS, not
-	    &os;).</para>
-
-	  <para>For a SCSI drive, this will normally imply that the root
-	    partition will be in the first 1024&nbsp;MB (or in the first
-	    4096&nbsp;MB if extended translation is turned on &mdash; see
-	    previous question).  For IDE, the corresponding figure is
-	    504&nbsp;MB.</para>
-	</answer>
-      </qandaentry>
-
-      <qandaentry>
-	<question id="disk-manager">
-	  <para>Is &os; compatible with any disk managers?</para>
-	</question>
-
-	<answer>
-	  <para>&os; recognizes the <application>Ontrack Disk
-	    Manager</application> and makes allowances for it.  Other disk
-	    managers are not supported.</para>
-
-	  <para>If you just want to use the disk with &os; you do not
-	    need a disk manager.  Just configure the disk for as much
-	    space as the BIOS can deal with (usually
-	    504&nbsp;megabytes), and &os; should figure out how much
-	    space you really have.  If you are using an old disk with an
-	    MFM controller, you may need to explicitly tell &os; how
-	    many cylinders to use.</para>
-
-	  <para>If you want to use the disk with &os; and another
-	    operating system, you may be able to do without a disk
-	    manager: just make sure the &os; boot partition and the
-	    slice for the other operating system are in the first 1024
-	    cylinders.  If you are reasonably careful, a
-	    20&nbsp;megabyte boot partition should be plenty.</para>
-	</answer>
-      </qandaentry>
-
-      <qandaentry>
 	<question id="missing-os">
 	  <para>When I boot &os; for the first time after install I get
 	    <errorname>Missing Operating System</errorname>.  What is
@@ -1607,8 +1475,8 @@
 
 	<answer>
 	  <para>This is classically a case of &os; and some other
-	    OS conflicting over their ideas of disk <link
-	      linkend="geometry">geometry</link>.  You will have to
+	    OS conflicting over their ideas of disk
+	      geometry.  You will have to
 	    reinstall &os;, but obeying the instructions given above
 	    will almost always get you going.</para>
 	</answer>
@@ -2046,18 +1914,18 @@
 	  </question>
 
 	  <answer>
-	    <para>Yes.  &os; currently runs on the &intel; x86 and the
-	      AMD64 architectures.  The &intel; EM64T, IA-64, &arm;,
-	      &powerpc;, and &sparc64; architectures are also
-	      supported.  Upcoming platforms are &mips; and &s390;, join
-	      the &a.mips; for more information about ongoing work on
-	      the &mips; platform.  For general discussion on new
-	      architectures, join the &a.platforms;.</para>
+	    <para>Yes.  &os; divides support into multiple tiers.
+	      Tier 1 architectures, such as i386 or amd64; are
+	      fully supported.  Tiers 2 and 3 are supported on a
+	      if-possible basis.  A full explanation of the tier
+	      system is available in the
+	      <ulink
+		url="&url.articles.committers-guide;/archs.html">Committer's Guide.</ulink></para>
 
-	    <para>If your machine has a different architecture and you
-	      need something right now, we suggest you look at <ulink
-		url="http://www.netbsd.org/">NetBSD</ulink> or <ulink
-		url="http://www.openbsd.org/">OpenBSD</ulink>.</para>
+	    <para>A complete  list of supported architectures can be
+	      found on the
+	      <ulink
+		url="http://www.FreeBSD.org/platforms/">platforms page.</ulink></para>
 	  </answer>
 	</qandaentry>
 
@@ -2083,7 +1951,7 @@
 	</qandaentry>
 
 	<qandaentry>
-	  <question>
+	  <question id="microcode">
 	    <para>What is microcode?
 	      How do I install &intel; CPU microcode updates?</para>
 	  </question>
@@ -2093,8 +1961,7 @@
 	      implementating hardware level instructions.  This allows
 	      for CPU bugs to be fixed without replacing the on board chip.</para>
 
-	    <para>
-	      Install <filename role="package">sysutils/devcpu-data</filename>,
+	    <para>Install <filename role="package">sysutils/devcpu-data</filename>,
 	      then add:</para>
 	    <programlisting>microcode_update_enable="YES"</programlisting>
 
@@ -2625,41 +2492,6 @@ bindkey ^[[3~ delete-char # for xterm</programlisting>
       </qandaentry>
 
       <qandaentry>
-	<question id="awre">
-	  <para>What do I do when I have bad blocks on my hard
-	    drive?</para>
-	</question>
-
-	<answer>
-	  <para>With SCSI drives, the drive should be capable of
-	    re-mapping these automatically.  However, many drives ship
-	    with this feature disabled.</para>
-
-	  <para>To enable bad block remapping edit the first device page
-	    mode, which can be done by giving the command (as
-	    <username>root</username>)</para>
-
-	  <screen>&prompt.root; <userinput>camcontrol modepage sd0 -m 1 -e -P 3</userinput></screen>
-
-	  <para>and changing the values of AWRE and ARRE from 0 to
-	    1:</para>
-
-	  <programlisting>AWRE (Auto Write Reallocation Enbld):  1
-ARRE (Auto Read Reallocation Enbld):  1</programlisting>
-
-	  <para>Modern IDE drives also have bad block remapping features
-	    in the controller, and they ship with this feature turned
-	    on.</para>
-
-	  <para>If you see warnings about bad blocks (on either type of
-	    drive), it is time to consider replacing the drive.  You
-	    might be able to use the drive manufacturer's diagnostic
-	    program to lock out those bad blocks, but at best this will
-	    buy you some time.</para>
-	</answer>
-      </qandaentry>
-
-      <qandaentry>
 	<question id="hpnetserver-scsi-failure">
 	  <para>Why does &os; not detect my HP Netserver's SCSI
 	    controller?</para>
@@ -2995,7 +2827,7 @@ quit</programlisting>
 
 	  <para>To adjust your <varname>kern.maxusers</varname> value,
 	    see the <ulink
-	      url="&url.books.handbook;/configtuning-kernel-limits.html#KERN-MAXFILES">File/Process Limits</ulink>
+	      url="&url.books.handbook;/configtuning-kernel-limits.html#kern-maxfiles">File/Process Limits</ulink>
 	    section of the Handbook.  (While that section refers to open
 	    files, the same limits apply to processes.)</para>
 
@@ -3089,7 +2921,7 @@ quit</programlisting>
 	<answer>
 	  <para>You can find a detailed answer for this question in the
 	    <ulink
-	      url="&url.books.handbook;/mail-trouble.html#Q26.5.2.">Handbook</ulink>.</para>
+	      url="&url.books.handbook;/mail-trouble.html#q26.5.2.">Handbook</ulink>.</para>
 	</answer>
       </qandaentry>
 
@@ -3426,7 +3258,7 @@ chip1@pci0:31:5:        class=0x040100 card=0x00931028 chip=0x24158086 rev=0x02 
 	  <para>This error message indicates you have exhausted the
 	    number of available file descriptors on your system.  Please
 	    see the <ulink
-	      url="&url.books.handbook;/configtuning-kernel-limits.html#KERN-MAXFILES">kern.maxfiles</ulink>
+	      url="&url.books.handbook;/configtuning-kernel-limits.html#kern-maxfiles">kern.maxfiles</ulink>
 	    section of the <ulink
 	      url="&url.books.handbook;/configtuning-kernel-limits.html">Tuning Kernel Limits</ulink>
 	    section of the Handbook for a discussion and
@@ -3658,7 +3490,7 @@ kern.timecounter.hardware: TSC -&gt; i8254</screen>
 	<answer>
 	  <para>An answer for this question can be found in the &os;
 	    Glossary, see <ulink
-	      url="&url.books.handbook;/freebsd-glossary.html#LOR-GLOSSARY">LOR</ulink>.</para>
+	      url="&url.books.handbook;/freebsd-glossary.html#lor-glossary">LOR</ulink>.</para>
 	</answer>
       </qandaentry>
 
@@ -3874,7 +3706,7 @@ kern.timecounter.hardware: TSC -&gt; i8254</screen>
 
 	<answer>
 	  <para>Yes!  See the <ulink
-	      url="&url.base;/commercial/software_bycat.html#CATEGORY_DATABASE">Commercial Vendors</ulink>
+	      url="&url.base;/commercial/software_bycat.html#category_database">Commercial Vendors</ulink>
 	    section of &os;'s Web site.</para>
 
 	  <para>Also see the <ulink
@@ -4121,7 +3953,7 @@ kern.timecounter.hardware: TSC -&gt; i8254</screen>
 	    fail to function properly.</para>
 
 	  <para>For more information, see <ulink
-	      url="&url.books.handbook;/updating-upgrading-freebsdupdate.html#FREEBSDUPDATE-UPGRADE">the section on upgrades</ulink>
+	      url="&url.books.handbook;/updating-upgrading-freebsdupdate.html#freebsdupdate-upgrade">the section on upgrades</ulink>
 	    in the &os; Handbook.</para>
 	</answer>
       </qandaentry>
@@ -4434,10 +4266,8 @@ kern.sched.name: ULE</screen>
 
 	<answer>
 	  <para><varname>kern.sched.quantum</varname> is the maximum
-	    number of ticks a process can run without being preempted.  It
-	    is specific to the 4BSD scheduler, so you can use its
-	    presence or absence to determine which scheduler is in
-	    use.</para>
+	    number of ticks a process can run without being preempted
+	    in the 4BSD scheduler.</para>
 	</answer>
       </qandaentry>
     </qandaset>
@@ -5063,7 +4893,7 @@ C:\="DOS"</programlisting>
 	  <para>If the drive already has a
 	    file system on it, you can use a command like this:</para>
 
-	  <screen>&prompt.root; <userinput>mount /dev/da0s1 /mnt</userinput></screen>
+	  <screen>&prompt.root; <userinput>mount -t msdosfs /dev/da0s1 /mnt</userinput></screen>
 
 	  <para>If the drive will only be used with &os;
 	    systems it is better idea to
@@ -5120,7 +4950,7 @@ C:\="DOS"</programlisting>
 	  <para>This generally means that there is no CD-ROM in the
 	    CD-ROM drive, or the drive is not visible on the bus.
 	    Please see the <ulink
-	      url="&url.books.handbook;/creating-cds.html#MOUNTING-CD">Using Data CDs</ulink>
+	      url="&url.books.handbook;/creating-cds.html#mounting-cd">Using Data CDs</ulink>
 	    section of the Handbook for a detailed discussion of this
 	    issue.</para>
 	</answer>
@@ -5155,7 +4985,7 @@ C:\="DOS"</programlisting>
 	    the <ulink
 	      url="&url.books.handbook;/creating-cds.html">Handbook chapter on creating CD-ROMs</ulink>,
 	    particularly the section on <ulink
-	      url="&url.books.handbook;/creating-cds.html#RAWDATA-CD">burning raw data CDs</ulink>.</para>
+	      url="&url.books.handbook;/creating-cds.html#rawdata-cd">burning raw data CDs</ulink>.</para>
 	</answer>
       </qandaentry>
 
@@ -5166,7 +4996,7 @@ C:\="DOS"</programlisting>
 
 	<answer>
 	  <para>This is discussed in the Handbook section on <ulink
-	      url="&url.books.handbook;/creating-cds.html#IMAGING-CD">duplicating data CDs</ulink>.
+	      url="&url.books.handbook;/creating-cds.html#imaging-cd">duplicating data CDs</ulink>.
 	    For more on working with CD-ROMs, see the <ulink
 	      url="&url.books.handbook;/creating-cds.html">Creating CDs Section</ulink>
 	    in the Storage chapter in the Handbook.</para>
@@ -5367,6 +5197,107 @@ C:\="DOS"</programlisting>
 	</answer>
       </qandaentry>
     </qandaset>
+
+    <sect1 id="all-about-zfs">
+      <title>ZFS</title>
+
+      <qandaset>
+	<qandaentry>
+	  <question id="how-much-ram-for-zfs">
+	    <para>What is the minimum amount of RAM one should have to
+	      run ZFS?</para>
+	  </question>
+
+	  <answer>
+	    <para>A minimum of 4GB of RAM is required for comfortable
+	      usage, but individual workloads can vary widely.</para>
+	  </answer>
+	</qandaentry>
+
+	<qandaentry>
+	  <question id="what-is-zil">
+	    <para>What is the ZIL and when does it get used?</para>
+	  </question>
+
+	  <answer>
+	    <para>The <acronym>ZIL</acronym> ((<acronym>ZFS</acronym>
+	      intent log) is a write log used to implement posix write
+	      commitment semantics across crashes.  Normally writes
+	      are bundled up into transaction groups
+	      and written to disk when filled (<quote>Transaction Group
+		Commit</quote>).  However syscalls like &man.fsync.2;
+	      require a commitment to stable storage before returning.
+	      The ZIL is needed for writes that have been acknowledged
+	      as written but which are not yet on disk as part of a
+	      transaction.  The transaction groups are timestamped.
+	      In the event of a crash the last valid timestamp is
+	      found and missing data is merged in from the ZIL.</para>
+	  </answer>
+	</qandaentry>
+
+	<qandaentry>
+	  <question id="need-ssd-for-zil">
+	    <para>Do I need a SSD for ZIL?</para>
+	  </question>
+
+	  <answer>
+	    <para>By default, ZFS stores the ZIL in the pool with all
+	      the data.  If your application has a heavy write load,
+	      storing the ZIL in a separate device that has very fast
+	      synchronous, sequential write performance can improve
+	      overall system.  For other workloads, a SSD is unlikely
+	      to make much of an improvement.</para>
+	  </answer>
+	</qandaentry>
+
+	<qandaentry>
+	  <question id="what-is-l2arc">
+	    <para>What is the L2ARC?</para>
+	  </question>
+
+	  <answer>
+	    <para>The <acronym>L2ARC</acronym> is a read cache stored
+	      on a fast device such as an <acronym>SSD</acronym>.
+	      This cache is not persisent across
+	      reboots.  Note that RAM is used as the first layer
+	      of cache and the L2ARC is only needed if there is
+	      insufficient RAM.</para>
+
+	    <para>L2ARC needs space in the ARC to index it.  So,
+	      perversely, a working set that fits perfectly in the
+	      ARC will not fit perfectly any more if a L2ARC is used
+	      because part of the ARC is holding the L2ARC index,
+	      pushing part of the working set into the
+	      L2ARC which is slower than RAM.</para>
+	    </answer>
+	</qandaentry>
+
+	<qandaentry>
+	  <question id="should-enable-dedup">
+	    <para>Is enabling deduplication advisable?</para>
+	  </question>
+
+	  <answer>
+	    <para>Generally speaking, no.</para>
+
+	    <para>Deduplication takes up a significant amount
+	      of RAM and may slow down read and write
+	      disk access times.  Unless one is storing data that is
+	      very heavily duplicated (such as virtual machine images,
+	      or user backups) it is possible that deduplication will
+	      do more harm than good.  Another consideration is the
+	      inability to revert deduplication status.  If
+	      deduplication is enabled, data written, and then dedup
+	      is disabled, those blocks which were deduplicated will
+	      not be duplicated until they are next modified.</para>
+
+	    <para>Deduplication can also lead to some unexpected
+	      situations. In particular deleting files may become much
+	      slower.</para>
+	  </answer>
+	</qandaentry>
+      </qandaset>
+    </sect1>
   </chapter>
 
   <chapter id="admin">
@@ -6068,8 +5999,7 @@ options    SYSVMSG          # enable for messaging</programlisting>
 		<makevar>ENABLE_SUID_SSH</makevar> to
 		<literal>true</literal> in
 		<filename>/etc/make.conf</filename> then rebuild and
-		install &man.ssh.1; (or run
-		<command>make <maketarget>world</maketarget></command>).</para>
+		reinstall &man.ssh.1;.</para>
 	    </listitem>
 
 	    <listitem>
@@ -6077,12 +6007,7 @@ options    SYSVMSG          # enable for messaging</programlisting>
 		<filename>/usr/bin/ssh</filename> to
 		<literal>4555</literal> by running
 		<command>chmod 4555 /usr/bin/ssh</command> as
-		<username>root</username>.  Then add
-		<literal><makevar>ENABLE_SUID_SSH</makevar>= true</literal>
-		to <filename>/etc/make.conf</filename> so
-		the change takes effect the next time
-		<command>make <maketarget>world</maketarget></command>
-		is run.</para>
+		<username>root</username>.</para>
 	    </listitem>
 	  </itemizedlist>
 	</answer>
@@ -6748,7 +6673,7 @@ UserConfig&gt; <userinput>quit</userinput></screen>
 	<answer>
 	  <para>The detailed answer for this question can be found in
 	    the <ulink
-	      url="&url.books.handbook;/boot-blocks.html#BOOT-SPLASH">Boot Time Splash Screens</ulink>
+	      url="&url.books.handbook;/boot-blocks.html#boot-splash">Boot Time Splash Screens</ulink>
 	    section of the &os; Handbook.</para>
 	</answer>
       </qandaentry>
@@ -7108,7 +7033,7 @@ Key F15        A        A        Menu Workplace Nop</programlisting>
 	    review &man.exports.5; and the <ulink
 	      url="&url.books.handbook;/network-nfs.html">NFS</ulink>
 	    entry in the Handbook, especially the section on <ulink
-	      url="&url.books.handbook;/network-nfs.html#CONFIGURING-NFS">configuring NFS</ulink>.</para>
+	      url="&url.books.handbook;/network-nfs.html#configuring-nfs">configuring NFS</ulink>.</para>
 	</answer>
       </qandaentry>
 
@@ -7782,7 +7707,7 @@ default            10.0.0.2           UGSc        0        0      tun0
 	  <programlisting>delete ALL</programlisting>
 
 	  <para>If this is the case, go back to the <ulink
-	      url="&url.books.handbook;/userppp.html#USERPPP-FINAL">Final System Configuration</ulink>
+	      url="&url.books.handbook;/userppp.html#userppp-final">Final System Configuration</ulink>
 	    section of the handbook.</para>
 	</answer>
       </qandaentry>
@@ -7812,7 +7737,7 @@ default            10.0.0.2           UGSc        0        0      tun0
 add 0 0 HISADDR</programlisting>
 
 	  <para>Refer to the <ulink
-	      url="&url.books.handbook;/userppp.html#USERPPP-DYNAMICIP">PPP and Dynamic IP addresses</ulink>
+	      url="&url.books.handbook;/userppp.html#userppp-dynamicip">PPP and Dynamic IP addresses</ulink>
 	    section of the handbook for further details.</para>
 	</answer>
       </qandaentry>
@@ -8818,7 +8743,7 @@ hint.sio.7.irq="12"</programlisting>
 
 	<answer>
 	  <para>See the <ulink
-	      url="&url.books.handbook;/serial.html#SERIAL-HW-CONFIG">Serial Communications</ulink>
+	      url="&url.books.handbook;/serial.html#serial-hw-config">Serial Communications</ulink>
 	    section in the &os; Handbook.</para>
 	</answer>
       </qandaentry>

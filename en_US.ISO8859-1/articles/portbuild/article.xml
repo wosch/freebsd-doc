@@ -66,19 +66,23 @@
       otherwise specified, all paths will be relative to
       this location.  <replaceable>${arch}</replaceable> will
       be used to specify one of the package architectures
-      (amd64, &i386;, ia64, powerpc, and &sparc64;), and
+      (e.g., amd64, arm, &i386;, ia64, powerpc, &sparc64;), and
       <replaceable>${branch}</replaceable> will be used
-      to specify the build branch (7, 7-exp, 8, 8-exp, 9, 9-exp, 10, 10-exp).
+      to specify the build branch (e.g., 7, 7-exp, 8, 8-exp, 9, 9-exp, 10, 10-exp).
+      The set of branches that <username>portmgr</username> currently
+      supports is the same as those that the &os;
+      <ulink url="http://www.freebsd.org/security/index.html#supported-branches">security team</ulink>
+      supports.
     </para>
 
     <note>
-      <para>Packages are no longer built for Releases 4, 5, or 6, nor
+      <para>Packages are no longer built for branches 4, 5, or 6, nor
 	for the alpha architecture.</para>
     </note>
 
     <para>The scripts that control all of this live in
       <filename class="directory">/var/portbuild/scripts/</filename>.
-      These are the checked-out copies from the Subversion repository
+      These are the checked-out copies from the Subversion repository at
       <ulink url="http://svnweb.freebsd.org/base/projects/portbuild/scripts/">
       <filename class="directory">base/projects/portbuild/scripts/</filename>
       </ulink>.</para>
@@ -95,8 +99,11 @@
 	<literal>-CURRENT</literal>
 	</para></listitem>
 
-      <listitem><para>for experimental builds</para></listitem>
+      <listitem><para>for experimental (<literal>"exp-"</literal>) builds</para></listitem>
+
     </itemizedlist>
+
+    <para>Packages from experimental builds are not uploaded.</para>
 
     </sect2>
 
@@ -104,7 +111,7 @@
       <title>Notes on the codebase</title>
 
       <para>Until mid-2010, the scripts were completely specific to
-	<hostid>pointyhat</hostid> as the head (dispatch) node.  During
+	<hostid>pointyhat.FreeBSD.org</hostid> as the head (dispatch) node.  During
 	the summer of 2010, a significant rewrite was done in order to allow
 	for other hosts to be head nodes.  Among the changes were:</para>
 
@@ -136,9 +143,11 @@
 	to <literal>old codebase:</literal>.</para>
 
       <note>
-	<para>As of December 2010, <hostid>pointyhat</hostid> is still
-	  running on the old codebase, until the new codebase is considered
-	  rock-solid.</para>
+	<para>Up until November 2012, <hostid>pointyhat</hostid> had still
+	  been running the old codebase.  That installation has now been
+	  permanently offlined.  Therefore, all the instructions having
+	  to do with the old codebase are <emphasis>obsolete</emphasis>,
+	  and will be removed in the near future.</para>
       </note>
 
       <note>
@@ -167,7 +176,7 @@
       interesting data (ports and src trees, bindist tarballs,
       scripts, etc.) to disconnected nodes during the node-setup
       phase.  Then, the disconnected portbuild directory is
-      nullfs-mounted for chroot builds.</para>
+      nullfs-mounted for jail builds.</para>
 
     <para>The
       <username>ports-<replaceable>${arch}</replaceable></username>
@@ -179,41 +188,32 @@
     <para>The <command>scripts/allgohans</command> script can
       be used to run a command on all of the
       <replaceable>${arch}</replaceable> clients.</para>
-
-    <para>The <command>scripts/checkmachines</command> script
-      is used to monitor the load on all the nodes of the
-      build cluster, and schedule which nodes build which ports.
-      This script is not very robust, and has a tendency to die.
-      It is best to start up this script on the build master
-      (e.g. <hostid>pointyhat</hostid>)
-      after boot time using a &man.while.1; loop.
-    </para>
   </sect1>
 
   <sect1 id="setup">
-    <title>Chroot Build Environment Setup</title>
+    <title>Jail Build Environment Setup</title>
 
     <para>Package builds are performed in a
-      <literal>chroot</literal> populated by the
+      <literal>jail</literal> populated by the
       <filename>portbuild</filename> script using the
       <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/builds/<replaceable>${buildid}</replaceable>/bindist.tar</filename>
       file.</para>
 
-    <para>The following command builds a world from the
+    <para>The <command>makeworld</command> command builds a world from the
       <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/builds/<replaceable>${buildid}</replaceable>/src/</filename>
       tree and installs it into
-      <replaceable>${worlddir}</replaceable>.  The tree will
-      be updated first unless <literal>-nocvs</literal> is
-      specified.</para>
+      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/builds/<replaceable>${buildid}</replaceable>/bindist.tar</filename>.
+      The tree will
+      be updated first unless <literal>-novcs</literal> is
+      specified.  It should be run as <username>root</username>:</para>
 
-    <screen>/var/portbuild&prompt.root; <userinput>scripts/makeworld <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable> [-nocvs]</userinput></screen>
+    <screen>&prompt.root; <userinput>/var/portbuild/scripts/makeworld <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable> [-novcs]</userinput></screen>
 
     <para>The <filename>bindist.tar</filename> tarball is created from the
       previously installed world by the <command>mkbindist</command>
-      script.  It should be run as <username>root</username> with the following
-      command:</para>
+      script.  It should be also be run as <username>root</username>:</para>
 
-    <screen>/var/portbuild&prompt.root; <userinput>scripts/mkbindist <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable></userinput></screen>
+    <screen>&prompt.root; <userinput>/var/portbuild/scripts/mkbindist <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable></userinput></screen>
 
     <para>The per-machine tarballs are located in
       <filename><replaceable>${arch}</replaceable>/clients</filename>.</para>
@@ -280,7 +280,7 @@
       <para>(For this case, the contents are identical for both server
 	and client.)</para>
 
-      <screen>RUBY_DEFAULT_VER= 1.9</screen>
+      <programlisting>RUBY_DEFAULT_VER= 1.9</programlisting>
     </example>
 
     <example>
@@ -291,7 +291,7 @@
       <para>(For this case, the contents are also identical for both
 	server and client.)</para>
 
-      <screen>
+      <programlisting>
 .if !defined(CC) || ${CC} == "cc"
 CC=clang
 .endif
@@ -304,41 +304,42 @@ CPP=clang-cpp
 # Don't die on warnings
 NO_WERROR=
 WERROR=
-</screen>
+</programlisting>
     </example>
 
     <example>
       <title>Sample <filename>make.conf.server</filename> for
 	<application>pkgng</application></title>
 
-      <screen>WITH_PKGNG=yes
-PKG_BIN=/usr/local/sbin/pkg</screen>
+      <programlisting>WITH_PKGNG=yes
+PKG_BIN=/usr/local/sbin/pkg</programlisting>
     </example>
 
     <example>
       <title>Sample <filename>make.conf.client</filename> for
 	<application>pkgng</application></title>
 
-      <screen>WITH_PKGNG=yes</screen>
+      <programlisting>WITH_PKGNG=yes</programlisting>
     </example>
 
     <example>
       <title>Sample <filename>src.conf.server</filename>
 	to test new <application>sort</application> codebase</title>
 
-      <screen>WITH_BSD_SORT=yes</screen>
+      <programlisting>WITH_BSD_SORT=yes</programlisting>
     </example>
   </sect1>
 
   <sect1 id="starting">
     <title>Starting the Build</title>
 
-    <para>Several separate builds for each architecture - branch combination
+    <para>Separate builds for various combinations of architecture and branch
       are supported.  All data private to a build (ports tree, src tree,
-      packages, distfiles, log files, bindist, Makefile, etc) are located under
-      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/builds/<replaceable>${buildid}</replaceable></filename>.
-      The last created build can be alternatively referenced under buildid
-      <literal>latest</literal>, the one before is called
+      packages, distfiles, log files, bindist, Makefile, etc) are located under the
+      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/builds/<replaceable>${buildid}</replaceable>/</filename>
+      directory.
+      The most recently created build can be alternatively referenced using buildid
+      <literal>latest</literal>, and the one before using
       <literal>previous</literal>.</para>
 
     <para>New builds are cloned from the <literal>latest</literal>, which is
@@ -425,7 +426,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       <para>The symlinks go away, and you just use
         <command>dopackages.wrapper</command> directly.  For example:</para>
 
-    <screen><command>dopackages.wrapper <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable> <literal>[-options]</literal></command></screen>
+    <screen>&prompt.root; <userinput>dopackages.wrapper <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable> <literal>[-options]</literal></userinput></screen>
 
     </sect3>
 
@@ -443,7 +444,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
 	<para><literal>-keep</literal> - Do not delete this build in the
 	  future, when it would be normally deleted as part of the
 	  <literal>latest</literal> - <literal>previous</literal> cycle.
-	  Don't forget to clean it up manually when you no longer need it.
+	  Do not forget to clean it up manually when you no longer need it.
 	</para>
       </listitem>
 
@@ -451,8 +452,8 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
 	<para><literal>-nofinish</literal> - Do not perform
 	  post-processing once the build is complete.  Useful
 	  if you expect that the build will need to be restarted
-	  once it finishes.  If you use this option, don't forget to cleanup
-	  the clients when you don't need the build anymore.
+	  once it finishes.  If you use this option, do not forget to cleanup
+	  the clients when you do not need the build any more.
 	</para>
       </listitem>
 
@@ -519,7 +520,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       <listitem>
 	<para><literal>-noduds</literal> - Do not rebuild the
 	  <filename>duds</filename> file (ports that are never
-	  built, e.g.  those marked <literal>IGNORE</literal>,
+	  built, e.g., those marked <literal>IGNORE</literal>,
 	  <literal>NO_PACKAGE</literal>, etc.) during
 	  preprocessing.
 	</para>
@@ -558,9 +559,9 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       </listitem>
 
       <listitem>
-	<para><literal>-srccvs</literal> - Do not update the
+	<para><literal>-srcvcs</literal> - Do not update the
 	  <literal>src</literal> tree from the ZFS snapshot, update it with
-	  <literal>cvs update</literal> instead.
+	  a fresh checkout instead.
 	</para>
       </listitem>
 
@@ -572,9 +573,9 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       </listitem>
 
       <listitem>
-	<para><literal>-portscvs</literal> - Do not update the
+	<para><literal>-portsvcs</literal> - Do not update the
 	  <literal>ports</literal> tree from the ZFS snapshot, update it with
-	  <literal>cvs update</literal> instead.
+	  a fresh checkout instead.
 	</para>
       </listitem>
 
@@ -600,7 +601,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       <listitem>
 	<para><literal>-fetch-original</literal> - Fetch the
 	  distfile from the original <literal>MASTER_SITES</literal>
-	  rather than <hostid>ftp-master</hostid>.
+	  rather than any cache such as on <hostid>ftp-master</hostid>.
 	</para>
       </listitem>
 
@@ -628,9 +629,9 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       <literal>-nocleanup</literal>, you need to clean up clients by running
     </para>
 
-    <para><command>build cleanup <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable> -full</command></para>
+    <para>&prompt.user; <userinput>build cleanup <replaceable>${arch}</replaceable> <replaceable>${branch}</replaceable> <replaceable>${buildid}</replaceable> -full</userinput></para>
 
-    <para><filename>errors/</filename>,
+    <para>When a new build is created, the directories <filename>errors/</filename>,
       <filename>logs/</filename>, <filename>packages/</filename>, and so
       forth, are cleaned by the scripts.  If you are short of space,
       you can also clean out <filename>ports/distfiles/</filename>.
@@ -653,7 +654,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
 
     <note><para>The actual package build itself occurs in two
       identical phases.  The reason for this is that sometimes
-      transient problems (e.g. NFS failures, FTP sites being
+      transient problems (e.g., NFS failures, FTP sites being
       unreachable, etc.) may halt a build.  Doing things
       in two phases is a workaround for these types of
       problems.</para></note>
@@ -664,10 +665,10 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       process encounters an empty subdirectory, both package build
       phases will stop short, and an error similar to the following
       will be written to
-      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/make.[0|1]</filename>:
+      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/journal</filename>:
     </para>
 
-    <screen><literal>don't know how to make dns-all(continuing)</literal></screen>
+    <programlisting><literal>don't know how to make dns-all(continuing)</literal></programlisting>
 
     <para>To correct this problem, simply comment out or remove
       the <literal>SUBDIR</literal> entries that point to empty
@@ -685,22 +686,22 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
     <example>
       <title>Update the i386-7 tree and do a complete build</title>
 
-      <para><command>dopackages.7 i386 -nosrc -norestr -nofinish</command></para>
-      <para><command>dopackages.wrapper i386 7 -nosrc -norestr -nofinish</command></para>
+      <screen>&prompt.user; <userinput>dopackages.7 i386 -nosrc -norestr -nofinish</userinput>
+&prompt.user; <userinput>dopackages.wrapper i386 7 -nosrc -norestr -nofinish</userinput></screen>
     </example>
 
     <example>
       <title>Restart an interrupted amd64-8 build without updating</title>
 
-      <para><command>dopackages.8 amd64 -nosrc -noports -norestr -continue -noindex -noduds -nofinish</command></para>
-      <para><command>dopackages.wrapper amd64 8 -nosrc -noports -norestr -continue -noindex -noduds -nofinish</command></para>
+      <screen>&prompt.user; <userinput>dopackages.8 amd64 -nosrc -noports -norestr -continue -noindex -noduds -nofinish</userinput>
+&prompt.user; <userinput>dopackages.wrapper amd64 8 -nosrc -noports -norestr -continue -noindex -noduds -nofinish</userinput></screen>
     </example>
 
     <example>
       <title>Post-process a completed sparc64-7 tree</title>
 
-      <para><command>dopackages.7 sparc64 -finish</command></para>
-      <para><command>dopackages.wrapper sparc64 7 -finish</command></para>
+      <screen>&prompt.user; <userinput>dopackages.7 sparc64 -finish</userinput>
+&prompt.user; <userinput>dopackages.wrapper sparc64 7 -finish</userinput></screen>
     </example>
 
     <para>Hint: it is usually best to run the <command>dopackages</command>
@@ -741,7 +742,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
 	  <para><literal>build srcupdate <replaceable>arch</replaceable>
 	    <replaceable>branch</replaceable>
 	    <replaceable>buildid</replaceable></literal> - Replaces the src
-	    tree with a new ZFS snapshot.  Don't forget to use
+	    tree with a new ZFS snapshot.  Do not forget to use
 	    <literal>-nosrc</literal> flag to <command>dopackages</command>
 	    later!
 	  </para>
@@ -751,7 +752,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
 	  <para><literal>build portsupdate <replaceable>arch</replaceable>
 	    <replaceable>branch</replaceable>
 	    <replaceable>buildid</replaceable></literal> - Replaces the ports
-	    tree with a new ZFS snapshot.  Don't forget to use
+	    tree with a new ZFS snapshot.  Do not forget to use
 	    <literal>-noports</literal> flag to <command>dopackages</command>
 	    later!
 	  </para>
@@ -767,7 +768,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
 	package set.  This can be accomplished with the following
 	invocation:</para>
 
-      <para><command><replaceable>path</replaceable>/qmanager/packagebuild <replaceable>amd64</replaceable> <replaceable>7-exp</replaceable> <replaceable>20080904212103</replaceable> <replaceable>aclock-0.2.3_2.tbz</replaceable></command></para>
+      <para>&prompt.root; <command><replaceable>path</replaceable>/qmanager/packagebuild <replaceable>amd64</replaceable> <replaceable>7-exp</replaceable> <replaceable>20080904212103</replaceable> <replaceable>aclock-0.2.3_2.tbz</replaceable></command></para>
     </sect2>
   </sect1>
 
@@ -846,9 +847,9 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/journal</filename> (new codebase).
       Individual ports will write
       their build logs to
-      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/logs</filename>
+      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/logs/</filename>
       and their error logs to
-      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/errors</filename>.
+      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/errors/</filename>.
     </para>
 
     <para>Formerly the docs tree was also checked out, however, it has
@@ -886,7 +887,7 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       identify the tty in which it's running (either record the output
       of &man.tty.1; when you start the build, or use <command>ps x</command>
       to identify it.  You need to make sure that nothing else important
-      is running in this tty, e.g. <command>ps -t p1</command> or whatever.
+      is running in this tty, e.g., <command>ps -t p1</command> or whatever.
       If there is not, you can just kill off the whole term easily with
       <command>pkill -t pts/1</command>; otherwise issue a
       <command>kill -HUP</command> in there by, for example,
@@ -911,11 +912,11 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
     <title>Cleaning up a Build</title>
 
     <para>To free up resources, you will need to clean up client machines by
-      running <command>build cleanup</command> command.  For example:
-      <screen>&prompt.user; <userinput>/var/portbuild/scripts/build cleanup i386 8-exp 20080714120411 -full</userinput></screen></para>
+      running <command>build cleanup</command> command.  For example:</para>
+      <screen>&prompt.user; <userinput>/var/portbuild/scripts/build cleanup i386 8-exp 20080714120411 -full</userinput></screen>
 
     <para>If you forget to do this, then the old build
-      <literal>chroot</literal>s will not be cleaned up for 24 hours, and no
+      <literal>jail</literal>s will not be cleaned up for 24 hours, and no
       new jobs will be dispatched in their place since
       <hostid>pointyhat</hostid> thinks the job slot is still occupied.</para>
 
@@ -924,21 +925,21 @@ PKG_BIN=/usr/local/sbin/pkg</screen>
       it thinks is running, and this should be roughly concordant
       with the load average.  <literal>loads</literal> is refreshed
       every 2 minutes.  If you do <command>ps x | grep pdispatch</command>
-      and it's less than the number of jobs that <literal>loads</literal>
-      thinks are in use, you're in trouble.</para>
+      and it is less than the number of jobs that <literal>loads</literal>
+      thinks are in use, you are in trouble.</para>
 
     <para>You may have problem with the <command>umount</command>
       commands hanging.  If so, you are going to have to use the
       <command>allgohans</command> script to run an &man.ssh.1;
-      command across all clients for that buildenv.  For example:
-<screen>ssh -l root gohan24 df</screen>
+      command across all clients for that buildenv.  For example:</para>
+<screen>&prompt.user; ssh gohan24 df</screen>
 
-      will get you a df, and
+    <para>will get you a df, and</para>
 
-<screen>allgohans "umount -f pointyhat.freebsd.org:/var/portbuild/i386/8-exp/ports"
-allgohans "umount -f pointyhat.freebsd.org:/var/portbuild/i386/8-exp/src"</screen>
+<screen>&prompt.user; allgohans "umount -f pointyhat.freebsd.org:/var/portbuild/i386/8-exp/ports"
+&prompt.user; allgohans "umount -f pointyhat.freebsd.org:/var/portbuild/i386/8-exp/src"</screen>
 
-      are supposed to get rid of the hanging mounts.  You will have to
+    <para>are supposed to get rid of the hanging mounts.  You will have to
       keep doing them since there can be multiple mounts.</para>
 
     <note>
@@ -1006,8 +1007,8 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
     <para>You can use <command>qclient</command> command to monitor the status
       of build nodes, and to list the currently scheduled jobs:</para>
 
-    <para><command>python <replaceable>path</replaceable>/qmanager/qclient jobs</command></para>
-    <para><command>python <replaceable>path</replaceable>/qmanager/qclient status</command></para>
+    <screen>&prompt.user; <command>python <replaceable>path</replaceable>/qmanager/qclient jobs</command>
+&prompt.user; <command>python <replaceable>path</replaceable>/qmanager/qclient status</command></screen>
 
     <para>The
       <command>scripts/stats <replaceable>${branch}</replaceable></command>
@@ -1038,7 +1039,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
       directory.  The next time the cluster tries to build this port,
       it will tar, compress, and copy the <literal>WRKDIR</literal>
       to
-      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/wrkdirs</filename>.
+      <filename><replaceable>${arch}</replaceable>/<replaceable>${branch}</replaceable>/wrkdirs/</filename>.
     </para>
 
     <para>If you find that the system is looping trying to build the
@@ -1055,16 +1056,16 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
       then <trademark>Bad Things</trademark> happen.
     </para>
 
-    <para>The status of all current builds is generated twice an hour
+    <para>The status of all current builds is generated periodically
       and posted to
       <ulink url="http://pointyhat.FreeBSD.org/errorlogs/packagestats.html"></ulink>.
       For each <literal>buildenv</literal>, the following is displayed:</para>
 
     <itemizedlist>
       <listitem>
-	<para><literal>cvs date</literal> is the contents of
-	  <filename>cvsdone</filename>.  This is why we recommend that you
-	  update <filename>cvsdone</filename> for <literal>-exp</literal>
+	<para><literal>updated</literal> is the contents of
+	  <filename>.updated</filename>.  This is why we recommend that you
+	  update <filename>.updated</filename> for <literal>-exp</literal>
 	  runs (see below).</para>
       </listitem>
 
@@ -1095,7 +1096,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
       <listitem>
 	<para><literal>missing</literal> shows the difference between
 	  <filename>INDEX</filename> and the other columns.  If you have
-	  restarted a run after a <command>cvs update</command>, there
+	  restarted a run after a ports tree update, there
 	  will likely be duplicates in the packages and error columns,
 	  and this column will be meaningless.  (The script is naive).</para>
       </listitem>
@@ -1137,8 +1138,8 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
     <para>When building packages for a release, it may be
       necessary to manually update the <literal>ports</literal>
       and <literal>src</literal> trees to the release tag and use
-      <literal>-nocvs</literal> and
-      <literal>-noportscvs</literal>.</para>
+      <literal>-novcs</literal> and
+      <literal>-noportsvcs</literal>.</para>
 
     <para>To build package sets intended for use on a CD-ROM,
       use the <literal>-cdrom</literal> option to
@@ -1259,7 +1260,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
 	one of the symlinks that points to it.</para>
     </note>
 
-    <para>If you are doing a completely new package set (e.g. for
+    <para>If you are doing a completely new package set (e.g., for
       a new release), copy packages to the staging area on
       <hostid>ftp-master</hostid> with something like the following:</para>
 
@@ -1270,7 +1271,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
       the package set was transferred successfully, remove the
       package set that the new package set is to replace (in
       <filename>~/w/ports/<replaceable>${arch}</replaceable></filename>),
-      and move the new set into place.  (<literal>w/</literal> is
+      and move the new set into place.  (<filename>w/</filename> is
       merely a shortcut.)</para>
 
     <para>For incremental builds, packages should be uploaded
@@ -1311,12 +1312,17 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
     <para>In general, an experimental patches build is run the same
       way as any other build, except that you should first update the
       ports tree to the latest version and then apply your patches.
-      To do the former, you can use the following:
+      To do the former, you can use the following:</para>
 
+    <note>
+      <para>The following example is obsolete</para>
+    </note>
+
+    <para>
       <screen>&prompt.user; <userinput>cvs -R update -dP > update.out</userinput>
-&prompt.user; <userinput>date > cvsdone</userinput></screen>
+&prompt.user; <userinput>date > .updated</userinput></screen>
       This will most closely simulate what the <literal>dopackages</literal>
-      script does.  (While <filename>cvsdone</filename> is merely
+      script does.  (While <filename>.updated</filename> is merely
       informative, it can be a help.)</para>
 
     <para>You will need to edit <filename>update.out</filename> to look
@@ -1330,7 +1336,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
       tested.</para>
 
     <para>Since the machine is shared, someone else may delete your
-      changes by mistake, so keep a copy of them in e.g. your home
+      changes by mistake, so keep a copy of them in e.g., your home
       directory on <hostid>freefall</hostid>.  Do not use
       <filename>tmp/</filename>; since <hostid>pointyhat</hostid>
       itself runs some version of <literal>-CURRENT</literal>, you
@@ -1411,7 +1417,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
       </listitem>
 
       <listitem>
-	<para>Port was broken due to a transient error (e.g. FTP site
+	<para>Port was broken due to a transient error (e.g., FTP site
 	  down, package client error, etc.)
 	</para>
       </listitem>
@@ -1424,6 +1430,10 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
 
     <screen>&prompt.user; <userinput>cd /var/portbuild/i386/8/ports</userinput></screen>
 
+    <note>
+      <para>The following example is obsolete</para>
+    </note>
+
     <note><para>Be sure to <literal>cvs update</literal> this tree to the same date as
       the experimental patches tree.</para></note>
 
@@ -1431,11 +1441,11 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
     <para>The following command will set up the control branch for
       the partial build (old codebase):</para>
 
-    <screen>&prompt.user; <userinput>/var/portbuild/scripts/dopackages.8 -noportscvs -nobuild -nocvs -nofinish</userinput></screen>
+    <screen>&prompt.user; <userinput>/var/portbuild/scripts/dopackages.8 -noportsvcs -nobuild -novcs -nofinish</userinput></screen>
 
     <!-- XXX MCL obsolete -->
     <para>The builds must be performed from the
-      <literal>packages/All</literal> directory.  This directory should
+      <filename>packages/All</filename> directory.  This directory should
       initially be empty except for the Makefile symlink.  If this
       symlink does not exist, it must be created:</para>
 
@@ -1451,7 +1461,7 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
     <para>The list of packages to build should be a list of package
       names (including versions) as they appear in
       <filename>INDEX</filename>.  The <literal>PKGSUFFIX</literal>
-      (i.e. .tgz or .tbz) is optional.</para></note>
+      (i.e., .tgz or .tbz) is optional.</para></note>
 
     <para>This will build only those packages listed as well as all
       of their dependencies.</para>
@@ -1564,9 +1574,13 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
 
 	<step>
 	  <para>Pick a directory to hold ports configuration and
-	    <command>chroot</command> subdirectories.  It may be
+	    <filename>chroot</filename> subdirectories.  It may be
 	    best to put it this on its own partition.  (Example:
 	    <filename>/usr2/</filename>.)</para>
+	  <note>
+	    <para>The filename <filename>chroot</filename> is a
+	      historical remnant.</para>
+	  </note>
 	</step>
       </procedure>
 
@@ -1611,12 +1625,13 @@ umount: Cleanup of /x/tmp/8-exp/chroot/53837/compat/linux/proc failed!
 	    3.5G on &i386;, <literal>PAE</literal>).
 	  </para>
 	  <para>
-	    Required options:<screen>
+	    Required options:</para>
+	  <programlisting>
 options         NULLFS
-options         TMPFS</screen>
-	  </para>
+options         TMPFS</programlisting>
 	  <para>
-	    Suggested options:<screen>
+	    Suggested options:</para>
+	  <programlisting>
 options         GEOM_CONCAT
 options         GEOM_STRIPE
 options         SHMMAXPGS=65536
@@ -1625,30 +1640,29 @@ options         SEMMNS=240
 options         SEMUME=40
 options         SEMMNU=120
 
-options         ALT_BREAK_TO_DEBUGGER</screen>
-	  </para>
+options         ALT_BREAK_TO_DEBUGGER</programlisting>
 
 	  <para>For <literal>PAE</literal>, it is not currently possible
 	    to load modules.  Therefore, if you are running an architecture
-	    that supports Linux emulation, you will need to add:<screen>
+	    that supports Linux emulation, you will need to add:</para>
+	  <programlisting>
 options         COMPAT_LINUX
-options         LINPROCFS</screen>
-	  </para>
+options         LINPROCFS</programlisting>
 
 	  <para>Also for <literal>PAE</literal>, as of 20110912 you need
-	    the following.  This needs to be investigated:<screen>
+	    the following.  This needs to be investigated:</para>
+	  <programlisting>
 nooption        NFSD                    # New Network Filesystem Server
 options         NFSCLIENT               # Network Filesystem Client
-options         NFSSERVER               # Network Filesystem Server</screen>
-	  </para>
+options         NFSSERVER               # Network Filesystem Server</programlisting>
 	</step>
 
 	<step>
 	  <para>As root, do the usual build steps, e.g.:<screen>
-<userinput>make -j4 buildworld</userinput>
-<userinput>make buildkernel KERNCONF=<replaceable>${kernconf}</replaceable></userinput>
-<userinput>make installkernel KERNCONF=<replaceable>${kernconf}</replaceable></userinput>
-<userinput>make installworld</userinput></screen>
+&prompt.root; <userinput>make -j4 buildworld</userinput>
+&prompt.root; <userinput>make buildkernel KERNCONF=<replaceable>${kernconf}</replaceable></userinput>
+&prompt.root; <userinput>make installkernel KERNCONF=<replaceable>${kernconf}</replaceable></userinput>
+&prompt.root; <userinput>make installworld</userinput></screen>
 	    The install steps use <makevar>DESTDIR</makevar>.
 	  </para>
 	</step>
@@ -1690,10 +1704,10 @@ options         NFSSERVER               # Network Filesystem Server</screen>
 	    </listitem>
 
 	    <listitem>
-	      <para>Also add the following users:<screen>
+	      <para>Also add the following users:</para>
+	      <programlisting>
 squid:*:100:100::0:0:User &amp;:/usr/local/squid:/bin/sh
-ganglia:*:102:102::0:0:User &amp;:/usr/local/ganglia:/bin/sh</screen>
-	      </para>
+ganglia:*:102:102::0:0:User &amp;:/usr/local/ganglia:/bin/sh</programlisting>
 	      <para>Add them to <filename>etc/group</filename> as well.</para>
 	    </listitem>
 
@@ -1703,9 +1717,8 @@ ganglia:*:102:102::0:0:User &amp;:/usr/local/ganglia:/bin/sh</screen>
 	    </listitem>
 
 	    <listitem>
-	      <para>In <filename>etc/crontab</filename>: add
-		<screen>*       *       *       *       *       root    /var/portbuild/scripts/client-metrics</screen>
-	      </para>
+	      <para>In <filename>etc/crontab</filename>: add</para>
+		<programlisting>*       *       *       *       *       root    /var/portbuild/scripts/client-metrics</programlisting>
 	    </listitem>
 
 	    <listitem>
@@ -1716,14 +1729,14 @@ ganglia:*:102:102::0:0:User &amp;:/usr/local/ganglia:/bin/sh</screen>
 	    </listitem>
 
 	    <listitem>
-	      <para>In <filename>etc/inetd.conf</filename>: add
-		<screen>infoseek        stream  tcp     nowait  nobody  /var/portbuild/scripts/reportload</screen>
-	      </para>
+	      <para>In <filename>etc/inetd.conf</filename>: add</para>
+		<programlisting>infoseek        stream  tcp     nowait  nobody  /var/portbuild/scripts/reportload</programlisting>
 	    </listitem>
 
 	    <listitem>
-	      <para>We run the cluster on UTC:
-		<screen>cp /usr/share/zoneinfo/Etc/UTC etc/localtime</screen>
+	      <para>You should run the cluster on UTC.  If you have not set the clock
+		to UTC:
+		<programlisting>&prompt.root; cp -p /usr/share/zoneinfo/Etc/UTC etc/localtime</programlisting>
 	      </para>
 	    </listitem>
 
@@ -1808,7 +1821,7 @@ squid_pidfile="<filename>/<replaceable>usr2</replaceable>/squid/logs/squid.pid</
 > kern.maxfiles=40000
 > kern.maxfilesperproc=30000
 >
-> # Since the NFS root is static we don't need to check frequently for file changes
+> # Since the NFS root is static we do not need to check frequently for file changes
 > # This saves >75% of NFS traffic
 > vfs.nfs.access_cache_timeout=300
 > debug.debugger_on_panic=1
@@ -1959,8 +1972,8 @@ touch /tmp/.boot_finished</screen>
 
 	    <listitem>
 	      <para>Configure <command>ssh</command>: copy
-		<filename>/etc/ssh</filename> to
-		<filename>/usr/local/etc/ssh</filename> and add
+		<filename>etc/ssh</filename> to
+		<filename>usr/local/etc/ssh</filename> and add
 		<literal>NoneEnabled yes</literal> to
 		<filename>sshd_config</filename>.</para>
 	    </listitem>
@@ -2011,7 +2024,7 @@ touch /tmp/.boot_finished</screen>
 	    between boots then they must either preserve their
 	    <filename>/tmp</filename>, or revalidate their available
 	    builds at boot time (see the script on the <literal>amd64</literal>
-	    machines).  They must also clean up stale chroots from previous
+	    machines).  They must also clean up stale jails from previous
 	    builds before creating <filename>/tmp/.boot_finished</filename>.
 	  </para>
 	</step>
@@ -2091,7 +2104,7 @@ MASTER_SITE_OVERRIDE= \
 
 	  <para>Hint: you will need one of these for each machine;
 	    however, if you have multiple machines at one site, you
-	    should create a site-specific one (e.g. in
+	    should create a site-specific one (e.g., in
 	    <filename>/var/portbuild/conf/clients/</filename>)
 	    and symlink to it.</para>
 	</step>
@@ -2156,20 +2169,24 @@ ssh_cmd="/usr/local/bin/ssh"
       <title>Enabling the node</title>
 
       <para>These steps need to be taken by a <literal>portmgr</literal>
-	acting as <literal>ports-<replaceable>arch</replaceable></literal>
-	on <hostid>pointyhat</hostid>.
+	acting as <literal>ports-<replaceable>arch</replaceable></literal>:
       </para>
 
       <procedure>
 	<step>
-	  <para>Ensure that <literal>ssh</literal> is working by executing
-	    <command>ssh <replaceable>hostname</replaceable></command>.
+	  <para>Ensure that <literal>ssh</literal> to the client
+	    is working by executing
+	    <command>ssh <replaceable>hostname</replaceable> uname -a</command>.
+	    The actual command is not important; what is important is to
+	    confirm the setup, and also add an entry into
+	    <filename>known_hosts</filename>, once you have confirmed the
+	    node's identity.
 	  </para>
 	</step>
 
 	<step>
-	  <para>Populate <filename>/var/portbuild/scripts/</filename>
-	    by something like
+	  <para>Populate the client's copy of
+	    <filename>/var/portbuild/scripts/</filename> by something like
 	    <command>/var/portbuild/scripts/dosetupnode <replaceable>arch</replaceable> <replaceable>major</replaceable> latest <replaceable>hostname</replaceable></command>.
 	    Verify that you now have files in that directory.
 	  </para>
@@ -2187,7 +2204,7 @@ ssh_cmd="/usr/local/bin/ssh"
       </procedure>
 
       <para>This step needs to be taken by a <literal>portmgr</literal>
-	acting as <literal>root</literal> on <hostid>pointyhat</hostid>.
+	acting as <literal>root</literal>:
       </para>
 
       <procedure>
@@ -2209,17 +2226,34 @@ ssh_cmd="/usr/local/bin/ssh"
 	    </command></para>
 	</step>
       </procedure>
+
+      <para>Finally, again as <literal>portmgr</literal>
+	acting as <literal>ports-<replaceable>arch</replaceable></literal>:
+      </para>
+
+      <procedure>
+	<step>
+	  <para>Once you are sure that the client is working, tell
+	    <application>pollmachine</application> about it by adding
+	    it to
+	    <filename>/var/portbuild/<replaceable>${arch}</replaceable>/mlist</filename>.
+	  </para>
+	</step>
+      </procedure>
     </sect2>
   </sect1>
 
   <sect1 id="new-branch">
     <title>How to configure a new &os; branch</title>
 
+    <sect2 id="new-branch-pre-qmanager">
+      <title>Steps necessary before <application>qmanager</application> is started</title>
+
+<!-- start of whitespace-broken area -->
+
     <para>When a new branch is created, some work needs to
       be done to specify that the previous branch is no longer
-      equivalent to <literal>HEAD</literal>.  The following
-      instructions apply to the <emphasis>previous</emphasis>
-      branch number:</para>
+      equivalent to <literal>HEAD</literal>.</para>
 
     <itemizedlist>
       <listitem>
@@ -2233,15 +2267,29 @@ ssh_cmd="/usr/local/bin/ssh"
 	  </listitem>
 
 	  <listitem>
-	    <para>For what was previously head, change
+	    <para>(Old codebase) For what was previously head, change
 	      <makevar>SRC_BRANCH_<replaceable>branch</replaceable>_TAG</makevar> to
-	      <literal>RELENG_<replaceable>branch</replaceable>_0</literal>.</para>
+	      <literal>RELENG_<replaceable>branch</replaceable>_0</literal>
+	      (literal zero).</para>
 	  </listitem>
 
 	  <listitem>
-	    <para>Add
+	    <para>(Old codebase) Add
 	      <makevar>SRC_BRANCH_<replaceable>new-branch</replaceable>_TAG</makevar>
 	      <literal>=.</literal> (literal period).</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>(New codebase) For what was previously head, change
+	      <makevar>SRC_BRANCH_<replaceable>branch</replaceable>_SUBDIR</makevar> to
+	      <literal>releng/<replaceable>branch</replaceable>.0</literal>
+	      (literal zero).</para>
+	  </listitem>
+
+	  <listitem>
+	    <para>(New codebase) Add
+	      <makevar>SRC_BRANCH_<replaceable>new-branch</replaceable>_SUBDIR</makevar>
+	      <literal>=head</literal>.</para>
 	  </listitem>
 	</itemizedlist>
       </listitem>
@@ -2317,16 +2365,44 @@ ln -s ../<replaceable>arch</replaceable>/<replaceable>branch</replaceable>/build
 	</para>
       </listitem>
 
-      <listitem>
-	<para>Kick-start the build for the branch with
-	  <screen>build create <replaceable>arch</replaceable> <replaceable>branch</replaceable></screen></para>
-      </listitem>
+    </itemizedlist>
 
+<!-- end of whitespace-broken area -->
+    </sect2>
+
+    <sect2 id="new-branch-post-qmanager">
+      <title>Steps necessary after <application>qmanager</application> is started</title>
+
+<!-- start of whitespace-broken area -->
+
+    <note>
+      <para>Again, as
+	<literal>ports-<replaceable>arch</replaceable></literal>:</para>
+    </note>
+
+    <itemizedlist>
       <listitem>
-	<para><link linkend="setup">Create <filename>bindist.tar</filename>
-	  </link>.</para>
+	<para>For each branch that will be supported, do the following:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>Kick-start the build for the branch with:</para>
+	      <screen>build create <replaceable>arch</replaceable> <replaceable>branch</replaceable></screen>
+	  </listitem>
+
+	  <listitem>
+	    <para><link linkend="setup">Create
+	      <filename>bindist.tar</filename></link>.</para>
+	  </listitem>
+	</itemizedlist>
+
       </listitem>
     </itemizedlist>
+
+<!-- end of whitespace-broken area -->
+    </sect2>
+
   </sect1>
 
   <sect1 id="old-branch">
@@ -2347,8 +2423,8 @@ ln -s ../<replaceable>arch</replaceable>/<replaceable>branch</replaceable>/build
 
 	    <listitem>
 	      <para>Delete
-		<makevar>SRC_BRANCH_<replaceable>old-branch</replaceable>_TAG</makevar>
-		<literal>=<replaceable>whatever</replaceable></literal></para>
+		<makevar>SRC_BRANCH_<replaceable>old-branch</replaceable>_SUBDIR</makevar><literal>=</literal>
+		  <replaceable>whatever</replaceable></para>
 	    </listitem>
 	  </itemizedlist>
       </listitem>
@@ -2418,9 +2494,9 @@ zfs destroy -r a/snap/src-<replaceable>old-branch</replaceable></command></para>
 	  with the following changes:</para>
 	  <itemizedlist>
 	    <listitem>
-	      <para>Change
-	        <makevar>SRC_BRANCH_<replaceable>branch</replaceable>_TAG</makevar> to
-	        <literal>RELENG_<replaceable>branch</replaceable>_<replaceable>N</replaceable></literal>
+	      <para>Change the value of
+	        <makevar>SRC_BRANCH_<replaceable>branch</replaceable>_SUBDIR</makevar> to
+	        <literal>releng/</literal><replaceable>branch</replaceable>.<replaceable>N</replaceable>
 	        where <literal>N</literal> is the newest 'oldest' release
 	        for that branch.</para>
 	    </listitem>
@@ -2456,6 +2532,11 @@ dopackages</command> without <literal>-nobuild</literal>.</para>
   <sect1 id="new-arch">
     <title>How to configure a new architecture</title>
 
+    <sect2 id="new-arch-pre-qmanager">
+      <title>Steps necessary before <application>qmanager</application> is started</title>
+
+<!-- start of whitespace-broken area -->
+
     <note>
       <para>The initial steps need to be done using
 	<application>sudo</application>.</para>
@@ -2481,33 +2562,12 @@ dopackages</command> without <literal>-nobuild</literal>.</para>
       <listitem>
 	<screen>
 chown ports-<replaceable>arch</replaceable>:portmgr /var/portbuild/<replaceable>arch</replaceable>;
-chmod 755 /var/portbuild/<replaceable>arch</replaceable>;
+chmod 775 /var/portbuild/<replaceable>arch</replaceable>;
 cd /var/portbuild/<replaceable>arch</replaceable></screen>
       </listitem>
 
       <listitem>
 	<para>Create and populate the <filename>.ssh</filename> directory.</para>
-      </listitem>
-
-      <listitem>
-	<para>Create a directory for buildlogs and errorlogs:
-	  <screen>mkdir /dumpster/pointyhat/<replaceable>arch</replaceable>/archive</screen>
-	</para>
-
-	<note>
-	  <para>It is possible that <filename>/dumpster/pointyhat</filename>
-	    will not have enough space.  In that case, create the archive
-	    directory as
-	    <filename>/dumpster/pointyhat/<replaceable>arch</replaceable>/archive</filename>
-	    and symlink to that.  (This needs to be sorted out.)
-	  </para>
-	</note>
-      </listitem>
-
-      <listitem>
-	<para>Create a link to the above for the webserver:
-	  <screen>ln -s /dumpster/pointyhat/<replaceable>arch</replaceable>/archive archive</screen>
-	</para>
       </listitem>
     </itemizedlist>
 
@@ -2518,31 +2578,59 @@ cd /var/portbuild/<replaceable>arch</replaceable></screen>
 
     <itemizedlist>
       <listitem>
-	<para>In the
+	<para>Create a fresh <filename>portbuild.conf</filename> file
+	  from one of the ones for another architecture.</para>
+      </listitem>
+
+      <listitem>
+	<para>Create an archive directory for buildlogs and errorlogs
+	  under <filename>archive/</filename>.</para>
+
+	<para>If you are going to store your historical buildlogs and
+	  errorlogs on your head node's hard drive, you may skip this step.
+	  Otherwise:</para>
+
+	<para>Create an external directory and link to it:</para>
+
+	<example>
+	  <title>Creating and linking an external archive directory</title>
+
+	  <screen>mkdir /dumpster/pointyhat/<replaceable>arch</replaceable>/archive</screen>
+	  <screen>ln -s /dumpster/pointyhat/<replaceable>arch</replaceable>/archive archive</screen>
+	</example>
+
+	<note>
+	  <para>(Historical note that only applied to the original
+	    <hostid>pointyhat.FreeBSD.org</hostid> installation)</para>
+
+	  <para>It is possible that <filename>/dumpster/pointyhat</filename>
+	    will not have enough space.  In that case, create the archive
+	    directory as
+	    <filename>/dumpster/pointyhat/<replaceable>arch</replaceable>/archive</filename>
+	    and symlink to that.
+	  </para>
+	</note>
+      </listitem>
+
+      <listitem>
+	<para>(Only necessary for old codebase)
+	  In the
 	  <filename>/var/portbuild/<replaceable>arch</replaceable></filename>
 	  directory:<screen>mkdir clients</screen></para>
       </listitem>
 
       <listitem>
-	<para>Populate <filename>clients</filename> as usual.</para>
+	<para>(Only necessary for old codebase)
+	<screen>mkdir loads</screen></para>
       </listitem>
 
       <listitem>
-	<para><screen>mkdir loads</screen></para>
+	<para>(Only necessary for old codebase)<screen>mkdir lockfiles</screen></para>
       </listitem>
 
       <listitem>
-	<para><screen>mkdir lockfiles</screen></para>
-      </listitem>
-
-      <listitem>
-	<para>Create a local <filename>make.conf</filename>.  In the
-	  most trivial case, you can
-	  <screen>ln ../make.conf ./make.conf</screen></para>
-      </listitem>
-
-      <listitem>
-	<para>Create an empty <filename>mlist</filename> file.</para>
+	<para>(Only necessary for old codebase)
+	Create an empty <filename>mlist</filename> file.</para>
       </listitem>
 
       <listitem>
@@ -2555,8 +2643,20 @@ cd /var/portbuild/<replaceable>arch</replaceable></screen>
       </listitem>
 
       <listitem>
-	<para>Create a fresh <filename>portbuild.conf</filename> file
-	  from one of the ones for another architecture.</para>
+	<para>For each branch that will be supported, do the following:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para>Kick-start the build for the branch with
+	      <screen>build create <replaceable>arch</replaceable> <replaceable>branch</replaceable></screen></para>
+	  </listitem>
+	</itemizedlist>
+
+      </listitem>
+
+      <listitem>
+	<para>Populate <filename>clients</filename> as usual.</para>
       </listitem>
 
       <listitem>
@@ -2570,19 +2670,26 @@ cd /var/portbuild/<replaceable>arch</replaceable></screen>
       </listitem>
 
       <listitem>
-	<para>Edit the <filename>.ssh/config</filename> file for
+	<para>If desired,
+	  edit the <filename>.ssh/config</filename> file for
 	  convenience in using <application>ssh</application>.</para>
       </listitem>
 
       <listitem>
-	<para>Make the private configuration directory:
-	  <screen>mkdir /var/portbuild/conf/<replaceable>arch</replaceable></screen>
-	</para>
-      </listitem>
+	<para>If you need to create any tunnels:</para>
 
-      <listitem>
+	<procedure>
+	  <step>
+	    <para>Make a private configuration directory:
+	  <screen>mkdir /var/portbuild/conf/<replaceable>arch</replaceable></screen>
+	    </para>
+	  </step>
+
+	  <step>
 	<para>In that directory: create any <filename>dotunnel.*</filename>
 	  scripts needed.</para>
+	  </step>
+	</procedure>
       </listitem>
     </itemizedlist>
 
@@ -2591,11 +2698,6 @@ cd /var/portbuild/<replaceable>arch</replaceable></screen>
     </note>
 
     <itemizedlist>
-      <listitem>
-	<para>Tell <application>qmanager</application> about the arch:
-	  <screen>python <replaceable>path</replaceable>/qmanager/qclient add_acl name=ports-<replaceable>arch</replaceable> uidlist=ports-<replaceable>arch</replaceable> gidlist=portmgr sense=1</screen></para>
-      </listitem>
-
       <listitem>
         <para>(Only necessary for new codebase):
 	  Add <replaceable>arch</replaceable> to <makevar>SUPPORTED_ARCHS</makevar> in
@@ -2628,36 +2730,11 @@ ln -s ../<replaceable>arch</replaceable>/<replaceable>branch</replaceable>/build
       </listitem>
 
       <listitem>
-        <para>
+        <para>(Only necessary for old codebase):
 	  In the <filename>/var/portbuild/errorlogs/</filename>
 	  directory, create two more links for the webserver:<screen>
 ln -s ../<replaceable>arch</replaceable>/archive/buildlogs <replaceable>arch</replaceable>-buildlogs
 ln -s ../<replaceable>arch</replaceable>/archive/errorlogs <replaceable>arch</replaceable>-errorlogs</screen></para>
-      </listitem>
-    </itemizedlist>
-
-    <note>
-      <para>Again, as
-	<literal>ports-<replaceable>arch</replaceable></literal>:</para>
-    </note>
-
-    <itemizedlist>
-      <listitem>
-	<para>For each branch that will be supported, do the following:
-	</para>
-
-	<itemizedlist>
-	  <listitem>
-	    <para>Kick-start the build for the branch with
-	      <screen>build create <replaceable>arch</replaceable> <replaceable>branch</replaceable></screen></para>
-	  </listitem>
-
-	  <listitem>
-	    <para><link linkend="setup">Create
-	      <filename>bindist.tar</filename></link>.</para>
-	  </listitem>
-	</itemizedlist>
-
       </listitem>
     </itemizedlist>
 
@@ -2667,26 +2744,64 @@ ln -s ../<replaceable>arch</replaceable>/archive/errorlogs <replaceable>arch</re
 
     <itemizedlist>
       <listitem>
-        <para>(Only necessary for old codebase):
-	  Only after the first time a
-	  <application>dopackages</application> has been run for the
-	  arch: add the arch to
-	  <filename>/var/portbuild/scripts/dopackagestats</filename>.</para>
-      </listitem>
-
-      <listitem>
 	<para>Add an appropriate <replaceable>arch</replaceable> entry for
 	  <filename>/var/portbuild/scripts/dologs</filename> to the root
 	  <filename>crontab</filename>.  (This is a hack and should go away.)
 	</para>
       </listitem>
     </itemizedlist>
+
+<!-- end of whitespace-broken area -->
+    </sect2>
+
+    <sect2 id="new-arch-post-qmanager">
+      <title>Steps necessary after <application>qmanager</application> is started</title>
+
+<!-- start of whitespace-broken area -->
+
+    <note>
+      <para>Again using <application>sudo</application>:</para>
+    </note>
+
+    <itemizedlist>
+      <listitem>
+	<para>Tell <application>qmanager</application> about the arch:
+	  <screen>python <replaceable>path</replaceable>/qmanager/qclient add_acl name=ports-<replaceable>arch</replaceable> uidlist=ports-<replaceable>arch</replaceable> gidlist=portmgr sense=1</screen></para>
+      </listitem>
+
+      <listitem>
+	<para>For each branch that will be supported, do the following:
+	</para>
+
+	<itemizedlist>
+	  <listitem>
+	    <para><link linkend="setup">Create
+	      <filename>bindist.tar</filename></link>.</para>
+	  </listitem>
+	</itemizedlist>
+
+      </listitem>
+
+      <listitem>
+        <para>(Only necessary for old codebase):
+	  Only after the first time a
+	  <application>dopackages</application> has been run for the
+	  arch: add the arch to
+	  <filename>/var/portbuild/scripts/dopackagestats</filename>.</para>
+      </listitem>
+    </itemizedlist>
+
+<!-- end of whitespace-broken area -->
+
+    </sect2>
+
   </sect1>
 
   <sect1 id="new-head-node">
     <title>How to configure a new head node (pointyhat instance)</title>
 
-    <para>This section is in progress.</para>
+    <para>This section only applies to the new codebase.  New installations
+      using the old codebase are <emphasis>not</emphasis> supported.</para>
 
     <para>Please talk to Mark Linimon before making any changes.</para>
 
@@ -2700,39 +2815,71 @@ ln -s ../<replaceable>arch</replaceable>/archive/errorlogs <replaceable>arch</re
 	</step>
 
 	<step>
-	  <para>For each supported arch, add a
-	    <literal>ports-<replaceable>${arch}</replaceable></literal>
-	    user and group.  Add them to the <literal>wheel</literal>
-	    group.  They should have the <literal>'*'</literal> password.
-	    Also, similarly, create the <literal>ports</literal> and
-	    <literal>portmgr</literal> users.</para>
-	</step>
-
-	<step>
-	  <para>For each supported arch, create
-	    <filename>/home/ports-<replaceable>${arch}/.ssh/</replaceable></filename>
-	    and populate <filename>authorized_keys</filename>.  </para>
-	</step>
-
-<!-- NOTYET
-	<step>
-	  <para>Also add the following users:<screen>
-squid:*:100:100::0:0:User &:/usr/local/squid:/bin/sh
-ganglia:*:102:102::0:0:User &:/usr/local/ganglia:/bin/sh</screen>
-	  </para>
-	  <para>Add them to <filename>/etc/group</filename> as well.</para>
-	</step>
--->
-
-	<step>
-	  <para>Create the appropriate files in
-	    <filename>/etc/.ssh/</filename>.</para>
+	  <para>Create a user to own the <application>portbuild</application>
+	    repository, such as <literal>portmgr</literal>, and add it
+	    to the <literal>wheel</literal> group.  It should have the
+	    <literal>'*'</literal> password.</para>
 	</step>
 
 	<step>
 	  <para>Add the following to <filename>/boot/loader.conf</filename>:<screen>
 console="vidconsole,comconsole"</screen>
 	  </para>
+	</step>
+
+	<step>
+	  <para>You should run the cluster on UTC.  If you have not set the clock
+	    to UTC:
+	    <programlisting>&prompt.root; cp -p /usr/share/zoneinfo/Etc/UTC /etc/localtime</programlisting>
+	  </para>
+	</step>
+
+	<step>
+	  <para>Create the appropriate
+	    <filename>/etc/rc.conf</filename>.</para>
+
+	  <para>Required entries:</para><screen>
+hostname="<replaceable>${hostname}</replaceable>"
+sshd_enable="YES"
+</screen>
+
+<para>Recommended entries:</para><screen>
+background_fsck="NO"
+clear_tmp_enable="YES"
+dumpdev="AUTO"
+fsck_y_enable="YES"
+
+apache22_enable="YES"
+apache_flags=""
+apache_pidfile="/var/run/httpd.pid"
+gmetad_enable="YES"
+gmond_enable="YES"
+inetd_enable="YES"
+# XXX MCL these do not work!
+#inetd_flags="-R 10000 -lw"
+mountd_enable="YES"
+nfs_server_enable="YES"
+nfs_server_flags="-u -t -n 12"
+nfs_remote_port_only="YES"
+ntpd_enable="YES"
+ntpdate_enable="YES"
+ntpdate_flags="north-america.pool.ntp.org"
+rpcbind_enable="YES"
+rpc_lockd_enable="NO"
+rpc_statd_enable="YES"
+sendmail_enable="NONE"
+smartd_enable="YES"
+</screen>
+	</step>
+
+	<step>
+	  <para>Create <filename>/etc/resolv.conf</filename>, if
+	    necessary.</para>
+	</step>
+
+	<step>
+	  <para>Create the appropriate files in
+	    <filename>/etc/ssh/</filename>.</para>
 	</step>
 
 	<step>
@@ -2749,39 +2896,6 @@ ttyu0   "/usr/libexec/getty std.9600"   vt100   on secure</screen>
 	  </para>
 	</step>
 
-	<step>
-	  <para>TBA</para>
-	</step>
-      </procedure>
-
-    </sect2>
-
-    <sect2 id="pointyhat-disk">
-      <title>Configuring the disk</title>
-
-      <procedure>
-
-	<step>
-	  <para>Create a <application>zfs</application> volume named
-	    <filename>a</filename> and mount it on
-	    <filename>/a</filename>:<screen>
-# zpool create a mirror da1 da2 mirror da3 da4 mirror da5 da6 mirror da7 da8</screen>
-	  </para>
-	</step>
-
-	<step>
-	  <para>Set up the base portbuild directory:<screen>
-# mkdir -p /a/portbuild
-# cd /a/portbuild
-# chown portmgr:portmgr .
-# chmod 775 .</screen>
-	  </para>
-	</step>
-
-	<step>
-	  <para>TBA</para>
-	</step>
-
       </procedure>
 
     </sect2>
@@ -2789,13 +2903,9 @@ ttyu0   "/usr/libexec/getty std.9600"   vt100   on secure</screen>
     <sect2 id="pointyhat-src">
       <title>Configuring <literal>src</literal></title>
 
-      <procedure>
-
-	<step>
-	  <para>TBA</para>
-	</step>
-
-      </procedure>
+      <para>You should be able to install from the most recent release
+	using only the default kernel configuration.
+      </para>
 
     </sect2>
 
@@ -2805,8 +2915,8 @@ ttyu0   "/usr/libexec/getty std.9600"   vt100   on secure</screen>
       <procedure>
 	<step>
 	  <para>The following ports (or their latest successors) are required:<screen>
-databases/py-pysqlite23
-databases/py-sqlalchemy
+databases/py-sqlite3
+databases/py-sqlalchemy (only SQLITE is needed)
 devel/git (WITH_SVN)
 devel/py-configobj
 devel/py-setuptools
@@ -2815,50 +2925,324 @@ net/nc
 net/rsync
 sysutils/ganglia-monitor-core (with GMETAD off)
 sysutils/ganglia-webfrontend (WITHOUT_X11)
-www/apache22 (with EXT_FILTER and THREADS)</screen>
+www/apache22 (with EXT_FILTER)</screen>
 	  </para>
 
-	  <para>Expect those to bring in:<screen>
+	  <para>Expect those to bring in, among others:<screen>
 databases/sqlite3
-lang/perl-5.12
-lang/python27</screen>
+lang/perl-5.14 (or successor)
+lang/python27 (or sucessor)</screen>
 	  </para>
 
 	  <para>The following ports (or their latest successors) are strongly suggested:<screen>
-benchmarks/bonnie++
 devel/ccache
 mail/postfix
 net/isc-dhcp41-server
-ports-mgmt/pkg_cutleaves
-ports-mgmt/pkg_tree
+ports-mgmt/pkg
 ports-mgmt/portaudit
 ports-mgmt/portmaster
 security/sudo
 shells/bash
 shells/zsh
-sysutils/screen
+sysutils/screen</screen>
+	  </para>
+
+	  <para>The following ports (or their latest successors) are handy:<screen>
+benchmarks/bonnie++
+ports-mgmt/pkg_tree
+sysutils/dmidecode
 sysutils/smartmontools</screen>
 	  </para>
 	</step>
 
-	<step>
-	  <para>Configure mail by doing the following: TBA.
-	  </para>
-	</step>
       </procedure>
 
     </sect2>
 
-    <sect2 id="pointyhat-other">
-      <title>Other</title>
+    <sect2 id="pointyhat-portbuild-volume">
+      <title>Configuring the portbuild volume</title>
 
       <procedure>
 
 	<step>
-	  <para>TBA</para>
+	  <para>Create a <application>zfs</application> volume named
+	    <filename>a</filename> and mount it on
+	    <filename>/a</filename>.</para>
+
+	  <example>
+	    <title>Creating a <application>zfs</application> volume for portbuild</title>
+
+<screen>&prompt.root; zpool create a mirror da1 da2 mirror da3 da4 mirror da5 da6 mirror da7 da8</screen>
+	  </example>
+	</step>
+
+	<step>
+	  <para>Create the <filename>portbuild</filename> directory:<screen>
+&prompt.root; mkdir -p /a/portbuild
+</screen>
+	  </para>
+	</step>
+
+	<step>
+	  <para>Create and mount a new <application>zfs</application>
+	    filesystem on it:
+	    <screen>zfs create -o mountpoint=/a/portbuild a/portbuild</screen>
+	  </para>
+	</step>
+
+	<step>
+	  <para>Set up the directory:<screen>
+&prompt.root; cd /a/portbuild
+&prompt.root; chown portmgr:portmgr .
+&prompt.root; chmod 775 .
+&prompt.root; ln -sf /a/portbuild /var/portbuild
+</screen>
+	  </para>
+
+	  <note>
+	    <para>The <command>ln</command> is necessary due to a number
+	      of hardcoded paths.  This is a bug.</para>
+	  </note>
 	</step>
 
       </procedure>
+
+    </sect2>
+
+    <sect2 id="pointyhat-repo">
+      <title>Setting up and configuring the <application>portbuild</application> repository</title>
+
+      <procedure>
+
+	<step>
+	  <para>Set up an account with subversion config files
+	    installed.  Again, we generally use
+	    <replaceable>portmgr</replaceable>.</para>
+	</step>
+
+	<step>
+	  <para>As that user, set up the repository:<screen>
+&prompt.user; svn checkout svn://svn.freebsd.org/base/projects/portbuild /a/portbuild
+</screen>
+	    </para>
+	</step>
+
+	<step>
+	  <para>Configure how build slaves will talk to your server
+	    by making the following changes to
+	    <filename>/var/portbuild/conf/client.conf</filename>:</para>
+
+	  <itemizedlist>
+
+	    <listitem>
+	      <para>Set <makevar>CLIENT_NFS_MASTER</makevar> to wherever
+		your build slaves will PXE boot from.  (Possibly, the
+		hostname of your server.)</para>
+	    </listitem>
+
+	    <listitem>
+	      <para>Set <makevar>CLIENT_BACKUP_FTP_SITE</makevar>
+		to a backup site for FTP fetches; again, possibly
+		the hostname of your server.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para>Set <makevar>CLIENT_UPLOAD_HOST</makevar> to
+		where completed packages will be uploaded.</para>
+	    </listitem>
+
+	  </itemizedlist>
+
+	  <para>Most of the other default values should be fine.</para>
+	</step>
+
+	<step>
+	  <para>Most of the default values in
+	    <filename>/var/portbuild/conf/common.conf</filename>
+	    should be fine.  This file holds definitions used by
+	    both the server and all its clients.</para>
+	</step>
+
+	<step>
+	  <para>Configure the server by making the following changes to
+	    <filename>/var/portbuild/conf/server.conf</filename>:</para>
+
+	  <itemizedlist>
+
+	    <listitem>
+	      <para>Set <makevar>SUPPORTED_ARCHS</makevar> to the
+		list of architectures you wish to build packages for.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para>For each source branch you will be building for, set
+		<makevar>SRC_BRANCHES</makevar> and
+		<makevar>SRC_BRANCH_<replaceable>branch</replaceable>_SUBDIR</makevar>
+		as detailed in <xref linkend="new-branch-pre-qmanager"/>.
+		You should not need to change
+		<makevar>SRC_BRANCHES_PATTERN</makevar>.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para>Set <makevar>UPLOAD_DIRECTORY</makevar>,
+		<makevar>UPLOAD_TARGET</makevar>, and
+		<makevar>UPLOAD_USER</makevar> as approprite
+		for your site.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para>Set <makevar>MASTER_URL</makevar> to the http
+		URL of your server.  This will be stamped into the
+		package build logs and the indices thereof.</para>
+	    </listitem>
+
+	  </itemizedlist>
+
+	  <para>Most of the other default values should be fine.</para>
+	</step>
+
+      </procedure>
+
+    </sect2>
+
+    <sect2 id="pointyhat-pre-qmanager">
+      <title>pre-<application>qmanager</application></title>
+
+      <procedure>
+
+	<step>
+	  <para>For each architecture, follow the steps in
+	    <xref linkend="new-arch-pre-qmanager"/>.</para>
+	</step>
+
+      </procedure>
+
+    </sect2>
+
+    <sect2 id="pointyhat-qmanager">
+      <title><application>qmanager</application></title>
+
+      <procedure>
+
+	<step>
+	  <para>Copy the following files from
+	    <filename>/var/portbuild/conf/etc/rc.d/</filename> to
+	    <filename>/usr/local/etc/rc.d/</filename>:<screen>
+buildproxy.sh
+pollmachine.sh
+qmanager.sh</screen>
+	  </para>
+
+	  <para>As root, start each one of them.  You may find it handy
+	    to start each under <application>screen</application> for
+	    debugging purposes.</para>
+	</step>
+
+	<step>
+	  <para>Initialize the <application>qmanager</application>
+	    database's acl list:<screen>
+&prompt.root; python /var/portbuild/qmanager/qclient add_acl name=deny_all uidlist= gidlist= sense=0
+</screen></para>
+	</step>
+
+      </procedure>
+
+    </sect2>
+
+    <sect2 id="pointyhat-src-ports-repos">
+      <title>Creating src and ports repositories</title>
+
+      <procedure>
+
+	<step>
+	  <para>Run the following commands manually to create the
+	    <literal>src</literal> and <literal>ports</literal>
+	    repositories, respectively:<screen>
+&prompt.user; sudo /var/portbuild/scripts/updatesnap.ports
+&prompt.user; sudo /var/portbuild/scripts/updatesnap
+</screen></para>
+
+	  <para>These will be periodically run from the root
+	    <filename>crontab</filename>, which you will
+	    install below.</para>
+	</step>
+
+      </procedure>
+
+    </sect2>
+
+    <sect2 id="pointyhat-other-services">
+      <title>Other services</title>
+
+      <procedure>
+
+	<step>
+	  <para>Configure
+	    <filename>/usr/local/etc/apache22/httpd.conf</filename>
+	    as appropriate for your site.</para>
+	</step>
+
+	<step>
+	  <para>Copy <filename>/var/portbuild/conf/apache.conf</filename>
+	    to the appropriate <filename>Includes/</filename> subdirectory, e.g.,
+	    <filename>/usr/local/etc/apache22/Includes/apache.conf</filename>.
+	    Configure it as appropriate for your site.</para>
+	</step>
+
+	<step>
+	  <para>Install <filename>/var/portbuild/crontabs/root</filename> as
+	    the <username>root</username> crontab via
+	    <command>crontab -e</command>.  If you do
+	    not support all the archs listed there, make sure to comment out
+	    the appropriate <application>dologs</application> entries.</para>
+	</step>
+
+	<step>
+	  <para>Install <filename>/var/portbuild/crontabs/portmgr</filename> as
+	    the <username>portmgr</username> crontab via
+	    <command>crontab -u portmgr -e</command>.  If you do
+	    not support all the archs listed there, make sure to comment out
+	    the appropriate <application>dologs</application> entries.</para>
+	</step>
+
+	<step>
+	  <para>If your build slaves will be pxebooted, make sure to
+	    enable the <application>tftp</application> entries in
+	    <filename>/etc/inetd.conf</filename>.</para>
+	</step>
+
+	<step>
+	  <para>If not already created, add the following users:<screen>
+squid:*:100:100::0:0:User &amp;:/usr/local/squid:/bin/sh
+ganglia:*:102:102::0:0:User &amp;:/usr/local/ganglia:/bin/sh</screen>
+	  </para>
+
+	  <para>Add them to <filename>/etc/group</filename> as well.</para>
+	</step>
+
+	<step>
+	  <para>Configure mail by doing the following:</para>
+
+	  <para>run <command>newaliases</command>.</para>
+	</step>
+
+      </procedure>
+
+    </sect2>
+
+    <sect2 id="pointyhat-finishing-up">
+      <title>Finishing up</title>
+
+      <procedure>
+
+	<step>
+	  <para>For each architecture, follow the steps in
+	    <xref linkend="new-arch-post-qmanager"/>.</para>
+	</step>
+
+      </procedure>
+
+      <para>You should now be ready to build packages.</para>
 
     </sect2>
 
@@ -2867,16 +3251,21 @@ sysutils/smartmontools</screen>
   <sect1 id="disk-failure">
     <title>Procedures for dealing with disk failures</title>
 
-    <para>When a machine has a disk failure (e.g. panics due to read errors,
+    <note>
+      <para>The following section is particular to <hostid>freebsd.org</hostid>
+	and is somewhat obsolete.</para>
+    </note>
+
+    <para>When a machine has a disk failure (e.g., panics due to read errors,
       etc), then we should do the following steps:</para>
 
     <itemizedlist>
-      <listitem><para>Note the time and failure mode (e.g. paste in the
+      <listitem><para>Note the time and failure mode (e.g., paste in the
 	relevant console output) in
 	<filename>/var/portbuild/<replaceable>${arch}</replaceable>/reboots</filename></para></listitem>
 
       <listitem><para>For i386 gohan clients, scrub the disk by touching
-	<filename>/SCRUB</filename> in the nfsroot (e.g.
+	<filename>/SCRUB</filename> in the nfsroot (e.g.,
 	<filename>/a/nfs/8.dir1/SCRUB</filename>) and rebooting.  This will
 	<command>dd if=/dev/zero of=/dev/ad0</command> and force the drive to
 	remap any bad sectors it finds, if it has enough spares left.  This is
@@ -2887,7 +3276,7 @@ sysutils/smartmontools</screen>
 	  disk seems to be that the blade will completely hang and be
 	  unresponsive to either console break, or even NMI.</para></note>
 
-	<para>For other build systems that don't newfs their disk at boot (e.g.
+	<para>For other build systems that do not newfs their disk at boot (e.g.,
 	  amd64 systems) this step has to be skipped.</para></listitem>
 
       <listitem><para>If the problem recurs, then the disk is probably toast.
