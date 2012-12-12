@@ -500,6 +500,10 @@
     </listitem>
 
     <listitem>
+      <para>&a.bar;</para>
+    </listitem>
+
+    <listitem>
       <para>&a.jmg;</para>
     </listitem>
 
@@ -1641,5 +1645,9 @@
 
     <listitem>
       <para>&a.az;</para>
+    </listitem>
+
+    <listitem>
+      <para>&a.syuu;</para>
     </listitem>
   </itemizedlist>
