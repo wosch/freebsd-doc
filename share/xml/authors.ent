@@ -132,6 +132,8 @@
 
 <!ENTITY a.bapt "Baptiste Daroussin <email>bapt@FreeBSD.org</email>">
 
+<!ENTITY a.bar "Barbara Guida <email>bar@FreeBSD.org</email>">
+
 <!ENTITY a.barner "Simon Barner <email>barner@FreeBSD.org</email>">
 
 <!ENTITY a.bbraun "Rob Braun <email>bbraun@FreeBSD.org</email>">
@@ -1249,6 +1251,8 @@
 <!ENTITY a.sylvio "Sylvio Cesar Teixeira <email>sylvio@FreeBSD.org</email>">
 
 <!ENTITY a.syrinx "Shteryana Shopova <email>syrinx@FreeBSD.org</email>">
+
+<!ENTITY a.syuu "Takuya ASADA <email>syuu@FreeBSD.org</email>">
 
 <!ENTITY a.tabthorpe "Thomas Abthorpe <email>tabthorpe@FreeBSD.org</email>">
 

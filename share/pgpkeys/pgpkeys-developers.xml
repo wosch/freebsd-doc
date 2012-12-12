@@ -486,6 +486,11 @@
       &pgpkey.lioux;
     </sect2>
 
+    <sect2 id="pgpkey-mdf">
+      <title>&a.mdf;</title>
+      &pgpkey.mdf;
+    </sect2>
+
     <sect2 id="pgpkey-fanf">
       <title>&a.fanf;</title>
       &pgpkey.fanf;
@@ -566,6 +571,11 @@
       &pgpkey.jamie;
     </sect2>
 
+    <sect2 id="pgpkey-bar">
+      <title>&a.bar;</title>
+      &pgpkey.bar;
+    </sect2>
+
     <sect2 id="pgpkey-jmg">
       <title>&a.jmg;</title>
       &pgpkey.jmg;
@@ -644,6 +654,11 @@
     <sect2 id="pgpkey-mux">
       <title>&a.mux;</title>
       &pgpkey.mux;
+    </sect2>
+
+    <sect2 id="pgpkey-wen">
+      <title>&a.wen;</title>
+      &pgpkey.wen;
     </sect2>
 
     <sect2 id="pgpkey-dhn">
@@ -1876,6 +1891,11 @@
       &pgpkey.bz;
     </sect2>
 
+    <sect2 id="pgpkey-zeising">
+      <title>&a.zeising;</title>
+      &pgpkey.zeising;
+    </sect2>
+
     <sect2 id="pgpkey-phantom">
       <title>&a.phantom;</title>
       &pgpkey.phantom;
@@ -1889,5 +1909,10 @@
     <sect2 id="pgpkey-zont">
       <title>&a.zont;</title>
       &pgpkey.zont;
+    </sect2>
+
+    <sect2 id="pgpkey-syuu">
+      <title>&a.syuu;</title>
+      &pgpkey.syuu;
     </sect2>
 
