@@ -104,3 +104,8 @@ DOC_LOCAL_MK=	${DOC_PREFIX}/${LANGCODE}/share/mk/doc.local.mk
 
 # Subdirectory glue.
 .include "doc.subdir.mk"
+
+NCPU?= 8
+p-all:
+	make -V SUBDIR | perl -npe 's/ /\n/g' | perl -ne 'print if s/^(.+)/make -C $$1\0/' | xargs -0 -n1 -P${NCPU} /bin/sh -c
+
