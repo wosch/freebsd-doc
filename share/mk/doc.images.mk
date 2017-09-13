@@ -107,14 +107,14 @@ EPS2PNM_RES?=	100
 		${PNGTOPNM} ${PNGTOPNMOPTS} | \
 		${PPMTOPGM} ${PPMTOPGMOPTS} | \
 		${PNMTOPS} ${PNMTOPSOPTS} > $$tmpfile && \
-		mv -f $$tmpfile ${.TARGET}
+		${MV} -f $$tmpfile ${.TARGET}
 .else
 .scr.eps:
 	tmpfile=$$(mktemp ${.TARGET}.XXXXXXXX); \
 	${SCR2PNG} ${SCR2PNGOPTS} < ${.ALLSRC} | \
 		${PNGTOPNM} ${PNGTOPNMOPTS} | \
 		${PNMTOPS} ${PNMTOPSOPTS} > $$tmpfile && \
-		mv -f $$tmpfile ${.TARGET}
+		${MV} -f $$tmpfile ${.TARGET}
 .endif
 
 # The .txt files need to have any trailing spaces trimmed from
@@ -131,7 +131,7 @@ EPS2PNM_RES?=	100
 
 .pic.ps:
 	tmpfile=$$(mktemp ${.TARGET}.XXXXXXXX); \
-	${PIC2PS} ${.ALLSRC} > $$tmpfile && mv -f $$tmpfile ${.TARGET}
+	${PIC2PS} ${.ALLSRC} > $$tmpfile && ${MV} -f $$tmpfile ${.TARGET}
 
 # When ghostscript built with A4=yes is used, ps2epsi's paper size also
 # becomes the A4 size.  However, the ps2epsi fails to convert grops(1)
@@ -161,7 +161,7 @@ EPS2PNM_RES?=	100
 		echo "cleartomark countdictstack exch sub { end } repeat restore";\
 		echo "%%EOF";\
 	) >> $$tmpfile; \
-	mv -f $$tmpfile ${.TARGET}
+	${MV} -f $$tmpfile ${.TARGET}
 
 # We can't use suffix rules to generate the rules to convert EPS to PNG and
 # PNG to EPS.  This is because a .png file can depend on a .eps file, and
