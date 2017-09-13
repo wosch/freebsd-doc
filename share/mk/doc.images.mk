@@ -130,7 +130,8 @@ EPS2PNM_RES?=	100
 		| ${PNMTOPNG} > ${.TARGET}
 
 .pic.ps:
-	${PIC2PS} ${.ALLSRC} > ${.TARGET}
+	tmpfile=$$(mktemp ${.TARGET}.XXXXXXXX); \
+	${PIC2PS} ${.ALLSRC} > $$tmpfile && mv -f $$tmpfile ${.TARGET}
 
 # When ghostscript built with A4=yes is used, ps2epsi's paper size also
 # becomes the A4 size.  However, the ps2epsi fails to convert grops(1)
