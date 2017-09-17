@@ -109,5 +109,4 @@ DOC_LOCAL_MK=	${DOC_PREFIX}/${LANGCODE}/share/mk/doc.local.mk
 NCPU?= 8
 p-all:
 	make -V SUBDIR | sed -E 's/[ ]+$$//' | tr " " "\n" | sed -E 's/^/make -C /' | tr '\n' '\0' | xargs -0 -n1 -P${NCPU} /bin/sh -c
-	#make -V SUBDIR | perl -npe 's/ /\n/g' | perl -ne 'print if s/^(.+)/make -C $$1\0/' | xargs -0 -n1 -P${NCPU} /bin/sh -c
 
