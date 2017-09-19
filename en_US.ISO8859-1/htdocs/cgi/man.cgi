@@ -234,6 +234,8 @@ $manPathDefault = 'FreeBSD 11.1-RELEASE and Ports';
 "$manLocalDir/FreeBSD-11.1-RELEASE/man:$manLocalDir/FreeBSD-11.1-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-11.1-RELEASE/man:$manLocalDir/FreeBSD-ports-11.1-RELEASE/misc",
     'FreeBSD 11.0-RELEASE and Ports',
 "$manLocalDir/FreeBSD-11.0-RELEASE/man:$manLocalDir/FreeBSD-11.0-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-11.0-RELEASE/man:$manLocalDir/FreeBSD-ports-11.0-RELEASE/misc",
+    'FreeBSD 10.4-RELEASE and Ports',
+"$manLocalDir/FreeBSD-10.4-RELEASE/man:$manLocalDir/FreeBSD-10.4-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-10.4-RELEASE/man:$manLocalDir/FreeBSD-ports-10.4-RELEASE/misc",
     'FreeBSD 10.3-RELEASE and Ports',
 "$manLocalDir/FreeBSD-10.3-RELEASE/man:$manLocalDir/FreeBSD-10.3-RELEASE/openssl/man:$manLocalDir/FreeBSD-ports-10.3-RELEASE/man:$manLocalDir/FreeBSD-ports-10.3-RELEASE/misc",
     'FreeBSD 10.2-RELEASE and Ports',
@@ -269,9 +271,6 @@ $manPathDefault = 'FreeBSD 11.1-RELEASE and Ports';
     'FreeBSD 12-current',
 "$manLocalDir/FreeBSD-12-current/man:$manLocalDir/FreeBSD-12-current/openssl/man",
 
-    'FreeBSD 11-current',
-"$manLocalDir/FreeBSD-11-current/man:$manLocalDir/FreeBSD-11-current/openssl/man",
-
     'FreeBSD 11.1-stable',
 "$manLocalDir/FreeBSD-11.1-stable/man:$manLocalDir/FreeBSD-11.1-stable/openssl/man",
     'FreeBSD 11.1-RELEASE',
@@ -279,8 +278,10 @@ $manPathDefault = 'FreeBSD 11.1-RELEASE and Ports';
     'FreeBSD 11.0-RELEASE',
 "$manLocalDir/FreeBSD-11.0-RELEASE/man:$manLocalDir/FreeBSD-11.0-RELEASE/openssl/man",
 
-    'FreeBSD 10.3-stable',
-"$manLocalDir/FreeBSD-10.3-stable/man:$manLocalDir/FreeBSD-10.3-stable/openssl/man",
+    'FreeBSD 10.4-stable',
+"$manLocalDir/FreeBSD-10.4-stable/man:$manLocalDir/FreeBSD-10.4-stable/openssl/man",
+    'FreeBSD 10.4-RELEASE',
+"$manLocalDir/FreeBSD-10.4-RELEASE/man:$manLocalDir/FreeBSD-10.4-RELEASE/openssl/man",
     'FreeBSD 10.3-RELEASE',
 "$manLocalDir/FreeBSD-10.3-RELEASE/man:$manLocalDir/FreeBSD-10.3-RELEASE/openssl/man",
     'FreeBSD 10.2-RELEASE',
@@ -361,6 +362,7 @@ $manPathDefault = 'FreeBSD 11.1-RELEASE and Ports';
     'FreeBSD Ports 10.1', "$manLocalDir/FreeBSD-ports-10.1-RELEASE/man:$manLocalDir/FreeBSD-ports-10.1-RELEASE/misc",
     'FreeBSD Ports 10.2', "$manLocalDir/FreeBSD-ports-10.2-RELEASE/man:$manLocalDir/FreeBSD-ports-10.2-RELEASE/misc",
     'FreeBSD Ports 10.3', "$manLocalDir/FreeBSD-ports-10.3-RELEASE/man:$manLocalDir/FreeBSD-ports-10.3-RELEASE/misc",
+    'FreeBSD Ports 10.4', "$manLocalDir/FreeBSD-ports-10.4-RELEASE/man:$manLocalDir/FreeBSD-ports-10.4-RELEASE/misc",
     'FreeBSD Ports 11.0', "$manLocalDir/FreeBSD-ports-11.0-RELEASE/man:$manLocalDir/FreeBSD-ports-11.0-RELEASE/misc",
     'FreeBSD Ports 11.1', "$manLocalDir/FreeBSD-ports-11.1-RELEASE/man:$manLocalDir/FreeBSD-ports-11.1-RELEASE/misc",
 
@@ -742,14 +744,15 @@ my @no_pdf_output = (
 my %no_pdf_output = map { $_ => 1 } @no_pdf_output;
 
 my %valid_arch = map { $_ => 1 }
-  qw/acorn26 acorn32 algor alpha amd64 amiga arc arm arm26 arm32 armish atari aviion bebox cats cesfic cobalt dreamcast evbarm evbmips evbppc evbsh3 evbsh5 hp300 hp700 hpcarm hpcmips hpcsh hppa hppa64 i386 ibmnws landisk loongson luna68k luna88k mac68k macppc mipsco mmeye mvme68k mvme88k mvmeppc netwinder news68k newsmips next68k ofppc palm pc532 pegasos playstation2 pmax pmppc powerpc prep sandpoint sbmips sgi sgimips shark socppc sparc sparc64 sun2 sun3 sun3x tahoe vax walnut wgrisc x68k zaurus/;
+  qw/aarch64 acorn26 acorn32 algor alpha amd64 amiga arc arm arm26 arm32 arm64 armish atari aviion bebox cats cesfic cobalt dreamcast evbarm evbmips evbppc evbsh3 evbsh5 hp300 hp700 hpcarm hpcmips hpcsh hppa hppa64 i386 ibmnws landisk loongson luna68k luna88k mac68k macppc mipsco mmeye mvme68k mvme88k mvmeppc netwinder news68k newsmips next68k ofppc palm pc532 pegasos playstation2 pmax pmppc powerpc prep sandpoint sbmips sgi sgimips shark socppc sparc sparc64 sun2 sun3 sun3x tahoe vax walnut wgrisc x68k zaurus/;
 
 my $default_arch = 'amd64';
 my %arch_names = ('default' => 'All Architectures');
 
 my %arch = ( 
-'FreeBSD 11.1-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64/] } ,
-'FreeBSD 11.0-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64/] } ,
+'FreeBSD 11.1-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64 aarch64/] } ,
+'FreeBSD 11.0-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64 aarch64/] } ,
+'FreeBSD 10.4-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64/] } ,
 'FreeBSD 10.3-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64/] } ,
 'FreeBSD 10.2-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64/] } ,
 'FreeBSD 10.1-RELEASE' => { 'default' => 'i386', 'arch' => [qw/amd64 arm i386 powerpc sparc64/] } ,
@@ -804,9 +807,10 @@ while ( ( $key, $val ) = each %manPath ) {
     'freebsd',         'FreeBSD 11.1-RELEASE',
     'freebsd-release', 'FreeBSD 11.1-RELEASE',
 
-    'freebsd-stable',  'FreeBSD 10.3-stable',
+    'freebsd-stable', 'FreeBSD 11.1-stable',
     'freebsd-stable11', 'FreeBSD 11.1-stable',
-    'freebsd-stable10', 'FreeBSD 10.3-stable',
+
+    'freebsd-stable10', 'FreeBSD 10.4-stable',
     'freebsd-stable9', 'FreeBSD 9.3-stable',
     'freebsd-stable8', 'FreeBSD 8.4-stable',
     'freebsd-stable7', 'FreeBSD 7.4-stable',
@@ -1644,25 +1648,14 @@ sub encode_data {
     s/\</\&lt\;/g;
     s/\>/\&gt\;/g;
 
-    s,((_\010[^_])+),($str = $1) =~ s/.\010//g; "<i>$str</i>";,ge;
-    s,((.\010.)+),($str = $1) =~ s/.\010//g; "<b>$str</b>";,ge;
+    # underline: _^H.^H(.)
+    s,((_\010[^_]\010.)+),($str = $1) =~ s/_\010..//g; "<I>$str</I>";,ge;
 
- #s,((_\010.)+),($str = $1) =~ s/.\010//g; "<i>$str</i>";,ge;
- #s,(.\010)+,$1,g;
- #if (!s,((.\010.)+\s+(.\010.)+),($str = $1) =~ s/.\010//g; "<b>$str</b>";,ge) {
- # s,(([^_]\010.)+),($str = $1) =~ s/[^_]\010//g; "<b>$str</b>";,ge;
- # s,(([_]\010.)+),($str = $1) =~ s/[_]\010//g; "<i>$str</i>";,ge;
- #}
- # Escape binary data except for ^H which we process below
- # \375 gets turned into the & for the entity reference
- #s/([^\010\012\015\032-\176])/sprintf('\375#%03d;',ord($1))/eg;
- # Process ^H sequences, we use \376 and \377 (already escaped
- # above) to stand in for < and > until those characters can
- # be properly escaped below.
- #s,\376[IB]\377_\376/[IB]\377,,g;
- #s/.[\b]//g;			# just do an erase for anything else
- # Now convert our magic chars into our tag markers
- #s/\375/\&/g; s/\376/</g; s/\377/>/g;
+    # italic:  _^H(.)
+    s,((_\010[^_])+),($str = $1) =~ s/.\010//g; "<i>$str</i>";,ge;
+
+    # bold: .^H(.) 
+    s,(([^_]\010.)+),($str = $1) =~ s/.\010//g; "<b>$str</b>";,ge;
 
     # cleanup all the rest
     s,.\010,,g;

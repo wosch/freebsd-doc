@@ -45,6 +45,9 @@
 <!ENTITY a.adrian "Adrian Chadd">
 <!ENTITY a.adrian.email "&a.adrian; <email xmlns='http://docbook.org/ns/docbook'>adrian@FreeBSD.org</email>">
 
+<!ENTITY a.adridg "Adriaan de Groot">
+<!ENTITY a.adridg.email "&a.adridg; <email xmlns='http://docbook.org/ns/docbook'>adridg@FreeBSD.org</email>">
+
 <!ENTITY a.ae "Andrey V. Elsukov">
 <!ENTITY a.ae.email "&a.ae; <email xmlns='http://docbook.org/ns/docbook'>ae@FreeBSD.org</email>">
 
@@ -545,6 +548,9 @@
 
 <!ENTITY a.dburr "Donald Burr">
 <!ENTITY a.dburr.email "&a.dburr; <email xmlns='http://docbook.org/ns/docbook'>dburr@FreeBSD.org</email>">
+
+<!ENTITY a.dch "Dave Cottlehuber">
+<!ENTITY a.dch.email "&a.dch; <email xmlns='http://docbook.org/ns/docbook'>dch@FreeBSD.org</email>">
 
 <!ENTITY a.dchagin "Dmitry Chagin">
 <!ENTITY a.dchagin.email "&a.dchagin; <email xmlns='http://docbook.org/ns/docbook'>dchagin@FreeBSD.org</email>">
@@ -1248,6 +1254,9 @@
 <!ENTITY a.kib "Konstantin Belousov">
 <!ENTITY a.kib.email "&a.kib; <email xmlns='http://docbook.org/ns/docbook'>kib@FreeBSD.org</email>">
 
+<!ENTITY a.kibab "Ilya Bakulin">
+<!ENTITY a.kibab.email "&a.kibab; <email xmlns='http://docbook.org/ns/docbook'>kibab@FreeBSD.org</email>">
+
 <!ENTITY a.kientzle "Tim Kientzle">
 <!ENTITY a.kientzle.email "&a.kientzle; <email xmlns='http://docbook.org/ns/docbook'>kientzle@FreeBSD.org</email>">
 
@@ -1316,6 +1325,9 @@
 
 <!ENTITY a.ler "Larry Rosenman">
 <!ENTITY a.ler.email "&a.ler; <email xmlns='http://docbook.org/ns/docbook'>ler@FreeBSD.org</email>">
+
+<!ENTITY a.leres "Craig Leres">
+<!ENTITY a.leres.email "&a.leres; <email xmlns='http://docbook.org/ns/docbook'>leres@FreeBSD.org</email>">
 
 <!ENTITY a.lesi "Dejan Lesjak">
 <!ENTITY a.lesi.email "&a.lesi; <email xmlns='http://docbook.org/ns/docbook'>lesi@FreeBSD.org</email>">
