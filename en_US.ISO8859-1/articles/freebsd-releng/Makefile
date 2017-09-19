@@ -17,6 +17,5 @@ CSS_SHEET_ADDITIONS=extra.css
 URL_RELPREFIX?=	../../../..
 DOC_PREFIX?=	${.CURDIR}/../../..
 
-all: .PHONY clean
-
 .include "${DOC_PREFIX}/share/mk/doc.project.mk"
+
