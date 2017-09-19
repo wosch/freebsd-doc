@@ -96,6 +96,11 @@ DOC_LOCAL_MK=	${DOC_PREFIX}/${LANGCODE}/share/mk/doc.local.mk
 .if defined(DOC)
 .if ${DOCFORMAT} == "docbook"
 .include "doc.docbook.mk"
+
+.if !defined(DOC_DEPS_DISABLE) || ${DOC_DEPS_DISABLE} != "YES"
+.include "doc.docbook-dep.mk"
+.endif
+
 .endif
 .if ${DOCFORMAT} == "slides"
 .include "doc.slides.mk"
@@ -105,8 +110,11 @@ DOC_LOCAL_MK=	${DOC_PREFIX}/${LANGCODE}/share/mk/doc.local.mk
 # Subdirectory glue.
 .include "doc.subdir.mk"
 
-# parallel build for target "all"
-NCPU?= 8
-p-all:
-	make -V SUBDIR | sed -E 's/[ ]+$$//' | tr " " "\n" | sed -E 's/^/make -C /' | tr '\n' '\0' | xargs -0 -n1 -P${NCPU} /bin/sh -c
+# parallel build for target "all" and "clean"
+NCPU?= ${.MAKE.JOBS}
+
+p-all p-clean:
+	make -V SUBDIR | sed -E 's/[ ]+$$//' | tr " " "\n" | \
+		sed -E 's/^/make -C /; s/$$/ ${.TARGET:S/^p-//}/' | \
+		tr '\n' '\0' | xargs -0 -n1 -P${NCPU:S/^$$/8/} /bin/sh -c
 
