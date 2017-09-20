@@ -31,6 +31,6 @@ IMAGES_LIB+=	callouts/5.png
 URL_RELPREFIX?=	../../../..
 DOC_PREFIX?=	${.CURDIR}/../../..
 
-DOC_DEPS_DISABLE=YES
+DOCBOOK_DEPS_DISABLE=YES
 
 .include "${DOC_PREFIX}/share/mk/doc.project.mk"

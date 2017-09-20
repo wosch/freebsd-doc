@@ -97,7 +97,7 @@ DOC_LOCAL_MK=	${DOC_PREFIX}/${LANGCODE}/share/mk/doc.local.mk
 .if ${DOCFORMAT} == "docbook"
 .include "doc.docbook.mk"
 
-.if !defined(DOC_DEPS_DISABLE) || ${DOC_DEPS_DISABLE} != "YES"
+.if !defined(DOCBOOK_DEPS_DISABLE) || ${DOCBOOK_DEPS_DISABLE} != "YES"
 .include "doc.docbook-dep.mk"
 .endif
 
