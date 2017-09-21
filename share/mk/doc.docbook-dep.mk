@@ -15,7 +15,13 @@
 #
 
 .if ${.TARGETS} == "all"
-_DOCBOOK_DEPS_SYSTEM !=  for i in $$(egrep '<!ENTITY [^ ]+ SYSTEM "[^ ]+\.xml">' ${SRCS} | sed -E 's,.*"([^"]+)".*,\1,');do if [ -e $$i ]; then echo $i; else echo "Warning: dep file $$(pwd)/$$i does not exists" >&2; fi; done
+_DOCBOOK_DEPS_SYSTEM != for i in $$(egrep '<!ENTITY [^ ]+ SYSTEM "[^ ]+\.xml">' ${SRCS} | sed -E 's,.*"([^"]+)".*,\1,');do \
+			  if [ -e $$i ]; then \
+			    echo $i; \
+			  else \
+			    echo "Warning: dep file $$(pwd)/$$i does not exists" >&2; \
+			  fi; \
+			done
 .endif
 
 DOCBOOK_DEPS += ${_DOCBOOK_DEPS_SYSTEM}
