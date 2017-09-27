@@ -6,19 +6,19 @@
 # examples:
 #
 # run on 2 CPUs
-# make_opt=-j2 /path/to/webupdate-test
+# make_opt=-j2 /path/to/webupdate-regression
 #
 # run from a local GIT repo in $HOME/freebsd-doc
-# GIT_REPO_FREEBSD_DOC="$HOME/freebsd-doc" /path/to/webupdate-test
+# GIT_REPO_FREEBSD_DOC="$HOME/freebsd-doc" /path/to/webupdate-regression
 #
 # build html-split format only, on 8 CPUs
-# WEBUPDATE_FORMATS="html-split" make_opt=-j8 /path/to/webupdate-test
+# WEBUPDATE_FORMATS="html-split" make_opt=-j8 /path/to/webupdate-regression
 #
 # build html and html-split format, on 16 CPUs max.
-# WEBUPDATE_FORMATS="html html-split" make_opt=-j16 /path/to/webupdate-test
+# WEBUPDATE_FORMATS="html html-split" make_opt=-j16 /path/to/webupdate-regression
 #
 # do not run the `make clean`' test after successfully build
-# WEBUPDATE_CLEAN=NO /path/to/webupdate-test
+# WEBUPDATE_CLEAN=NO /path/to/webupdate-regression
 #
 
 set -e
