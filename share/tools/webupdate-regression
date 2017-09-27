@@ -74,7 +74,7 @@ build_htdocs ()
   (
   echo -n "build htdocs"
   cd en_US.ISO8859-1/htdocs
-  make $make_opt all >> $logfile 2>&1; log $logfile 
+  time make $make_opt all >> $logfile 2>&1; log $logfile 
   )
 }
 
@@ -132,7 +132,7 @@ install_doc log.install_doc
 install_doc log.install_doc2
 
 echo "installed web: $(du -hs $dir/www)"
-echo "installed files: $(find $dir/www -type f | wc -l)"
+echo "installed files: $(find $dir/www | wc -l)"
 
 if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
   (cd ..; tar cf - www > www.tar )
