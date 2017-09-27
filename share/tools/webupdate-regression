@@ -150,7 +150,7 @@ echo "successfully done"
 echo ""
 
 # display user time for each task
-tail -n 2 $(find -s . -name 'log.*')
+tail -n 2 $(ls -tr $(find . -name 'log.*' -type f))
 
 echo ""
 echo "Please cleanup: rm -rf $dir"
