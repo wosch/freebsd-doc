@@ -1,7 +1,8 @@
 #!/bin/sh
 # Copyright (c) 2017 Wolfram Schneider <wosch@FreeBSD.org>
 #
-# test the build of www.freebsd.org
+# regression test of the build of www.freebsd.org
+# Based on git
 #
 # examples:
 #
@@ -30,7 +31,8 @@ set -e
 : ${WEBUPDATE_CLEAN=YES}
 
 FORMATS=$WEBUPDATE_FORMATS
-export NO_OBJ WEBUPDATE_FORMATS
+export NO_OBJ
+export FORMATS
 
 
 log () {
