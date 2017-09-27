@@ -47,6 +47,7 @@ checkout ()
 
   cd $dir
   echo "Run from $dir"
+  echo "build for formats: $FORMATS"
 
   echo "git clone"
   git clone -q $GIT_REPO_FREEBSD_DOC doc
