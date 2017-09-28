@@ -59,17 +59,16 @@ checkout ()
 build_doc ()
 {
   logfile=$1
-  echo -n "build doc"
+  echo -n "build doc (4-40min)"
   time make $make_opt p-all >> $logfile 2>&1; log $logfile
 }
 
 # build web only, from english web pages
-# parallel build, 30-60 seconds
 build_htdocs_web ()
 {
   logfile=$1
   (
-  echo -n "build htdocs web"
+  echo -n "build htdocs web (1min)"
   cd en_US.ISO8859-1/htdocs
   WEB_ONLY=YES time make $make_opt >> $logfile 2>&1; log $logfile
   )
@@ -81,26 +80,24 @@ build_htdocs ()
 {
   logfile=$1
   (
-  echo -n "build htdocs"
+  echo -n "build htdocs (1-3min)"
   cd en_US.ISO8859-1/htdocs
   time make $make_opt all >> $logfile 2>&1; log $logfile 
   )
 }
 
 # install web only, from english web pages
-# less than 10 seconds
 install_htdocs ()
 {
   logfile=$1
   (
-  echo -n "install htdocs web"
+  echo -n "install htdocs web (<10 sec)"
   cd en_US.ISO8859-1/htdocs
   DESTDIR=$dir/www WEB_ONLY=YES time make $make_opt install >> $logfile 2>&1; log $logfile 
   )
 }
 
 # install web + doc, from english web pages
-# less than 30 seconds
 install_doc ()
 {
   logfile=$1
@@ -108,28 +105,27 @@ install_doc ()
   echo "no parallel install"
   make_opt=
 
-  echo -n "install htdocs"
+  echo -n "install htdocs (<30 sec)"
   cd en_US.ISO8859-1/htdocs
   DESTDIR=$dir/www time make $make_opt install >> $logfile 2>&1; log $logfile 
   )
 }
 
 # clean doc from ./doc
-# parallel clean, less than 5 seconds
+# parallel clean
 clean_doc ()
 {
   logfile=$1
-  echo -n "clean doc"
+  echo -n "clean doc (<5 sec)"
   time make $make_opt p-clean >> $logfile 2>&1; log $logfile 
 }
 
 # clean doc from english web pages
-# less than 10 seconds
 clean_htdocs ()
 {
   logfile=$1
   (
-  echo -n "clean htdocs web"
+  echo -n "clean htdocs web (<10 sec)"
   cd en_US.ISO8859-1/htdocs
   WEB_ONLY=YES time make $make_opt clean >> $logfile 2>&1; log $logfile 
   )
