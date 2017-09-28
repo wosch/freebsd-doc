@@ -154,10 +154,10 @@ echo "installed files: $(find $dir/www | wc -l)"
 if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
   (cd ..; tar cf - www > www.tar )
 
-  clean_htdocs cw.log
-  clean_htdocs cw2.log
-  clean_doc c.log
-  clean_doc c2.log
+  clean_htdocs log.clean_htdocs
+  clean_htdocs log.clean_htdocs2
+  clean_doc log.clean_doc
+  clean_doc log.clean_doc
 fi
 
 echo ""
