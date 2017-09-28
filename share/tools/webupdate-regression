@@ -38,7 +38,7 @@ export FORMATS
 log () {
   file=$1
   echo " ...done $file"
-  echo "build done" >> $file
+  #echo "build done" >> $file
 }
 
 checkout ()
@@ -161,7 +161,7 @@ echo "successfully done"
 echo ""
 
 # display user time for each task
-tail -n 2 $(ls -tr $(find . -name 'log.*' -type f))
+tail -n 1 $(ls -tr $(find . -name 'log.*' -type f))
 
 echo ""
 echo "Please cleanup: rm -rf $dir"
