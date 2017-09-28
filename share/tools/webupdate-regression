@@ -122,6 +122,7 @@ clean_doc ()
 }
 
 # clean doc from english web pages
+# is required for docs which don't have a web pages (./htdocs)
 clean_htdocs ()
 {
   logfile=$1
@@ -153,8 +154,9 @@ if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
 
   clean_htdocs log.clean_htdocs
   clean_htdocs log.clean_htdocs2
-  #clean_doc log.clean_doc
-  #clean_doc log.clean_doc
+
+  clean_doc log.clean_doc
+  clean_doc log.clean_doc
 fi
 
 echo ""
