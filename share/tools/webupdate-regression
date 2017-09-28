@@ -71,7 +71,7 @@ build_htdocs_web ()
   echo -n "build htdocs web (1min)"
   cd en_US.ISO8859-1/htdocs
   WEB_ONLY=YES time make $make_opt >> $logfile 2>&1; log $logfile
-  WEB_ONLY=YES time make -C ports $make_opt >> $logfile 2>&1; log $logfile
+  WEB_ONLY=YES time make -C./ports $make_opt >> $logfile 2>&1; log $logfile
   )
 }
 
@@ -129,6 +129,7 @@ clean_htdocs ()
   echo -n "clean htdocs web (<10 sec)"
   cd en_US.ISO8859-1/htdocs
   WEB_ONLY=YES time make $make_opt clean >> $logfile 2>&1; log $logfile 
+  WEB_ONLY=YES time make -C./ports $make_opt clean >> $logfile 2>&1; log $logfile 
   )
 }
 
