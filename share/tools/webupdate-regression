@@ -54,6 +54,8 @@ checkout ()
   cd doc
 }
 
+# build doc only, from ./doc
+# parallel build, 4-40 minutes
 build_doc ()
 {
   logfile=$1
@@ -61,6 +63,8 @@ build_doc ()
   time make $make_opt p-all >> $logfile 2>&1; log $logfile
 }
 
+# build web only, from english web pages
+# parallel build, 30-60 seconds
 build_htdocs_web ()
 {
   logfile=$1
@@ -71,6 +75,8 @@ build_htdocs_web ()
   )
 }
 
+# build web + doc, from english web pages
+# after build_htdocs_web: 1-3 minutes (?)
 build_htdocs ()
 {
   logfile=$1
@@ -81,6 +87,8 @@ build_htdocs ()
   )
 }
 
+# install web only, from english web pages
+# less than 10 seconds
 install_htdocs ()
 {
   logfile=$1
@@ -91,6 +99,8 @@ install_htdocs ()
   )
 }
 
+# install web + doc, from english web pages
+# less than 30 seconds
 install_doc ()
 {
   logfile=$1
@@ -104,6 +114,8 @@ install_doc ()
   )
 }
 
+# clean doc from ./doc
+# parallel clean, less than 5 seconds
 clean_doc ()
 {
   logfile=$1
@@ -111,6 +123,8 @@ clean_doc ()
   time make $make_opt p-clean >> $logfile 2>&1; log $logfile 
 }
 
+# clean doc from english web pages
+# less than 10 seconds
 clean_htdocs ()
 {
   logfile=$1
