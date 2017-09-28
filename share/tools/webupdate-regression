@@ -126,10 +126,9 @@ clean_htdocs ()
 {
   logfile=$1
   (
-  echo -n "clean htdocs web (<10 sec)"
+  echo -n "clean htdocs web + doc (<20 sec)"
   cd en_US.ISO8859-1/htdocs
-  WEB_ONLY=YES time make $make_opt clean >> $logfile 2>&1; log $logfile 
-  WEB_ONLY=YES time make -C./ports $make_opt clean >> $logfile 2>&1; log $logfile 
+  time make $make_opt clean >> $logfile 2>&1; log $logfile 
   )
 }
 
@@ -154,8 +153,8 @@ if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
 
   clean_htdocs log.clean_htdocs
   clean_htdocs log.clean_htdocs2
-  clean_doc log.clean_doc
-  clean_doc log.clean_doc
+  #clean_doc log.clean_doc
+  #clean_doc log.clean_doc
 fi
 
 echo ""
