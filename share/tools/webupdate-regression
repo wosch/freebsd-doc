@@ -48,6 +48,7 @@ checkout ()
   cd $dir
   echo "Run from $dir"
   echo "build for formats: $FORMATS"
+  echo "date: $(date)"
 
   echo "git clone"
   git clone -q $GIT_REPO_FREEBSD_DOC doc
@@ -71,6 +72,7 @@ build_htdocs_web ()
   echo -n "build htdocs web (1min)"
   cd en_US.ISO8859-1/htdocs
   WEB_ONLY=YES time make $make_opt >> $logfile 2>&1; log $logfile
+  echo -n "build htdocs web/ports (1min)"
   WEB_ONLY=YES time make -C./ports $make_opt >> $logfile 2>&1; log $logfile
   )
 }
@@ -146,9 +148,6 @@ install_htdocs log.install_htdocs2
 install_doc log.install_doc
 install_doc log.install_doc2
 
-echo "installed web: $(du -hs $dir/www)"
-echo "installed files: $(find $dir/www | wc -l)"
-
 if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
   (cd ..; tar cf - www > www.tar )
 
@@ -165,6 +164,10 @@ echo ""
 
 # display user time for each task
 tail -n 1 $(ls -tr $(find . -name 'log.*' -type f))
+
+echo ""
+echo "installed web: $(du -hs $dir/www)"
+echo "installed files: $(find $dir/www | wc -l)"
 
 echo ""
 echo "Please cleanup: rm -rf $dir"
