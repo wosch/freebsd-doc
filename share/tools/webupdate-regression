@@ -21,6 +21,9 @@
 # do not run the `make clean`' test after successfully build
 # WEBUPDATE_CLEAN=NO /path/to/webupdate-regression
 #
+# remove tempoary files on success
+# WEBUPDATE_CLEANUP=YES /path/to/webupdate-regression
+# 
 
 set -e
 
@@ -29,6 +32,7 @@ set -e
 : ${GIT_REPO_FREEBSD_DOC="$HOME/doc"}
 : ${WEBUPDATE_FORMATS="html-split html"}
 : ${WEBUPDATE_CLEAN=YES}
+: ${WEBUPDATE_CLEANUP=NO}
 
 FORMATS=$WEBUPDATE_FORMATS
 export NO_OBJ
@@ -174,8 +178,14 @@ echo ""
 echo "installed web: $(du -hs $dir/www)"
 echo "installed files: $(find $dir/www | wc -l)"
 
-echo ""
-echo "Please cleanup: rm -rf $dir"
+# cleanup (on scuccess)
+if [ "$WEBUPDATE_CLEANUP" = "YES" ]; then
+  echo "cleanup: $dir"
+  rm -rf $dir
+else
+  echo ""
+  echo "Please cleanup: rm -rf $dir"
+fi
 
 exit 0
 
