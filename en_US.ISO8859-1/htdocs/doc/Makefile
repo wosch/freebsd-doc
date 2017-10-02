@@ -14,7 +14,7 @@
 
 _DOC_FORMATS=	html-split html
 
-all: all-all all-install all-pgpkeyring
+all: all-all all-pgpkeyring
 
 all-all:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" all
