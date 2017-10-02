@@ -23,14 +23,14 @@ all-install:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${.OBJDIR} install
 
 all-pgpkeyring:
-	${MAKE} -C ${DOC_PREFIX}/share/pgpkeys pgpkeyring > ${.OBJDIR}/pgpkeyring.txt
+	${MAKE} -C ${DOC_PREFIX}/share/pgpkeys pgpkeyring.txt
 
 clean:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc clean
 
 install:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc install
-	cp ${.OBJDIR}/pgpkeyring.txt ${DESTDIR}/data/doc/pgpkeyring.txt
+	cp ${DOC_PREFIX}/share/pgpkeys/pgpkeyring.txt ${DESTDIR}/data/doc/pgpkeyring.txt
 
 .if make(clean)
 	${RM} -rf en* handbook faq pgpkeyring.txt
