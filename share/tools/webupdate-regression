@@ -21,6 +21,9 @@
 # do not run the `make clean`' test after successfully build
 # WEBUPDATE_CLEAN=NO /path/to/webupdate-regression
 #
+# test only english pages
+# ENGLISH_ONLY=YES /path/to/webupdate-regression
+#
 
 set -e
 
