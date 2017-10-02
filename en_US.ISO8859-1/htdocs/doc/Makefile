@@ -19,8 +19,8 @@ all: all-all all-pgpkeyring
 all-all:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" all
 
-all-install:
-	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${.OBJDIR} install
+#all-install:
+#	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${.OBJDIR} install
 
 all-pgpkeyring:
 	${MAKE} -C ${DOC_PREFIX}/share/pgpkeys pgpkeyring.txt
