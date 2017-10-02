@@ -30,7 +30,8 @@ clean:
 
 install:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc install
-	-wc ${DOC_PREFIX}/share/pgpkeys/pgpkeyring.txt ${DESTDIR}/data/doc/pgpkeyring.txt
+	-wc ${DOC_PREFIX}/share/pgpkeys/pgpkeyring.txt
+	-ls -l ${DESTDIR}/data/doc
 	-cp ${DOC_PREFIX}/share/pgpkeys/pgpkeyring.txt ${DESTDIR}/data/doc/pgpkeyring.txt
 
 .if make(clean)
