@@ -12,35 +12,26 @@
 .include "../Makefile.inc"
 .endif
 
+_DOC_FORMATS=	html-split html
+
 all: all-all all-install all-pgpkeyring
 
 all-all:
-	@unset DESTDIR || true; \
-	 cd ${DOC_PREFIX}/${LANGCODE}; \
-		${MAKE} FORMATS="html-split html" \
-			INSTALL_COMPRESSED= all
-all-install:
-	@unset DESTDIR || true; \
-	 cd ${DOC_PREFIX}/${LANGCODE}; \
-		${MAKE} FORMATS="html-split html" DOCDIR=${.OBJDIR} \
-			INSTALL_COMPRESSED= install
-all-pgpkeyring:
-	@unset DESTDIR || true; \
-	 cd ${DOC_PREFIX}/share/pgpkeys; \
-		${MAKE} \
-			pgpkeyring > ${.OBJDIR}/pgpkeyring.txt
+	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" all
 
-install clean:
-	@unset DESTDIR || true; \
-	 cd ${DOC_PREFIX}/${LANGCODE}; \
-		${MAKE} FORMATS="html-split html" DOCDIR=${DESTDIR}/data/doc \
-			INSTALL_COMPRESSED= ${.TARGET}
-.if make(install)
-	@unset DESTDIR || true; \
-	 cd ${DOC_PREFIX}/share/pgpkeys; \
-		${MAKE} \
-			pgpkeyring > ${DESTDIR}/data/doc/pgpkeyring.txt
-.endif
+all-install:
+	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${.OBJDIR} install
+
+all-pgpkeyring:
+	${MAKE} -C ${DOC_PREFIX}/share/pgpkeys pgpkeyring > ${.OBJDIR}/pgpkeyring.txt
+
+clean:
+	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc clean
+
+install:
+	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc install
+	cp ${.OBJDIR}/pgpkeyring.txt ${DESTDIR}/data/doc/pgpkeyring.txt
+
 .if make(clean)
 	${RM} -rf en* handbook faq pgpkeyring.txt
 .endif
