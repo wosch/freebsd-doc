@@ -97,7 +97,7 @@ install_htdocs ()
   echo -n "install htdocs web (<10 sec)"
   cd en_US.ISO8859-1/htdocs
   DESTDIR=$dir/www WEB_ONLY=YES time make $make_opt install >> $logfile 2>&1; log $logfile 
-  egrep -rl wosch $dir/www >/dev/null
+  #egrep -rl wosch $dir/www >/dev/null
   )
 }
 
@@ -112,7 +112,6 @@ install_doc ()
   echo -n "install htdocs (<30 sec)"
   cd en_US.ISO8859-1/htdocs
   DESTDIR=$dir/www time make $make_opt install >> $logfile 2>&1; log $logfile 
-  egrep -rl wosch $dir/www >/dev/null
   )
 }
 
