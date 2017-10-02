@@ -32,6 +32,7 @@ set -e
 : ${GIT_REPO_FREEBSD_DOC="$HOME/doc"}
 : ${WEBUPDATE_FORMATS="html-split html"}
 : ${WEBUPDATE_CLEAN=YES}
+: ${WEBUPDATE_LEVEL="3"}
 
 FORMATS=$WEBUPDATE_FORMATS
 export NO_OBJ
@@ -141,30 +142,58 @@ clean_htdocs ()
 
 checkout
 build_doc log.build_doc
-build_doc log.build_doc2
-build_doc log.build_doc3
+if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+  build_doc log.build_doc2
+fi
+if [ $WEBUPDATE_LEVEL -ge 3 ]; then
+  build_doc log.build_doc3
+fi
+
 build_htdocs_web log.build_htdocs_web
-build_htdocs_web log.build_htdocs_web2
-build_htdocs_web log.build_htdocs_web3
+if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+  build_htdocs_web log.build_htdocs_web2
+fi
+if [ $WEBUPDATE_LEVEL -ge 3 ]; then
+  build_htdocs_web log.build_htdocs_web3
+fi
+
 build_htdocs log.build_htdocs
-build_htdocs log.build_htdocs2
-build_htdocs log.build_htdocs3
+if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+  build_htdocs log.build_htdocs2
+fi
+if [ $WEBUPDATE_LEVEL -ge 3 ]; then
+  build_htdocs log.build_htdocs3
+fi
 
 install_htdocs log.install_htdocs
-install_htdocs log.install_htdocs2
+
+if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+  install_htdocs log.install_htdocs2
+fi
+  if [ $WEBUPDATE_LEVEL -ge 3 ]; then
 install_htdocs log.install_htdocs3
+fi
+
 install_doc log.install_doc
-install_doc log.install_doc2
-install_doc log.install_doc3
+if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+  install_doc log.install_doc2
+fi
+if [ $WEBUPDATE_LEVEL -ge 3 ]; then
+  install_doc log.install_doc3
+fi
 
 if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
   #(cd ..; tar cf - www > www.tar )
 
   clean_htdocs log.clean_htdocs
-  clean_htdocs log.clean_htdocs2
+  if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+    clean_htdocs log.clean_htdocs2
+  fi
 
   clean_doc log.clean_doc
-  clean_doc log.clean_doc
+  if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+    clean_doc log.clean_doc2
+  fi
 fi
 
 echo ""
