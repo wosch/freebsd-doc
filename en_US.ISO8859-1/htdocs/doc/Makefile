@@ -12,7 +12,7 @@
 .include "../Makefile.inc"
 .endif
 
-_DOC_FORMATS=	html-split html
+_DOC_FORMATS?=	html-split html
 
 all: all-all all-pgpkeyring
 
