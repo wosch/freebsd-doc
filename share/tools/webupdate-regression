@@ -24,6 +24,9 @@
 # test only english pages
 # ENGLISH_ONLY=YES /path/to/webupdate-regression
 #
+# clean git checkout after success
+# WEBUPDATE_CLEAN_SANDBOX=YES /path/to/webupdate-regression
+#
 
 set -e
 
@@ -33,6 +36,7 @@ set -e
 : ${WEBUPDATE_FORMATS="html-split html"}
 : ${WEBUPDATE_CLEAN=YES}
 : ${WEBUPDATE_LEVEL="3"}
+: ${WEBUPDATE_CLEAN_SANDBOX="NO"}
 
 FORMATS=$WEBUPDATE_FORMATS
 export NO_OBJ
@@ -212,8 +216,13 @@ echo "installed web: $(du -hs $dir/www)"
 echo "installed files: $(find $dir/www | wc -l)"
 ( cd $dir/www && find -s . > ../find.www )
 
-echo ""
-echo "Please cleanup: rm -rf $dir"
+if [ "$WEBUPDATE_CLEAN_SANDBOX" = "YES" ]; then
+  echo "cleanup sandbox $dir"
+  rm -rf $dir
+else
+  echo ""
+  echo "Please cleanup: rm -rf $dir"
+fi
 
 exit 0
 
