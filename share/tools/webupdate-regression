@@ -58,9 +58,9 @@ checkout ()
   git clone -q $GIT_REPO_FREEBSD_DOC doc
   cd doc
   echo "branch: $(git branch)"
-  echo ""
   echo "ENGLISH_ONLY=$ENGLISH_ONLY"
   echo "WEB_ONLY=$WEB_ONLY"
+  echo ""
 }
 
 # build doc only, from ./doc
