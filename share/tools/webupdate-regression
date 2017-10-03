@@ -57,7 +57,7 @@ checkout ()
   echo "git clone to ./doc"
   git clone -q $GIT_REPO_FREEBSD_DOC doc
   cd doc
-  git branch
+  echo "branch: $(git branch)"
 }
 
 # build doc only, from ./doc
