@@ -33,6 +33,7 @@ install:
 
 .include "${DOC_PREFIX}/share/mk/web.site.mk"
 
+# XXX
 obj: _OBJUSE
 
 _OBJUSE: .USE
