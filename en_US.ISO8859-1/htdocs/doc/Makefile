@@ -25,13 +25,11 @@ all-pgpkeyring:
 clean:
 	${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc clean
 
+# here are dragons
 install:
-	unset DESTDIR || true; ${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc install
+	unset DESTDIR || true; \
+	  ${MAKE} -C ${DOC_PREFIX}/${LANGCODE} FORMATS="${_DOC_FORMATS}" DOCDIR=${DESTDIR}/data/doc install
 	${CP} ${DOC_PREFIX}/share/pgpkeys/pgpkeyring.txt ${DESTDIR}/data/doc/pgpkeyring.txt
-
-.if make(clean)
-	${RM} -rf en* handbook faq pgpkeyring.txt
-.endif
 
 .include "${DOC_PREFIX}/share/mk/web.site.mk"
 
