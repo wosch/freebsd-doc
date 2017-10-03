@@ -111,8 +111,8 @@ install_doc ()
 {
   logfile=$1
   (
-  #echo "no parallel install"
-  #make_opt=
+  echo "no parallel install"
+  make_opt=
 
   echo -n "install htdocs (<30 sec)"
   cd en_US.ISO8859-1/htdocs
