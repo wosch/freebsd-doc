@@ -155,15 +155,23 @@ clean_htdocs ()
   )
 }
 
+########################################################################################
+#
+
 checkout
-build_doc log.build_doc
-if [ $WEBUPDATE_LEVEL -ge 2 ]; then
-  build_doc log.build_doc2
-fi
-if [ $WEBUPDATE_LEVEL -ge 3 ]; then
-  build_doc log.build_doc3
+
+# ./doc
+if [ "$WEB_ONLY" != "YES" ]; then
+  build_doc log.build_doc
+  if [ $WEBUPDATE_LEVEL -ge 2 ]; then
+    build_doc log.build_doc2
+  fi
+  if [ $WEBUPDATE_LEVEL -ge 3 ]; then
+    build_doc log.build_doc3
+  fi
 fi
 
+# doc/en_US.ISO8859-1/htdocs
 build_htdocs_web log.build_htdocs_web
 if [ $WEBUPDATE_LEVEL -ge 2 ]; then
   build_htdocs_web log.build_htdocs_web2
@@ -172,6 +180,7 @@ if [ $WEBUPDATE_LEVEL -ge 3 ]; then
   build_htdocs_web log.build_htdocs_web3
 fi
 
+# doc/en_US.ISO8859-1/htdocs/doc
 build_htdocs log.build_htdocs
 if [ $WEBUPDATE_LEVEL -ge 2 ]; then
   build_htdocs log.build_htdocs2
@@ -180,8 +189,8 @@ if [ $WEBUPDATE_LEVEL -ge 3 ]; then
   build_htdocs log.build_htdocs3
 fi
 
+# install doc/en_US.ISO8859-1/htdocs
 install_htdocs log.install_htdocs
-
 if [ $WEBUPDATE_LEVEL -ge 2 ]; then
   install_htdocs log.install_htdocs2
 fi
@@ -189,6 +198,7 @@ fi
 install_htdocs log.install_htdocs3
 fi
 
+# install doc/en_US.ISO8859-1/htdocs/doc
 install_doc log.install_doc
 if [ $WEBUPDATE_LEVEL -ge 2 ]; then
   install_doc log.install_doc2
@@ -197,6 +207,7 @@ if [ $WEBUPDATE_LEVEL -ge 3 ]; then
   install_doc log.install_doc3
 fi
 
+# make clean
 if [ "$WEBUPDATE_RUN_CLEAN" = "YES" ]; then
   clean_htdocs log.clean_htdocs
   if [ $WEBUPDATE_LEVEL -ge 2 ]; then
