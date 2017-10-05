@@ -65,7 +65,7 @@ checkout ()
   echo "NO_OBJ=$NO_OBJ"
   echo "make_opt=$make_opt"
 
-  echo "git clone to ./doc"
+  echo "git clone from $GIT_REPO_FREEBSD_DOC -> doc"
   git clone -q $GIT_REPO_FREEBSD_DOC doc
   cd doc
   echo "branch: $(git branch)"
