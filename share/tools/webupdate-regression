@@ -19,13 +19,13 @@
 # WEBUPDATE_FORMATS="html html-split" make_opt=-j16 /path/to/webupdate-regression
 #
 # do not run the `make clean`' test after successfully build
-# WEBUPDATE_CLEAN=NO /path/to/webupdate-regression
+# WEBUPDATE_RUN_CLEAN=NO /path/to/webupdate-regression
 #
 # test only english pages
 # ENGLISH_ONLY=YES /path/to/webupdate-regression
 #
 # clean git checkout after success
-# WEBUPDATE_CLEAN_SANDBOX=YES /path/to/webupdate-regression
+# WEBUPDATE_SANDBOX_CLEANUP=YES /path/to/webupdate-regression
 #
 
 set -e
@@ -34,9 +34,9 @@ set -e
 : ${make_opt=-j8}
 : ${GIT_REPO_FREEBSD_DOC="$HOME/doc"}
 : ${WEBUPDATE_FORMATS="html-split html"}
-: ${WEBUPDATE_CLEAN=YES}
+: ${WEBUPDATE_RUN_CLEAN=YES}
 : ${WEBUPDATE_LEVEL="3"}
-: ${WEBUPDATE_CLEAN_SANDBOX="NO"}
+: ${WEBUPDATE_SANDBOX_CLEANUP="NO"}
 
 FORMATS=$WEBUPDATE_FORMATS
 export NO_OBJ
@@ -59,8 +59,8 @@ checkout ()
   echo "ENGLISH_ONLY=$ENGLISH_ONLY"
   echo "WEB_ONLY=$WEB_ONLY"
   echo "FORMATS=$FORMATS"
-  echo "WEBUPDATE_CLEAN=$WEBUPDATE_CLEAN"
-  echo "WEBUPDATE_CLEAN_SANDBOX=$WEBUPDATE_CLEAN_SANDBOX"
+  echo "WEBUPDATE_RUN_CLEAN=$WEBUPDATE_RUN_CLEAN"
+  echo "WEBUPDATE_SANDBOX_CLEANUP=$WEBUPDATE_SANDBOX_CLEANUP"
   echo "WEBUPDATE_LEVEL=$WEBUPDATE_LEVEL"
   echo "NO_OBJ=$NO_OBJ"
   echo "make_opt=$make_opt"
@@ -197,9 +197,7 @@ if [ $WEBUPDATE_LEVEL -ge 3 ]; then
   install_doc log.install_doc3
 fi
 
-if [ "$WEBUPDATE_CLEAN" = "YES" ]; then
-  #(cd ..; tar cf - www > www.tar )
-
+if [ "$WEBUPDATE_RUN_CLEAN" = "YES" ]; then
   clean_htdocs log.clean_htdocs
   if [ $WEBUPDATE_LEVEL -ge 2 ]; then
     clean_htdocs log.clean_htdocs2
@@ -223,7 +221,7 @@ echo "installed web: $(du -hs $dir/www)"
 echo "installed files: $(find $dir/www | wc -l)"
 ( cd $dir/www && find -s . > ../find.www )
 
-if [ "$WEBUPDATE_CLEAN_SANDBOX" = "YES" ]; then
+if [ "$WEBUPDATE_SANDBOX_CLEANUP" = "YES" ]; then
   echo "cleanup sandbox $dir"
   rm -rf $dir
 else
