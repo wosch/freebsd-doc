@@ -217,7 +217,7 @@ echo ""
 tail -n 1 $(ls -tr $(find . -name 'log.*' -type f))
 
 echo ""
-echo "installed web disk usage: $(du -hs $dir/www)"
+echo "installed data disk usage: $(du -hs $dir/www)"
 echo "installed file number: $(find $dir/www | wc -l)"
 ( cd $dir/www && find -s . > ../find.www )
 
