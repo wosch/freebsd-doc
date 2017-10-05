@@ -32,7 +32,7 @@ set -e
 
 : ${NO_OBJ=YES}
 : ${make_opt=-j8}
-: ${GIT_REPO_FREEBSD_DOC="$HOME/doc"}
+: ${GIT_REPO_FREEBSD_DOC="$HOME/freebsd-doc"}
 : ${WEBUPDATE_FORMATS="html-split html"}
 : ${WEBUPDATE_RUN_CLEAN=YES}
 : ${WEBUPDATE_LEVEL="3"}
