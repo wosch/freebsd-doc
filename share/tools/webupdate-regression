@@ -217,8 +217,8 @@ echo ""
 tail -n 1 $(ls -tr $(find . -name 'log.*' -type f))
 
 echo ""
-echo "installed web: $(du -hs $dir/www)"
-echo "installed files: $(find $dir/www | wc -l)"
+echo "installed web disk usage: $(du -hs $dir/www)"
+echo "installed file number: $(find $dir/www | wc -l)"
 ( cd $dir/www && find -s . > ../find.www )
 
 if [ "$WEBUPDATE_SANDBOX_CLEANUP" = "YES" ]; then
