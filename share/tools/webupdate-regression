@@ -55,15 +55,22 @@ checkout ()
 
   cd $dir
   echo "Run from $dir"
-  echo "build for formats: $FORMATS"
   echo "date: $(date)"
+  echo "ENGLISH_ONLY=$ENGLISH_ONLY"
+  echo "WEB_ONLY=$WEB_ONLY"
+  echo "FORMATS=$FORMATS"
+  echo "WEBUPDATE_CLEAN=$WEBUPDATE_CLEAN"
+  echo "WEBUPDATE_CLEAN_SANDBOX=$WEBUPDATE_CLEAN_SANDBOX"
+  echo "WEBUPDATE_LEVEL=$WEBUPDATE_LEVEL"
+  echo "NO_OBJ=$NO_OBJ"
+  echo "make_opt=$make_opt"
 
   echo "git clone to ./doc"
   git clone -q $GIT_REPO_FREEBSD_DOC doc
   cd doc
   echo "branch: $(git branch)"
-  echo "ENGLISH_ONLY=$ENGLISH_ONLY"
-  echo "WEB_ONLY=$WEB_ONLY"
+  echo "cwd: $(pwd)"
+
   echo ""
 }
 
