@@ -27,6 +27,8 @@
 # clean git checkout after success
 # WEBUPDATE_SANDBOX_CLEANUP=YES /path/to/webupdate-regression
 #
+#
+# $FreeBSD$
 
 set -e
 
