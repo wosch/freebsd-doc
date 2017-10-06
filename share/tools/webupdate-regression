@@ -45,8 +45,7 @@ export FORMATS
 
 log () {
   file=$1
-  echo " ...done $file"
-  #echo "build done" >> $file
+  echo " ...done"
 }
 
 checkout ()
@@ -79,7 +78,7 @@ checkout ()
 build_doc ()
 {
   logfile=$1
-  echo -n "build doc (4-40min)"
+  echo -n "build doc (4-40min) $(pwd)/$logfile"
   time make $make_opt p-all >> $logfile 2>&1; log $logfile
 }
 
@@ -88,8 +87,8 @@ build_htdocs_web ()
 {
   logfile=$1
   (
-  echo -n "build htdocs web (1min)"
   cd en_US.ISO8859-1/htdocs
+  echo -n "build htdocs web (1min) $(pwd)/$logfile"
   WEB_ONLY=YES time make $make_opt >> $logfile 2>&1; log $logfile
   echo -n "build htdocs web/ports (1min)"
   WEB_ONLY=YES time make -C./ports $make_opt >> $logfile 2>&1; log $logfile
@@ -102,8 +101,8 @@ build_htdocs ()
 {
   logfile=$1
   (
-  echo -n "build htdocs (1-3min)"
   cd en_US.ISO8859-1/htdocs
+  echo -n "build htdocs (1-3min) $(pwd)/$logfile"
   time make $make_opt all >> $logfile 2>&1; log $logfile 
   )
 }
@@ -113,8 +112,8 @@ install_htdocs ()
 {
   logfile=$1
   (
-  echo -n "install htdocs web (<10 sec)"
   cd en_US.ISO8859-1/htdocs
+  echo -n "install htdocs web (<10 sec) $(pwd)/$logfile"
   DESTDIR=$dir/www WEB_ONLY=YES time make $make_opt install >> $logfile 2>&1; log $logfile 
   #egrep -rl wosch $dir/www >/dev/null
   )
@@ -128,8 +127,8 @@ install_doc ()
   echo "no parallel install"
   make_opt=
 
-  echo -n "install htdocs (<30 sec)"
   cd en_US.ISO8859-1/htdocs
+  echo -n "install htdocs (<30 sec) $(pwd)/$logfile"
   DESTDIR=$dir/www time make $make_opt install >> $logfile 2>&1; log $logfile 
   )
 }
@@ -139,7 +138,7 @@ install_doc ()
 clean_doc ()
 {
   logfile=$1
-  echo -n "clean doc (<5 sec)"
+  echo -n "clean doc (<5 sec) $(pwd)/$logfile"
   time make $make_opt p-clean >> $logfile 2>&1; log $logfile 
 }
 
@@ -149,8 +148,8 @@ clean_htdocs ()
 {
   logfile=$1
   (
-  echo -n "clean htdocs web + doc (<20 sec)"
   cd en_US.ISO8859-1/htdocs
+  echo -n "clean htdocs web + doc (<20 sec) $(pwd)/$logfile"
   time make $make_opt clean >> $logfile 2>&1; log $logfile 
   )
 }
