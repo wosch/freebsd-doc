@@ -53,4 +53,7 @@ URL_RELPREFIX?=	../../../..
 DOC_PREFIX?=	${.CURDIR}/../../..
 DOCBOOK_DEPS_DISABLE=YES
 
+# Fixme!
+DOCBOOK_DEPS_DISABLE=YES
+
 .include "${DOC_PREFIX}/share/mk/doc.project.mk"
