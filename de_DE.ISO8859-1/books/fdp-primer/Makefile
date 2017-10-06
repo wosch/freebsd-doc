@@ -51,7 +51,6 @@ SRCS+= chapters.ent
 
 URL_RELPREFIX?=	../../../..
 DOC_PREFIX?=	${.CURDIR}/../../..
-DOCBOOK_DEPS_DISABLE=YES
 
 # Fixme!
 DOCBOOK_DEPS_DISABLE=YES
