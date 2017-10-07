@@ -12,6 +12,9 @@
 # run from a local GIT repo in $HOME/freebsd-doc
 # GIT_REPO_FREEBSD_DOC="$HOME/freebsd-doc" /path/to/webupdate-regression
 #
+# run the regression test on branch "debug"
+# FREEBSD_DOC_GIT_BRANCH=debug /path/to/webupdate-regression
+#
 # build html-split format only, on 8 CPUs
 # WEBUPDATE_FORMATS="html-split" make_opt=-j8 /path/to/webupdate-regression
 #
