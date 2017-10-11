@@ -251,6 +251,8 @@ EXTRAS=		mirrors.lastmod.inc \
 
 XMLDOCS_NO_SRCS=YES
 CLEANFILES+= ${EXTRAS}
-index.html ${DOC}.html: ${EXTRAS}
+
+_extracs: ${EXTRAS}
+mirrors/chapter.xml: _extracs
 
 .include "${DOC_PREFIX}/share/mk/doc.project.mk"
